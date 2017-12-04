@@ -36,27 +36,26 @@
 
 <script>
   import btnGroup from './components/btn-group.vue'
-  import http from 'assets/js/http'
   import downExcel from 'components/Common/down-excel.vue'
   import tableModel from 'components/Common/table-model.vue'
   import breadCrumb from 'components/Common/bread-crumb.vue'
   import searchModel from 'components/Common/search-model.vue'
   import pageModel from 'components/Common/page-model.vue'
 
-  export default {
-      props:['data', 'config'],
-	  components: {
-        btnGroup,
-        downExcel,
-        tableModel,
-        breadCrumb,
-        searchModel,
-        pageModel,
+export default {
+    props: ['data', 'config'],
+    components: {
+      btnGroup,
+      downExcel,
+      tableModel,
+      breadCrumb,
+      searchModel,
+      pageModel
     },
-    data() {
+    data () {
       return {
 
       }
-    },
     }
+}
 </script>

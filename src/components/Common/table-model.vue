@@ -6,6 +6,7 @@
             v-loading="loading_min"
             element-loading-text="拼命加载中"
             style="width: 100%"
+            @sort-change="sortChange"
             @selection-change="selectItem"
     >
         <!-- checkbox -->
@@ -23,8 +24,9 @@
         </el-table-column>
 
         <!-- 表格主体 -->
-        <el-table-column v-for="i in config.show.items.length" 		:label="config.show.items[i-1]" 	:prop="config.show.prop[i-1]"	 :width="config.show.width[i-1]"></el-table-column>
-
+        <template v-for="i in config.show.items.length" >
+            <el-table-column :sortable="config.sort[config.show.prop[i-1]]" :label="config.show.items[i-1]" :prop="config.show.prop[i-1]"	 :width="config.show.width[i-1]"></el-table-column>
+        </template>
         <!-- 内容过长的内容 -->
             <template  v-if="config.toolong">
                 <el-table-column
@@ -73,51 +75,58 @@
 </template>
 
 <script>
-    import http from '../../assets/js/http'
-    export default {
-        props: ['exchanged', 'tableData', 'config', 'baseApi'],
-        data() {
-            return {
-            }
-        },
-        methods: {
-            selectItem(val) {
-                // checkbox方法
-                this.exchanged.multipleSelection = val
-            },
-            confirmDelete(item) {
-                this.$confirm('确认删除?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.loading_min = true
-                    this.apiDelete(this.baseApi+'/', item.id).then((res) => {
-                        this.loading_min = false
-                        const that = this
-                        this.handelResponse(res, (data) => {
-                            _g.toastMsg('success', '删除成功')
-                            setTimeout(() => {
-                                that.exchanged.isDelete++
-                                this.loading_min = false
-                            }, 1500)
-                        })
-                    })
-                }).catch(() => {
-                    // catch error
-                })
-            },
-            dateFormat(row) {
-                // 日期格式化
-                var date = parseInt(row.create_time+'000')
-                if (date == undefined) {
-                    return ""
-                }
-                return moment(date).format("YYYY年MM月DD日 HH:mm:ss")
-            },
-        },
-        created() {
-        },
-        mixins: [http]
+import http from 'assets/js/http'
+export default {
+  props: ['exchanged', 'tableData', 'config', 'baseApi'],
+  data () {
+    return {}
+  },
+  methods: {
+    sortChange (column) {
+      if (column.prop === null || column.order === null) {
+        this.exchanged.search.orderByString = ''
+      } else {
+        this.exchanged.search.orderByString = column.prop + '.' + column.order
+      }
+    },
+    selectItem (val) {
+      // checkbox方法
+      this.exchanged.multipleSelection = val
+    },
+    confirmDelete (item) {
+      this.$confirm('确认删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.loading_min = true
+          this.apiDelete(this.baseApi + '/', item.id).then(res => {
+            this.loading_min = false
+            const that = this
+            this.handelResponse(res, data => {
+              _g.toastMsg('success', '删除成功')
+              setTimeout(() => {
+                that.exchanged.isDelete++
+                this.loading_min = false
+              }, 1500)
+            })
+          })
+        })
+        .catch(() => {
+          // catch error
+        })
+    },
+    dateFormat(row) {
+      // 日期格式化
+      var date = parseInt(row.create_time + '000')
+      if (date === undefined) {
+        return ''
+      }
+      return moment(date).format('YYYY年MM月DD日 HH:mm:ss')
     }
+  },
+  created() {},
+  mixins: [http]
+}
 </script>

@@ -28,20 +28,20 @@
             <el-table-column label="操作"  width="300" fixed="right">
                 <template slot-scope="row">
 						<span class="icon_button">
-						    <a href="javascript:;" @click="downloadsql(row)" title="下载"><icon class="download-icon" name="download" ></icon></a>
+						    <a href="javascript:;" class="opration" @click="downloadsql(row)" title="下载"><icon class="download-icon" name="download" ></icon></a>
 					    </span>
                     <span class="icon_button">
-						    <a href="javascript:;" @click="confirmRecovery(row)" title="恢复"><icon class="recover-icon" name="recover" ></icon></i></a>
+						    <a href="javascript:;" class="opration" @click="confirmRecovery(row)" title="恢复"><icon class="recover-icon" name="recover" ></icon></i></a>
 					    </span>
                     <span class="icon_button">
-                            <a href="javascript:;" @click="confirmDelete(row)"><i class="el-icon-delete" title="删除"></i></a>
+                            <a href="javascript:;" class="opration" @click="confirmDelete(row)"><i class="el-icon-delete" title="删除"></i></a>
 					    </span>
                 </template>
             </el-table-column>
 
         </el-table>
         <div class="pos-rel p-t-20">
-            <div class="block pages">
+            <div class="block-pages block pages">
                 <el-pagination
                         @current-change="handleCurrentChange"
                         layout="total, prev, pager, next, jumper"
@@ -55,162 +55,185 @@
 </template>
 
 <script>
-    import btnGroup from 'components/Common/btn-group.vue'
-    import http from 'assets/js/http'
-    import breadCrumb from 'components/Common/bread-crumb.vue'
-    export default {
-        data () {
-            return {
-              config:{
-                crumb: [
-                  {
-                    to:'',
-                    name:'系统'
-                  },
-                  {
-                    to:'',
-                    name:'系统配置'
-                  },
-                  {
-                    to:'',
-                    name:'数据备份'
-                  }
-                ]
-              },
-                tableData: [],
-                multipleSelection: [],
-                fileList: [],
-                IsShow:false,
-                limit:10,
-                currentPage:null,
-                dataCount:null,
-                SqlURI:null
-            }
-        },
-        methods: {
-            downloadsql(data) {
-                let a = document.createElement('a');
-                let url = ResourceBaseUrl + 'databak\\' + data.row.name;
-                let filename = '数据备份.sql';
-                a.href = url;
-                a.download = filename;
-                a.click();
-                window.URL.revokeObjectURL(url);
-            },
-            selectItem(val) {
-                this.multipleSelection = val
-            },
-            handleCurrentChange(page) {
-                router.push({ path: this.$route.path, query: { keywords: this.keywords, page: page }})
-            },
-            confirmRecovery(data) {
-                this.$confirm('确认恢复该备份?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.apiGet('admin/DbBackup', {params:{'name':data.row.name, 'tp': 'restore'}}).then((res) => {
-                        _g.closeGlobalLoading()
-                        this.handelResponse(res, (data) => {
-                            _g.toastMsg('success', res.data)
-                        })
-                    })
-                }).catch(() => {
-                    // handel error
-                })
-            },
-            addBackup(item) {
-                this.$confirm('确认新增备份?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.apiGet('admin/DbBackup', {params:{'tp': 'backup'}}).then((res) => {
-                        _g.closeGlobalLoading()
-                        this.handelResponse(res, (data) => {
-                            _g.toastMsg('success', res.data)
-                            setTimeout(() => {
-                                _g.shallowRefresh(this.$route.name)
-                            }, 1500)
-                        })
-                    })
-                }).catch(() => {
-                    // handel error
-                })
-            },
-            confirmDelete(item) {
-                this.$confirm('确认删除该备份?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(() => {
-                    this.apiGet('admin/DbBackup', {params:{'name':item.row.name, 'tp': 'del'}}).then((res) => {
-                        _g.closeGlobalLoading()
-                        this.handelResponse(res, (data) => {
-                            _g.toastMsg('success', '删除成功')
-                            setTimeout(() => {
-                                _g.shallowRefresh(this.$route.name)
-                            }, 1500)
-                        })
-                    })
-                }).catch(() => {
-                    // handel error
-                })
-            },
-            handleRemove(file, fileList) {
-                console.log(file, fileList);
-            },
-            handlePreview(file) {
-                _g.shallowRefresh(this.$route.name)
-                this.fileList = [];
-                console.log(file);
-            },
-            getCurrentPage() {
-                let data = this.$route.query
-                if (data) {
-                    if (data.page) {
-                        this.currentPage = parseInt(data.page)
-                    } else {
-                        this.currentPage = 1
-                    }
-                }
-            },
-            getPageList () {
-                this.apiGet('admin/DbBackup', {params:{'page':this.currentPage, 'limit':this.limit}}).then((res) => {
-                    this.handelResponse(res, (data) => {
-                        this.tableData = data.list
-                        this.dataCount = data.dataCount
-                    })
-                })
-            },
-            init() {
-                this.getCurrentPage()
-                this.getPageList()
-            },
-
-        },
-        created() {
-            this.init()
-        },
-        computed: {
-            addShow() {
-                return _g.getHasRule('menus-save')
-            },
-            editShow() {
-                return _g.getHasRule('menus-update')
-            },
-            deleteShow() {
-                return _g.getHasRule('menus-delete')
-            }
-        },
-        watch: {
-            '$route' (to, from) {
-                this.init()
-            }
-        },
-        components: {
-            btnGroup, breadCrumb
-        },
-        mixins: [http]
+import btnGroup from 'components/Common/btn-group.vue';
+import http from 'assets/js/http';
+import breadCrumb from 'components/Common/bread-crumb.vue';
+export default {
+  data () {
+    return {
+      config: {
+        crumb: [
+          {
+            to: '',
+            name: '系统'
+          },
+          {
+            to: '',
+            name: '系统配置'
+          },
+          {
+            to: '',
+            name: '数据备份'
+          }
+        ]
+      },
+      tableData: [],
+      multipleSelection: [],
+      fileList: [],
+      IsShow: false,
+      limit: 10,
+      currentPage: null,
+      dataCount: null,
+      SqlURI: null
     }
+  },
+  methods: {
+    downloadsql (data) {
+      const a = document.createElement('a')
+      const url = ResourceBaseUrl + 'databak\\' + data.row.name
+      const filename = '数据备份.sql'
+      a.href = url
+      a.download = filename
+      a.click()
+      window.URL.revokeObjectURL(url)
+    },
+    selectItem (val) {
+      this.multipleSelection = val
+    },
+    handleCurrentChange (page) {
+      router.push({
+        path: this.$route.path,
+        query: { keywords: this.keywords, page: page }
+      })
+    },
+    confirmRecovery (data) {
+      this.$confirm('确认恢复该备份?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.apiGet('admin/DbBackup', {
+            params: { name: data.row.name, tp: 'restore' }
+          }).then(res => {
+            _g.closeGlobalLoading()
+            this.handelResponse(res, data => {
+              _g.toastMsg('success', res.data)
+            })
+          })
+        })
+        .catch(() => {
+          // handel error
+        })
+    },
+    addBackup (item) {
+      this.$confirm('确认新增备份?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.apiGet('admin/DbBackup', {
+            params: { tp: 'backup' }
+          }).then(res => {
+            _g.closeGlobalLoading()
+            this.handelResponse(res, data => {
+              _g.toastMsg('success', res.data)
+              setTimeout(() => {
+                _g.shallowRefresh(this.$route.name)
+              }, 1500)
+            })
+          })
+        })
+        .catch(() => {
+          // handel error
+        })
+    },
+    confirmDelete (item) {
+      this.$confirm('确认删除该备份?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.apiGet('admin/DbBackup', {
+            params: { name: item.row.name, tp: 'del' }
+          }).then(res => {
+            _g.closeGlobalLoading()
+            this.handelResponse(res, data => {
+              _g.toastMsg('success', '删除成功')
+              setTimeout(() => {
+                _g.shallowRefresh(this.$route.name)
+              }, 1500)
+            })
+          })
+        })
+        .catch(() => {
+          // handel error
+        })
+    },
+    handleRemove (file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview (file) {
+      _g.shallowRefresh(this.$route.name)
+      this.fileList = []
+      console.log(file)
+    },
+    getCurrentPage () {
+      const data = this.$route.query
+      if (data) {
+        if (data.page) {
+          this.currentPage = parseInt(data.page)
+        } else {
+          this.currentPage = 1
+        }
+      }
+    },
+    getPageList () {
+      this.apiGet('admin/DbBackup', {
+        params: { page: this.currentPage, limit: this.limit }
+      }).then(res => {
+        this.handelResponse(res, data => {
+          this.tableData = data.list
+          this.dataCount = data.dataCount
+        })
+      })
+    },
+    init () {
+      this.getCurrentPage()
+      this.getPageList()
+    }
+  },
+  created () {
+    this.init()
+  },
+  computed: {
+    addShow () {
+      return _g.getHasRule('menus-save')
+    },
+    editShow () {
+      return _g.getHasRule('menus-update')
+    },
+    deleteShow () {
+      return _g.getHasRule('menus-delete')
+    }
+  },
+  watch: {
+    $route (to, from) {
+      this.init()
+    }
+  },
+  components: {
+    btnGroup,
+    breadCrumb
+  },
+  mixins: [http]
+}
 </script>
+
+<style>
+  .block-pages{
+    margin-bottom: 20px!important;
+  }
+</style>

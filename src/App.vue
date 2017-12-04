@@ -52,7 +52,7 @@ export default {
 	body {
 		margin: 0px;
 		padding: 0px;
-		background: #1F2D3D;
+		background: #c9c9c9;
 		font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
 		font-weight: 400;
 		-webkit-font-smoothing: antialiased;
@@ -78,7 +78,7 @@ export default {
 	.icon_button{
 		margin-left: 10px;
 	}
-	.icon_button i:hover{
+	.icon_button :hover{
 		color: #20a0ff;
 	}
 </style>
