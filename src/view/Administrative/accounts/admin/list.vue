@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import List from 'components/tpl/list.vue'
+    import List from './components/list.vue'
     import http from 'assets/js/http.js'
 
     export default {
@@ -124,7 +124,8 @@
 						date:{
                             create_time:''
 						},
-                        multipleSelection:[]
+                        multipleSelection:[],
+                        isDelete: 0
                     }
                 }
             }
@@ -135,9 +136,11 @@
             this.$watch('data.exchanged.search', {deep: true,handler:function(){
                 router.push({ path: this.$route.path, query: this.getCondition()});
                 _g.openGlobalLoading()
-                console.log('this is data: ')
-                console.log(this.data)
                 this.tableData()
+            }})
+            this.$watch('data.exchanged.isDelete', {deep: true,handler:function(){
+              _g.openGlobalLoading()
+              this.tableData()
             }})
         },
         methods: {

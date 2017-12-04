@@ -59,7 +59,7 @@
     import http from 'assets/js/http'
     import breadCrumb from 'components/Common/bread-crumb.vue'
     export default {
-        data() {
+        data () {
             return {
               config:{
                 crumb: [
@@ -91,10 +91,9 @@
             downloadsql(data) {
                 let a = document.createElement('a');
                 let url = ResourceBaseUrl + 'databak\\' + data.row.name;
-                let filename = '系统菜单.xml';
+                let filename = '数据备份.sql';
                 a.href = url;
                 a.download = filename;
-                console.log(a)
                 a.click();
                 window.URL.revokeObjectURL(url);
             },
@@ -110,7 +109,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.apiGet('admin/DbBackup/bak', {params:{'name':data.row.name, 'tp': 'restore'}}).then((res) => {
+                    this.apiGet('admin/DbBackup', {params:{'name':data.row.name, 'tp': 'restore'}}).then((res) => {
                         _g.closeGlobalLoading()
                         this.handelResponse(res, (data) => {
                             _g.toastMsg('success', res.data)
@@ -126,7 +125,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.apiGet('admin/DbBackup/bak', {params:{'tp': 'backup'}}).then((res) => {
+                    this.apiGet('admin/DbBackup', {params:{'tp': 'backup'}}).then((res) => {
                         _g.closeGlobalLoading()
                         this.handelResponse(res, (data) => {
                             _g.toastMsg('success', res.data)
@@ -145,7 +144,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.apiGet('admin/DbBackup/bak', {params:{'name':item.row.name, 'tp': 'del'}}).then((res) => {
+                    this.apiGet('admin/DbBackup', {params:{'name':item.row.name, 'tp': 'del'}}).then((res) => {
                         _g.closeGlobalLoading()
                         this.handelResponse(res, (data) => {
                             _g.toastMsg('success', '删除成功')
@@ -177,7 +176,7 @@
                 }
             },
             getPageList () {
-                this.apiGet('admin/DbBackup/bak', {params:{'page':this.currentPage, 'limit':this.limit}}).then((res) => {
+                this.apiGet('admin/DbBackup', {params:{'page':this.currentPage, 'limit':this.limit}}).then((res) => {
                     this.handelResponse(res, (data) => {
                         this.tableData = data.list
                         this.dataCount = data.dataCount

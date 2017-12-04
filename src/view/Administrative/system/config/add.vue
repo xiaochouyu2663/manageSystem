@@ -6,7 +6,7 @@
 			<el-form-item label="系统名称" prop="SYSTEM_NAME" >
 				<el-input v-model.trim="form.SYSTEM_NAME" class="h-40 w-200"></el-input>
 			</el-form-item>
-			<el-form-item label="LOGO">
+			<!-- <el-form-item label="LOGO">
 				<el-upload
 						class="avatar-uploader"
 						:action="uploadUrl"
@@ -16,7 +16,7 @@
 					<img v-if="imageUrl" :src="imageUrl" class="avatar">
 					<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 				</el-upload>
-			</el-form-item>
+			</el-form-item> -->
       <!--<el-form-item label="LOGO类型">-->
         <!--<el-radio-group v-model="form.LOGO_TYPE">-->
           <!--<el-radio label="1">图片</el-radio>-->

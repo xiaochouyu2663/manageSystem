@@ -94,10 +94,11 @@
                     this.loading_min = true
                     this.apiDelete(this.baseApi+'/', item.id).then((res) => {
                         this.loading_min = false
+                        const that = this
                         this.handelResponse(res, (data) => {
                             _g.toastMsg('success', '删除成功')
                             setTimeout(() => {
-                                _g.shallowRefresh(this.$route.name)
+                                that.exchanged.isDelete++
                                 this.loading_min = false
                             }, 1500)
                         })

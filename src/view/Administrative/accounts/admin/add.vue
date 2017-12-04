@@ -7,7 +7,10 @@
 					<el-input v-model.trim="form.username" class="h-40 w-200" :maxlength=12></el-input>
 				</el-form-item>
 				<el-form-item label="密码" prop="password">
-					<el-input v-model.trim="form.password" class="h-40 w-200"></el-input>
+					<el-input v-model.trim="form.password" class="h-40 w-200" type="password" :maxlength=12></el-input>
+				</el-form-item>
+        <el-form-item label="确认密码" prop="repass">
+					<el-input v-model.trim="form.repass" class="h-40 w-200" type="password" :maxlength=12></el-input>
 				</el-form-item>
 				<el-form-item label="真实姓名" prop="realname">
 					<el-input v-model.trim="form.realname" class="h-40 w-200"></el-input>
@@ -41,21 +44,63 @@
     components: {
       breadCrumb
     },
-    data() {
+    data () {
+      const validateUsername = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('用户名不能为空'))
+        }
+        const re = /[^\u0000-\u00FF]+/
+        const res = re.test(value)
+        console.log(res)
+        if (res) {
+          callback(new Error('用户名只能包含半角，字母加数字'))
+        }
+        if (value.length < 6) {
+          callback(new Error('用户名长度为最小为6位'))
+        }
+        callback()
+      }
+      const validatePassword = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('密码不能为空'))
+        }
+        const re = /[^\u0000-\u00FF]+/
+        const res = re.test(value)
+        console.log(res)
+        if (res) {
+          callback(new Error('密码只能包含半角字符，字母加数字'))
+        }
+        if (value.length < 6) {
+          callback(new Error('密码最小长度为6位'))
+        }
+        if (this.form.password !== this.form.repass && this.form.repass !== '') {
+          return callback(new Error('密码不一致'))
+        }
+        callback()
+      }
+      const validateRePass = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('确认密码不能为空'))
+        }
+        if (this.form.password !== this.form.repass) {
+          return callback(new Error('密码不一致'))
+        }
+        callback()
+      }
       return {
-        config:{
+        config: {
           crumb: [
             {
-              to:'',
-              name:'系统'
+              to: '',
+              name: '系统'
             },
             {
-              to:'',
-              name:'账户管理'
+              to: '',
+              name: '账户管理'
             },
             {
-              to:'',
-              name:'添加账户'
+              to: '',
+              name: '添加账户'
             }
           ]
         },
@@ -66,6 +111,7 @@
           realname: '',
           structure_id: null,
           remark: '',
+          repass: '',
           groups: []
         },
         orgsOptions: [],
@@ -74,10 +120,13 @@
         selectedIds: [],
         rules: {
           username: [
-            { required: true, message: '请输入用户名' }
+            { validator: validateUsername, trigger: 'blur' }
           ],
           password: [
-            { required: true, message: '请输入用户密码' }
+            { validator: validatePassword, trigger: 'blur' }
+          ],
+          repass: [
+            { validator: validateRePass, trigger: 'blur' }
           ],
           realname: [
             { required: true, message: '请输入真实姓名' }
@@ -89,7 +138,7 @@
       }
     },
     methods: {
-      selectCheckbox() {
+      selectCheckbox () {
         let temp = false
         _(this.groupOptions).forEach((res) => {
           if (this.selectedGroups.toString().indexOf(res.title) > -1) {
@@ -103,12 +152,12 @@
         this.selectedIds = []
         return temp
       },
-      add(form) {
+      add (form) {
         if (!this.selectCheckbox()) {
           _g.toastMsg('warning', '请选择用户组')
           return
         }
-        console.log('res = ', _g.j2s(this.form))
+        // console.log('res = ', _g.j2s(this.form))
         this.$refs.form.validate((pass) => {
           if (pass) {
             this.isLoading = !this.isLoading
@@ -126,7 +175,7 @@
           }
         })
       },
-      getAllGroups() {
+      getAllGroups () {
         this.apiGet('admin/groups').then((res) => {
           this.handelResponse(res, (data) => {
             this.groupOptions = data
@@ -134,7 +183,7 @@
         })
       }
     },
-    created() {
+    created () {
       this.getAllGroups()
     },
     mixins: [http, fomrMixin]

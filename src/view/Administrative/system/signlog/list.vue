@@ -34,7 +34,7 @@
 </template>
 
 <script>
-    import btnGroup from 'components/Common/btn-group.vue'
+    import btnGroup from './components/btn-group.vue'
     import http from 'assets/js/http'
     import downExcel from 'components/Common/down-excel.vue'
     import tableModel from 'components/Common/table-model.vue'

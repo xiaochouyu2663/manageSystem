@@ -6,8 +6,11 @@
 				<el-form-item label="用户名" prop="username">
 					<el-input v-model.trim="form.username" class="h-40 w-200" :maxlength=12 :disabled="true"></el-input>
 				</el-form-item>
-				<el-form-item label="密码">
-					<el-input v-model.trim="password" class="h-40 w-200"></el-input>
+				<el-form-item label="新密码" prop="password">
+					<el-input v-model.trim="form.password" class="h-40 w-200" type="password" ></el-input>
+				</el-form-item>
+        <el-form-item label="确认密码" prop="repass">
+					<el-input v-model.trim="form.repass" class="h-40 w-200" type="password" :maxlength=12></el-input>
 				</el-form-item>
 				<el-form-item label="真实姓名" prop="realname">
 					<el-input v-model.trim="form.realname" class="h-40 w-200"></el-input>
@@ -41,21 +44,42 @@
     components: {
       breadCrumb
     },
-    data() {
+    data () {
+      const validatePassword = (rule, value, callback) => {
+        const re = /[^\u0000-\u00FF]+/
+        const res = re.test(value)
+        console.log(res)
+        if (res) {
+          callback(new Error('密码只能包含半角字符，字母加数字'))
+        }
+        if (value.length < 6 && value !== '') {
+          callback(new Error('密码最小长度为6位'))
+        }
+        if (this.form.password !== this.form.repass && this.form.repass !== '') {
+          return callback(new Error('密码不一致'))
+        }
+        callback()
+      }
+      const validateRePass = (rule, value, callback) => {
+        if (this.form.password !== this.form.repass && this.form.password !== '') {
+          return callback(new Error('密码不一致'))
+        }
+        callback()
+      }
       return {
-        config:{
+        config: {
           crumb: [
             {
-              to:'',
-              name:'系统'
+              to: '',
+              name: '系统'
             },
             {
-              to:'',
-              name:'账户管理'
+              to: '',
+              name: '账户管理'
             },
             {
-              to:'',
-              name:'编辑账户'
+              to: '',
+              name: '编辑账户'
             }
           ]
         },
@@ -64,18 +88,24 @@
         form: {
           username: '',
           realname: '',
+          password: '',
+          repass: '',
           structure_id: null,
           remark: '',
           groups: []
         },
+        repass: '',
         password: '',
         orgsOptions: [],
         groupOptions: [],
         selectedGroups: [],
         selectedIds: [],
         rules: {
-          username: [
-            { required: true, message: '请输入用户名' }
+          password: [
+            { validator: validatePassword, trigger: 'blur' }
+          ],
+          repass: [
+            { validator: validateRePass, trigger: 'blur' }
           ],
           realname: [
             { required: true, message: '请输入真实姓名' }
@@ -87,7 +117,7 @@
       }
     },
     methods: {
-      selectCheckbox() {
+      selectCheckbox () {
         let temp = false
         _(this.groupOptions).forEach((res) => {
           if (this.selectedGroups.toString().indexOf(res.else) > -1) {
@@ -101,7 +131,7 @@
         this.selectedIds = []
         return temp
       },
-      add() {
+      add () {
         if (!this.selectCheckbox()) {
           _g.toastMsg('warning', '请选择用户组')
           return
@@ -115,7 +145,7 @@
             }
             this.apiPut('admin/users/', this.id, this.form).then((res) => {
               this.handelResponse(res, (data) => {
-                _g.toastMsg('success', '添加成功')
+                _g.toastMsg('success', '修改成功')
                 _g.clearVuex('setUsers')
                 setTimeout(() => {
                   this.goback()
@@ -127,7 +157,7 @@
           }
         })
       },
-      getAllGroups() {
+      getAllGroups () {
         return new Promise((resolve, reject) => {
           let data = store.state.userGroups
           if (data && data.length) {
@@ -142,7 +172,7 @@
           }
         })
       },
-      async getCompleteData() {
+      async getCompleteData () {
         this.groupOptions = await this.getAllGroups()
         this.apiGet('admin/users/' + this.id).then((res) => {
           console.log('res = ', _g.j2s(res))
@@ -153,7 +183,7 @@
             this.form.remark = data.remark
             _(data.groups).forEach((res1) => {
               _(this.groupOptions).forEach((res2) => {
-                if (res1.title == res2.else) {
+                if (res1.title === res2.else) {
                   this.selectedGroups.push(res1.title)
                 }
               })
@@ -162,13 +192,13 @@
         })
       }
     },
-    created() {
+    created () {
       this.id = this.$route.params.id
       this.getCompleteData()
-      this.$watch('$route', {deep: true,handler:function(){
+      this.$watch('$route', { deep: true, handler: function () {
         this.id = this.$route.params.id
         this.getCompleteData()
-      }})
+      } })
     },
     mixins: [http, fomrMixin]
   }
