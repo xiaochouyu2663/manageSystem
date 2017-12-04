@@ -8,7 +8,7 @@
       <el-form-item prop="password">
         <el-input type="password" v-model="form.password" auto-complete="off" placeholer="密码"></el-input>
       </el-form-item>
-      <el-form-item v-  show="requireVerify" prop="verifyCode">
+      <el-form-item v-show="requireVerify" prop="verifyCode">
         <el-input type="text" v-model="form.verifyCode" auto-complete="off" placeholder="验证码" class="w-150"></el-input>
         <img :src="verifyUrl" @click="refreshVerify()" class="verify-pos" />
       </el-form-item>
