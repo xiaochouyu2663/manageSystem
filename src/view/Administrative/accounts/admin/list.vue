@@ -141,21 +141,21 @@ export default {
     this.$watch('data.exchanged.search', {
       deep: true,
       handler: function() {
-        router.push({ path: this.$route.path, query: this.getCondition() });
+        router.push({ path: this.$route.path, query: this.getCondition() })
         _g.openGlobalLoading()
         this.tableData()
       }
     })
     this.$watch('data.exchanged.isDelete', {
       deep: true,
-      handler: function () {
+      handler: function() {
         _g.openGlobalLoading()
         this.tableData()
       }
     })
   },
   methods: {
-    init () {
+    init() {
       // 基本数据获取
       this.tableData()
     },
@@ -164,7 +164,7 @@ export default {
       this.apiGet(url).then(res => {
         this.handelResponse(res, data => {
           this.data.received.search.ability = data.list
-          this.data.received.search.ability.map(function (value) {
+          this.data.received.search.ability.map(function(value) {
             value.label = value.title
             delete value.title
             value.value = value.id
@@ -173,7 +173,7 @@ export default {
         })
       })
     },
-    tableData () {
+    tableData() {
       // 表格数据
       const data = {
         params: this.getCondition()
