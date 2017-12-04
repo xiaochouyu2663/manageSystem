@@ -64,46 +64,46 @@ export default {
     return {
       height: document.documentElement.clientHeight,
       active: ''
-    };
+    }
   },
   methods: {
     routerChange(item) {
       // 与当前页面路由相等则刷新页面
-      if (item.url != this.$route.path) {
-        router.push(item.url);
+      if (item.url !== this.$route.path) {
+        router.push(item.url)
       } else {
-        _g.shallowRefresh(this.$route.name);
+        _g.shallowRefresh(this.$route.name)
       }
     },
     init() {
-      this.height = document.documentElement.clientHeight;
+      this.height = document.documentElement.clientHeight
     }
   },
   mounted() {
-    const that = this;
+    const that = this
     window.onresize = () => {
       return (() => {
-        window.screenWidth = document.documentElement.clientHeight;
-        that.height = window.screenWidth;
-      })();
-    };
+        window.screenWidth = document.documentElement.clientHeight
+        that.height = window.screenWidth
+      })()
+    }
   },
   watch: {
     height(val) {
-      this.height = val;
-      this.height;
+      this.height = val
+      this.height
     }
   },
   created() {
-    this.active = this.$route.path;
-    this.init();
+    this.active = this.$route.path
+    this.init()
     // 延迟绑定监听
     this.$watch('$route', {
       deep: true,
       handler: function() {
-        this.active = this.$route.path;
+        this.active = this.$route.path
       }
-    });
+    })
   }
-};
+}
 </script>

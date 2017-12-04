@@ -56,82 +56,85 @@
 </template>
 
 <script>
-  import btnGroup from 'components/Common/btn-group.vue'
-  import http from 'assets/js/http'
-  import breadCrumb from 'components/Common/bread-crumb.vue'
+import btnGroup from 'components/Common/btn-group.vue'
+import http from 'assets/js/http'
+import breadCrumb from 'components/Common/bread-crumb.vue'
 
-  export default {
-    data() {
-      return {
-        config:{
-          crumb: [
-            {
-              to:'',
-              name:'系统'
-            },
-            {
-              to:'',
-              name:'组织构架'
-            },
-            {
-              to:'',
-              name:'角色管理'
-            }
-          ]
-        },
-        tableData: [],
-        multipleSelection: []
-      }
-    },
-    methods: {
-      selectItem(val) {
-        this.multipleSelection = val
+export default {
+  data() {
+    return {
+      config: {
+        crumb: [
+          {
+            to: '',
+            name: '系统'
+          },
+          {
+            to: '',
+            name: '组织构架'
+          },
+          {
+            to: '',
+            name: '角色管理'
+          }
+        ]
       },
-      confirmDelete(item) {
-        this.$confirm('确认删除该用户组?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+      tableData: [],
+      multipleSelection: []
+    }
+  },
+  methods: {
+    selectItem(val) {
+      this.multipleSelection = val
+    },
+    confirmDelete(item) {
+      this.$confirm('确认删除该用户组?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
           _g.openGlobalLoading()
-          this.apiDelete('admin/groups/', item.id).then((res) => {
+          this.apiDelete('admin/groups/', item.id).then(res => {
             _g.closeGlobalLoading()
-            this.handelResponse(res, (data) => {
+            this.handelResponse(res, data => {
               _g.toastMsg('success', '删除成功')
               setTimeout(() => {
                 _g.shallowRefresh(this.$route.name)
               }, 1500)
             })
           })
-        }).catch(() => {
+        })
+        .catch(() => {
           // handle error
         })
-      },
-      getgroups() {
-        this.apiGet('admin/groups').then((res) => {
-          this.handelResponse(res, (data) => {
-            this.tableData = data
-          })
+    },
+    getgroups() {
+      this.apiGet('admin/groups').then(res => {
+        this.handelResponse(res, data => {
+          this.tableData = data
         })
-      }
+      })
+    }
+  },
+  created() {
+    this.getgroups()
+  },
+  computed: {
+    addShow() {
+      return _g.getHasRule('groups-save')
     },
-    created() {
-      this.getgroups()
+    editShow() {
+      return _g.getHasRule('groups-update')
     },
-    computed: {
-      addShow() {
-        return _g.getHasRule('groups-save')
-      },
-      editShow() {
-        return _g.getHasRule('groups-update')
-      },
-      deleteShow() {
-        return _g.getHasRule('groups-delete')
-      }
-    },
-    components: {
-      btnGroup, breadCrumb
-    },
-    mixins: [http]
-  }
+    deleteShow() {
+      return _g.getHasRule('groups-delete')
+    }
+  },
+  components: {
+    btnGroup,
+    breadCrumb
+  },
+  mixins: [http]
+}
 </script>

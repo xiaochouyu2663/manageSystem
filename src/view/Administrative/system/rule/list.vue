@@ -76,79 +76,82 @@
 </template>
 
 <script>
-  import btnGroup from 'components/Common/btn-group.vue'
-  import http from 'assets/js/http'
-  import breadCrumb from 'components/Common/bread-crumb.vue'
+import btnGroup from 'components/Common/btn-group.vue'
+import http from 'assets/js/http'
+import breadCrumb from 'components/Common/bread-crumb.vue'
 
-  export default {
-    data() {
-      return {
-        config:{
-          crumb: [
-            {
-              to:'',
-              name:'系统'
-            },
-            {
-              to:'',
-              name:'系统配置'
-            },
-            {
-              to:'',
-              name:'权限规则'
-            }
-          ]
-        },
-        tableData: [],
-        multipleSelection: []
-      }
-    },
-    methods: {
-      selectItem(val) {
-        this.multipleSelection = val
+export default {
+  data() {
+    return {
+      config: {
+        crumb: [
+          {
+            to: '',
+            name: '系统'
+          },
+          {
+            to: '',
+            name: '系统配置'
+          },
+          {
+            to: '',
+            name: '权限规则'
+          }
+        ]
       },
-      confirmDelete(item) {
-        this.$confirm('确认删除该权限?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+      tableData: [],
+      multipleSelection: []
+    }
+  },
+  methods: {
+    selectItem(val) {
+      this.multipleSelection = val
+    },
+    confirmDelete(item) {
+      this.$confirm('确认删除该权限?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
           _g.openGlobalLoading()
-          this.apiDelete('admin/rules/', item.id).then((res) => {
+          this.apiDelete('admin/rules/', item.id).then(res => {
             _g.closeGlobalLoading()
-            this.handelResponse(res, (data) => {
+            this.handelResponse(res, data => {
               _g.toastMsg('success', '删除成功')
               setTimeout(() => {
                 _g.shallowRefresh(this.$route.name)
               }, 1500)
             })
           })
-        }).catch(() => {
-        // handle error
         })
-      }
-    },
-    created() {
-      this.apiGet('admin/rules').then((res) => {
-        this.handelResponse(res, (data) => {
-          this.tableData = data
+        .catch(() => {
+          // handle error
         })
+    }
+  },
+  created() {
+    this.apiGet('admin/rules').then(res => {
+      this.handelResponse(res, data => {
+        this.tableData = data
       })
+    })
+  },
+  computed: {
+    addShow() {
+      return _g.getHasRule('rules-save')
     },
-    computed: {
-      addShow() {
-        return _g.getHasRule('rules-save')
-      },
-      editShow() {
-        return _g.getHasRule('rules-update')
-      },
-      deleteShow() {
-        return _g.getHasRule('rules-delete')
-      }
+    editShow() {
+      return _g.getHasRule('rules-update')
     },
-    components: {
-      btnGroup, breadCrumb
-    },
-    mixins: [http]
-  }
+    deleteShow() {
+      return _g.getHasRule('rules-delete')
+    }
+  },
+  components: {
+    btnGroup,
+    breadCrumb
+  },
+  mixins: [http]
+}
 </script>

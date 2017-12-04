@@ -38,60 +38,60 @@
 </template>
 <style>
 .search-btn {
-	position: absolute;
-	top: 0px;
-	right: 0px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
 }
 </style>
 <script>
-  import http from 'assets/js/http'
+import http from 'assets/js/http'
 
-  export default {
-    data() {
-      return {
-        keyword: '',
-        tableData: [],
-		  	dialogVisible: false
-      }
+export default {
+  data() {
+    return {
+      keyword: '',
+      tableData: [],
+      dialogVisible: false
+    }
+  },
+  methods: {
+    open() {
+      this.dialogVisible = true
+      this.$refs.dialog.open()
     },
-    methods: {
-      open() {
-          this.dialogVisible = true;
-        this.$refs.dialog.open()
-      },
-      closeDialog() {
-          this.dialogVisible = false;
-        this.$refs.dialog.close()
-      },
-      selectRule(item) {
-        setTimeout(() => {
-          this.$parent.form.rule_name = item.title
-          this.$parent.form.rule_id = item.id
-        }, 0)
-        this.closeDialog()
-      },
-      getRules() {
-        this.apiGet('admin/rules').then((res) => {
-          this.handelResponse(res, (data) => {
-            this.tableDataShow = _(data).forEach((ret) => {
-              ret.showInput = false
-            })
-            this.tableData = this.tableDataShow
+    closeDialog() {
+      this.dialogVisible = false
+      this.$refs.dialog.close()
+    },
+    selectRule(item) {
+      setTimeout(() => {
+        this.$parent.form.rule_name = item.title
+        this.$parent.form.rule_id = item.id
+      }, 0)
+      this.closeDialog()
+    },
+    getRules() {
+      this.apiGet('admin/rules').then(res => {
+        this.handelResponse(res, data => {
+          this.tableDataShow = _(data).forEach(ret => {
+            ret.showInput = false
           })
+          this.tableData = this.tableDataShow
         })
-      }
-    },
-    created() {
-      let data = store.state.rules
-      if (data && data.length) {
-        this.tableDataShow = _(data).forEach((res) => {
-          res.showInput = false
-        })
-        this.tableData = this.tableDataShow
-      } else {
-        this.getRules()
-      }
-    },
-    mixins: [http]
-  }
+      })
+    }
+  },
+  created() {
+    let data = store.state.rules
+    if (data && data.length) {
+      this.tableDataShow = _(data).forEach(res => {
+        res.showInput = false
+      })
+      this.tableData = this.tableDataShow
+    } else {
+      this.getRules()
+    }
+  },
+  mixins: [http]
+}
 </script>

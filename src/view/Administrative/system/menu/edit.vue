@@ -48,121 +48,121 @@
 </template>
 
 <script>
-  import ruleList from './rule.vue'
-  import http from 'assets/js/http'
-  import fomrMixin from 'assets/js/form_com'
-  import breadCrumb from 'components/Common/bread-crumb.vue'
+import ruleList from './rule.vue'
+import http from 'assets/js/http'
+import fomrMixin from 'assets/js/form_com'
+import breadCrumb from 'components/Common/bread-crumb.vue'
 
-  export default {
-    data() {
-      return {
-        config:{
-          crumb: [
-            {
-              to:'',
-              name:'系统'
-            },
-            {
-              to:'',
-              name:'系统配置'
-            },
-            {
-              to:'',
-              name:'编辑菜单'
-            }
-          ]
-        },
-        loading: false,
-        id: null,
-        form: {
-          title: '',
-          rule_name: '',
-          rule_id: null,
-          pid: '',
-          menu_type: '',
-          url: '',
-          module: '',
-          menu: '',
-          sort: '',
-			icon: ''
-        },
-        options: [{ id: 0, title: '无' }],
-        rules: {
-          title: [
-            { required: true, message: '请输入菜单标题' }
-          ],
-          rule_name: [
-            { required: true, message: '请绑定权限标识' }
-          ],
-          menu_type: [
-            { required: true, message: '请选择菜单类型' }
-          ],
-          module: [
-            { required: true, message: '请填写菜单模块' }
-          ]
-        }
+export default {
+  data() {
+    return {
+      config: {
+        crumb: [
+          {
+            to: '',
+            name: '系统'
+          },
+          {
+            to: '',
+            name: '系统配置'
+          },
+          {
+            to: '',
+            name: '编辑菜单'
+          }
+        ]
+      },
+      loading: false,
+      id: null,
+      form: {
+        title: '',
+        rule_name: '',
+        rule_id: null,
+        pid: '',
+        menu_type: '',
+        url: '',
+        module: '',
+        menu: '',
+        sort: '',
+        icon: ''
+      },
+      options: [{ id: 0, title: '无' }],
+      rules: {
+        title: [{ required: true, message: '请输入菜单标题' }],
+        rule_name: [{ required: true, message: '请绑定权限标识' }],
+        menu_type: [{ required: true, message: '请选择菜单类型' }],
+        module: [{ required: true, message: '请填写菜单模块' }]
       }
-    },
-    methods: {
-      edit(form) {
-        this.$refs.form.validate((pass) => {
-          if (pass) {
-            this.isLoading = !this.isLoading
-            this.apiPut('admin/menus/', this.id, this.form).then((res) => {
-              this.handelResponse(res, (data) => {
+    }
+  },
+  methods: {
+    edit(form) {
+      this.$refs.form.validate(pass => {
+        if (pass) {
+          this.isLoading = !this.isLoading
+          this.apiPut('admin/menus/', this.id, this.form).then(res => {
+            this.handelResponse(
+              res,
+              data => {
                 _g.toastMsg('success', '编辑成功')
                 setTimeout(() => {
                   this.goback()
                 }, 1500)
-              }, () => {
+              },
+              () => {
                 this.isLoading = !this.isLoading
-              })
-            })
-          }
-        })
-      },
-      openRule() {
-        this.$refs.ruleList.open()
-      },
-      goback() {
-        router.go(-1)
-      },
-      getMenus() {
-        this.apiGet('admin/menus').then((res) => {
-          this.handelResponse(res, (data) => {
-            let array = []
-            _(data).forEach((res) => {
-              if (res.level != 3 && res.menu_type == 1) {
-                array.push(res)
               }
-            })
-            this.options = this.options.concat(array)
+            )
           })
-        })
-      }
+        }
+      })
     },
-    created() {
-      this.getMenus()
-      this.id = this.$route.params.id
-      this.$watch('$route', {deep: true,handler:function(){
+    openRule() {
+      this.$refs.ruleList.open()
+    },
+    goback() {
+      router.go(-1)
+    },
+    getMenus() {
+      this.apiGet('admin/menus').then(res => {
+        this.handelResponse(res, data => {
+          let array = []
+          _(data).forEach(res => {
+            if (res.level != 3 && res.menu_type == 1) {
+              array.push(res)
+            }
+          })
+          this.options = this.options.concat(array)
+        })
+      })
+    }
+  },
+  created() {
+    this.getMenus()
+    this.id = this.$route.params.id
+    this.$watch('$route', {
+      deep: true,
+      handler: function() {
         this.id = this.$route.params.id
-        this.apiGet('admin/menus/' + this.id).then((res) => {
-          this.handelResponse(res, (data) => {
+        this.apiGet('admin/menus/' + this.id).then(res => {
+          this.handelResponse(res, data => {
             data.menu_type = data.menu_type.toString()
             this.form = data
           })
         })
-      }})
-      this.apiGet('admin/menus/' + this.id).then((res) => {
-        this.handelResponse(res, (data) => {
-          data.menu_type = data.menu_type.toString()
-          this.form = data
-        })
+      }
+    })
+    this.apiGet('admin/menus/' + this.id).then(res => {
+      this.handelResponse(res, data => {
+        data.menu_type = data.menu_type.toString()
+        this.form = data
       })
-    },
-    components: {
-      ruleList, breadCrumb
-    },
-    mixins: [http, fomrMixin]
-  }
+    })
+  },
+  components: {
+    ruleList,
+    breadCrumb
+  },
+  mixins: [http, fomrMixin]
+}
 </script>

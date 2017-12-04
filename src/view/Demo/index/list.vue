@@ -14,18 +14,17 @@
 </template>
 
 <script>
-
-    export default {
-        data() {
-            return {
-                tableData: [],
-                multipleSelection: [],
-                fileList: [],
-                IsShow:false
-            }
-        },
-        created() {
-            _g.closeGlobalLoading()
-        }
+export default {
+  data() {
+    return {
+      tableData: [],
+      multipleSelection: [],
+      fileList: [],
+      IsShow: false
     }
+  },
+  created() {
+    _g.closeGlobalLoading()
+  }
+}
 </script>

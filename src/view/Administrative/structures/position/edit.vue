@@ -24,79 +24,84 @@
   </div>
 </template>
 <script>
-  import http from 'assets/js/http'
-  import fomrMixin from 'assets/js/form_com'
-  import breadCrumb from 'components/Common/bread-crumb.vue'
+import http from 'assets/js/http'
+import fomrMixin from 'assets/js/form_com'
+import breadCrumb from 'components/Common/bread-crumb.vue'
 
-  export default {
-    components: {
-      breadCrumb
-    },
-    data() {
-      return {
-        config:{
-          crumb: [
-            {
-              to:'',
-              name:'系统'
-            },
-            {
-              to:'',
-              name:'组织构架'
-            },
-            {
-              to:'',
-              name:'编辑岗位'
-            }
-          ]
-        },
-        isLoading: false,
-        form: {
-          id: null,
-          name: '',
-          remark: ''
-        },
-        rules: {
-          name: [
-            { required: true, message: '请输入岗位名称', trigger: 'blur' }
-          ]
-        }
+export default {
+  components: {
+    breadCrumb
+  },
+  data() {
+    return {
+      config: {
+        crumb: [
+          {
+            to: '',
+            name: '系统'
+          },
+          {
+            to: '',
+            name: '组织构架'
+          },
+          {
+            to: '',
+            name: '编辑岗位'
+          }
+        ]
+      },
+      isLoading: false,
+      form: {
+        id: null,
+        name: '',
+        remark: ''
+      },
+      rules: {
+        name: [{ required: true, message: '请输入岗位名称', trigger: 'blur' }]
       }
-    },
-    methods: {
-      edit(form) {
-        this.$refs[form].validate((valid) => {
-          if (valid) {
-            this.isLoading = !this.isLoading
-            this.apiPut('admin/posts/', this.form.id, this.form).then((res) => {
-              this.handelResponse(res, (data) => {
+    }
+  },
+  methods: {
+    edit(form) {
+      this.$refs[form].validate(valid => {
+        if (valid) {
+          this.isLoading = !this.isLoading
+          this.apiPut('admin/posts/', this.form.id, this.form).then(res => {
+            this.handelResponse(
+              res,
+              data => {
                 _g.toastMsg('success', '编辑成功')
                 setTimeout(() => {
                   this.goback()
                 }, 1500)
-              }, () => {
+              },
+              () => {
                 this.isLoading = !this.isLoading
-              })
-            })
-          }
-        })
-      },
-      getPosInfo() {
-        this.form.id = this.$route.params.id
-        this.apiGet('admin/posts/' + this.form.id).then((res) => {
-          this.handelResponse(res, (data) => {
-            this.form.name = data.name
-            this.form.remark = data.remark
+              }
+            )
           })
+        }
+      })
+    },
+    getPosInfo() {
+      this.form.id = this.$route.params.id
+      this.apiGet('admin/posts/' + this.form.id).then(res => {
+        this.handelResponse(res, data => {
+          this.form.name = data.name
+          this.form.remark = data.remark
         })
-      }
-    },
-    created() {
-      this.getPosInfo()
-      this.$watch('$route', {deep: true,handler:function(){
+      })
+    }
+  },
+  created() {
+    this.getPosInfo()
+    this.$watch('$route', {
+      deep: true,
+      handler: function() {
         this.getPosInfo()
-      }})
-    },
-    mixins: [http, fomrMixin]
-  }
+      }
+    })
+  },
+  mixins: [http, fomrMixin]
+}
 </script>

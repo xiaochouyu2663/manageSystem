@@ -45,31 +45,31 @@
     </el-form>
 </template>
 <script>
-    export default {
-        data() {
-            return {
-                form: {
-                    name: '',
-                    region: '',
-                    date1: '',
-                    date2: '',
-                    delivery: false,
-                    type: [],
-                    resource: '',
-                    desc: ''
-                }
-            }
-        },
-        methods: {
-            onSubmit() {
-                console.log('submit!');
-            },
-            init() {
-                _g.closeGlobalLoading()
-            }
-        },
-        created() {
-            this.init()
-        }
+export default {
+  data() {
+    return {
+      form: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      }
     }
+  },
+  methods: {
+    onSubmit() {
+      console.log('submit!')
+    },
+    init() {
+      _g.closeGlobalLoading()
+    }
+  },
+  created() {
+    this.init()
+  }
+}
 </script>

@@ -37,100 +37,99 @@
 </template>
 
 <script>
-  import http from 'assets/js/http'
-  import fomrMixin from 'assets/js/form_com'
-  import breadCrumb from 'components/Common/bread-crumb.vue'
+import http from 'assets/js/http'
+import fomrMixin from 'assets/js/form_com'
+import breadCrumb from 'components/Common/bread-crumb.vue'
 
-  export default {
-    components: {
-      breadCrumb
-    },
-    data() {
-      return {
-        config:{
-          crumb: [
-            {
-              to:'',
-              name:'系统'
-            },
-            {
-              to:'',
-              name:'系统配置'
-            },
-            {
-              to:'',
-              name:'数据备份'
-            }
-          ]
-        },
-        isLoading: false,
-        form: {
-          id: null,
-          title: '',
-          name: '',
-          pid: null,
-          level: null,
-            isLog: null
-        },
-        options: [{ id: 0, name: '根节点' }],
-        rules: {
-          title: [
-            { required: true, message: '请输入节点名称' }
-          ],
-          name: [
-            { required: true, message: '请输入节点显示名' }
-          ],
-          level: [
-            { required: true, message: '请选择节点类型' }
-          ],
-            isLog: [
-                { required: true, message: '请选择是否记录日志' }
-            ]
-        }
+export default {
+  components: {
+    breadCrumb
+  },
+  data() {
+    return {
+      config: {
+        crumb: [
+          {
+            to: '',
+            name: '系统'
+          },
+          {
+            to: '',
+            name: '系统配置'
+          },
+          {
+            to: '',
+            name: '数据备份'
+          }
+        ]
+      },
+      isLoading: false,
+      form: {
+        id: null,
+        title: '',
+        name: '',
+        pid: null,
+        level: null,
+        isLog: null
+      },
+      options: [{ id: 0, name: '根节点' }],
+      rules: {
+        title: [{ required: true, message: '请输入节点名称' }],
+        name: [{ required: true, message: '请输入节点显示名' }],
+        level: [{ required: true, message: '请选择节点类型' }],
+        isLog: [{ required: true, message: '请选择是否记录日志' }]
       }
-    },
-    methods: {
-      edit(form) {
-        this.$refs[form].validate((valid) => {
-          if (valid) {
-            this.isLoading = !this.isLoading
-            this.apiPut('admin/rules/', this.form.id, this.form).then((res) => {
-              this.handelResponse(res, (data) => {
+    }
+  },
+  methods: {
+    edit(form) {
+      this.$refs[form].validate(valid => {
+        if (valid) {
+          this.isLoading = !this.isLoading
+          this.apiPut('admin/rules/', this.form.id, this.form).then(res => {
+            this.handelResponse(
+              res,
+              data => {
                 _g.toastMsg('success', '编辑成功')
                 setTimeout(() => {
                   this.goback()
                 }, 1500)
-              }, () => {
+              },
+              () => {
                 this.isLoading = !this.isLoading
-              })
-            })
-          }
-        })
-      },
-      getRules() {
-        this.apiGet('admin/rules').then((res) => {
-          this.handelResponse(res, (data) => {
-            this.options = this.options.concat(data)
+              }
+            )
           })
-        })
-      },
-      getRuleInfo() {
-        this.form.id = this.$route.params.id
-        this.apiGet('admin/rules/' + this.form.id).then((res) => {
-          this.handelResponse(res, (data) => {
-            data.level = data.level.toString()
-            this.form = data
-          })
-        })
-      }
+        }
+      })
     },
-    created() {
-      this.getRuleInfo()
-      this.$watch('$route', {deep: true,handler:function(){
+    getRules() {
+      this.apiGet('admin/rules').then(res => {
+        this.handelResponse(res, data => {
+          this.options = this.options.concat(data)
+        })
+      })
+    },
+    getRuleInfo() {
+      this.form.id = this.$route.params.id
+      this.apiGet('admin/rules/' + this.form.id).then(res => {
+        this.handelResponse(res, data => {
+          data.level = data.level.toString()
+          this.form = data
+        })
+      })
+    }
+  },
+  created() {
+    this.getRuleInfo()
+    this.$watch('$route', {
+      deep: true,
+      handler: function() {
         this.getRuleInfo()
-      }})
-      this.getRules()
-    },
-    mixins: [http, fomrMixin]
-  }
+      }
+    })
+    this.getRules()
+  },
+  mixins: [http, fomrMixin]
+}
 </script>

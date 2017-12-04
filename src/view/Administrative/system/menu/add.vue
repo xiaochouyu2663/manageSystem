@@ -48,99 +48,94 @@
 </template>
 
 <script>
-  import ruleList from './rule.vue'
-  import http from 'assets/js/http'
-  import fomrMixin from 'assets/js/form_com'
-  import breadCrumb from 'components/Common/bread-crumb.vue'
-  export default {
-    data() {
-      return {
-        config:{
-          crumb: [
-            {
-              to:'',
-              name:'系统'
-            },
-            {
-              to:'',
-              name:'系统配置'
-            },
-            {
-              to:'',
-              name:'添加菜单'
-            }
-          ]
-        },
-        isLoading: false,
-        form: {
-          title: '',
-          rule_name: '',
-          rule_id: null,
-          pid: '',
-          menu_type: '',
-          url: '',
-          module: '',
-          menu: '',
-          sort: '',
-
-
-        },
-        options: [{ id: 0, title: '无' }],
-        rules: {
-          title: [
-            { required: true, message: '请输入菜单标题' }
-          ],
-          menu_type: [
-            { required: true, message: '请选择菜单类型' }
-          ],
-          module: [
-            { required: true, message: '请填写菜单模块' }
-          ],
-          pid: [
-            { required: true, message: '请选择上级菜单' }
-          ]
-        }
+import ruleList from './rule.vue'
+import http from 'assets/js/http'
+import fomrMixin from 'assets/js/form_com'
+import breadCrumb from 'components/Common/bread-crumb.vue'
+export default {
+  data() {
+    return {
+      config: {
+        crumb: [
+          {
+            to: '',
+            name: '系统'
+          },
+          {
+            to: '',
+            name: '系统配置'
+          },
+          {
+            to: '',
+            name: '添加菜单'
+          }
+        ]
+      },
+      isLoading: false,
+      form: {
+        title: '',
+        rule_name: '',
+        rule_id: null,
+        pid: '',
+        menu_type: '',
+        url: '',
+        module: '',
+        menu: '',
+        sort: ''
+      },
+      options: [{ id: 0, title: '无' }],
+      rules: {
+        title: [{ required: true, message: '请输入菜单标题' }],
+        menu_type: [{ required: true, message: '请选择菜单类型' }],
+        module: [{ required: true, message: '请填写菜单模块' }],
+        pid: [{ required: true, message: '请选择上级菜单' }]
       }
-    },
-    methods: {
-      add(form) {
-        this.$refs.form.validate((pass) => {
-          if (pass) {
-            this.isLoading = !this.isLoading
-            this.apiPost('admin/menus', this.form).then((res) => {
-              this.handelResponse(res, (data) => {
+    }
+  },
+  methods: {
+    add(form) {
+      this.$refs.form.validate(pass => {
+        if (pass) {
+          this.isLoading = !this.isLoading
+          this.apiPost('admin/menus', this.form).then(res => {
+            this.handelResponse(
+              res,
+              data => {
                 _g.clearVuex('setRules')
                 _g.toastMsg('success', '添加成功')
                 setTimeout(() => {
                   this.goback()
                 }, 1500)
-              }, () => {
+              },
+              () => {
                 this.isLoading = !this.isLoading
-              })
-            })
-          }
-        })
-      },
-      openRule() {
-        this.$refs.ruleList.open()
-      }
-    },
-    created() {
-      this.apiGet('admin/menus').then((res) => {
-        this.handelResponse(res, (data) => {
-          let array = []
-          _(data).forEach((ret) => {
-            if (ret.level != 3 && ret.menu_type == 1) {
-              array.push(ret)
-            }
+              }
+            )
           })
-          this.options = this.options.concat(array)
-        })
+        }
       })
     },
-    components: {
-      ruleList, breadCrumb
-    },
-    mixins: [http, fomrMixin]
-  }
+    openRule() {
+      this.$refs.ruleList.open()
+    }
+  },
+  created() {
+    this.apiGet('admin/menus').then(res => {
+      this.handelResponse(res, data => {
+        let array = []
+        _(data).forEach(ret => {
+          if (ret.level !== 3 && ret.menu_type === 1) {
+            array.push(ret)
+          }
+        })
+        this.options = this.options.concat(array)
+      })
+    })
+  },
+  components: {
+    ruleList,
+    breadCrumb
+  },
+  mixins: [http, fomrMixin]
+}
 </script>

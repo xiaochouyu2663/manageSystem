@@ -60,108 +60,111 @@
 </template>
 
 <script>
-  import btnGroup from 'components/Common/btn-group.vue'
-  import http from 'assets/js/http'
-  import breadCrumb from 'components/Common/bread-crumb.vue'
+import btnGroup from 'components/Common/btn-group.vue'
+import http from 'assets/js/http'
+import breadCrumb from 'components/Common/bread-crumb.vue'
 
-  export default {
-    data() {
-      return {
-        config:{
-          crumb: [
-            {
-              to:'',
-              name:'系统'
-            },
-            {
-              to:'',
-              name:'系统配置'
-            },
-            {
-              to:'',
-              name:'菜单管理'
-            }
-          ]
-        },
-		  tableData: [],
-		  multipleSelection: [],
-		  fileList: [],
-		  IsShow:false
-      }
-    },
-    methods: {
-        downloadXml() {
-          	// 请求后台数据 并生成xml文件
-			this.apiGet('admin/menus/createXml').then((res) => {
-                _g.closeGlobalLoading()
-                this.handelResponse(res, (data) => {
-                    let a = document.createElement('a');
-                    let url = ResourceBaseUrl + res.data;
-                    let filename = '系统菜单.xml';
-                    a.href = url;
-                    a.download = filename;
-                    console.log(a)
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                })
-			})
-		},
-      selectItem(val) {
-        this.multipleSelection = val
+export default {
+  data() {
+    return {
+      config: {
+        crumb: [
+          {
+            to: '',
+            name: '系统'
+          },
+          {
+            to: '',
+            name: '系统配置'
+          },
+          {
+            to: '',
+            name: '菜单管理'
+          }
+        ]
       },
-      confirmDelete(item) {
-        this.$confirm('确认删除该菜单?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.apiDelete('admin/menus/', item.id).then((res) => {
+      tableData: [],
+      multipleSelection: [],
+      fileList: [],
+      IsShow: false
+    }
+  },
+  methods: {
+    downloadXml() {
+      // 请求后台数据 并生成xml文件
+      this.apiGet('admin/menus/createXml').then(res => {
+        _g.closeGlobalLoading()
+        this.handelResponse(res, data => {
+          let a = document.createElement('a')
+          let url = ResourceBaseUrl + res.data
+          let filename = '系统菜单.xml'
+          a.href = url
+          a.download = filename
+          console.log(a)
+          a.click()
+          window.URL.revokeObjectURL(url)
+        })
+      })
+    },
+    selectItem(val) {
+      this.multipleSelection = val
+    },
+    confirmDelete(item) {
+      this.$confirm('确认删除该菜单?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          this.apiDelete('admin/menus/', item.id).then(res => {
             _g.closeGlobalLoading()
-            this.handelResponse(res, (data) => {
+            this.handelResponse(res, data => {
               _g.toastMsg('success', '删除成功')
               setTimeout(() => {
                 _g.shallowRefresh(this.$route.name)
               }, 1500)
             })
           })
-        }).catch(() => {
+        })
+        .catch(() => {
           // handel error
         })
-      },
-        handleRemove(file, fileList) {
-            console.log(file, fileList);
-        },
-        handlePreview(file) {
-            _g.shallowRefresh(this.$route.name)
-            this.fileList = [];
-            console.log(file);
-        },
-        uploadSuccess(data) {
-            _g.shallowRefresh(this.$route.name)
-            _g.toastMsg('success', '配置成功!')
-        }
     },
-    created() {
-      this.apiGet('admin/menus').then((res) => {
-        this.handelResponse(res, (data) => {
-          this.tableData = data
-        })
+    handleRemove(file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview(file) {
+      _g.shallowRefresh(this.$route.name)
+      this.fileList = []
+      console.log(file)
+    },
+    uploadSuccess(data) {
+      _g.shallowRefresh(this.$route.name)
+      _g.toastMsg('success', '配置成功!')
+    }
+  },
+  created() {
+    this.apiGet('admin/menus').then(res => {
+      this.handelResponse(res, data => {
+        this.tableData = data
       })
+    })
+  },
+  computed: {
+    addShow() {
+      return _g.getHasRule('menus-save')
     },
-    computed: {
-      addShow() {
-        return _g.getHasRule('menus-save')
-      },
-      editShow() {
-        return _g.getHasRule('menus-update')
-      },
-      deleteShow() {
-        return _g.getHasRule('menus-delete')
-      }
+    editShow() {
+      return _g.getHasRule('menus-update')
     },
-    components: {
-      btnGroup, breadCrumb
-    },
-    mixins: [http]
-  }
+    deleteShow() {
+      return _g.getHasRule('menus-delete')
+    }
+  },
+  components: {
+    btnGroup,
+    breadCrumb
+  },
+  mixins: [http]
+}
 </script>

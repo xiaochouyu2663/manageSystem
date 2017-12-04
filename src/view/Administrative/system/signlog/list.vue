@@ -51,7 +51,7 @@ export default {
     searchModel,
     pageModel
   },
-  data () {
+  data() {
     return {
       data: {
         received: {
@@ -162,11 +162,11 @@ export default {
       loading_min: false
     }
   },
-  created () {
+  created() {
     this.init()
     this.$watch('data.exchanged.search', {
       deep: true,
-      handler: function () {
+      handler: function() {
         router.push({ path: this.$route.path, query: this.getCondition() })
         _g.openGlobalLoading()
         console.log('this is data: ')
@@ -176,11 +176,11 @@ export default {
     })
   },
   methods: {
-    init () {
+    init() {
       // 基本数据获取
       this.tableData()
     },
-    tableData () {
+    tableData() {
       // 表格数据
       const data = {
         params: this.getCondition()
@@ -192,8 +192,8 @@ export default {
           this.data.received.table = data.list
           this.data.received.count = data.dataCount
           _g.closeGlobalLoading()
-        });
-      });
+        })
+      })
     },
     getCondition() {
       // 搜索优化配置
@@ -208,14 +208,14 @@ export default {
     }
   },
   computed: {
-    addShow () {
-      return _g.getHasRule('users-save');
+    addShow() {
+      return _g.getHasRule('users-save')
     },
-    editShow () {
-      return _g.getHasRule('users-update');
+    editShow() {
+      return _g.getHasRule('users-update')
     },
-    deleteShow () {
-      return _g.getHasRule('users-delete');
+    deleteShow() {
+      return _g.getHasRule('users-delete')
     }
   },
   mixins: [http]

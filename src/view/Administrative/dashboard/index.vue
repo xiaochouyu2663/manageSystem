@@ -9,30 +9,30 @@
 </template>
 
 <script>
-  import breadCrumb from 'components/Common/bread-crumb.vue'
+import breadCrumb from 'components/Common/bread-crumb.vue'
 
-  export default {
-    components: {
-      breadCrumb
-    },
-    data() {
-      return {
-        config:{
-          crumb: [
-            {
-              to:'',
-              name:'系统'
-            },
-            {
-              to:'',
-              name:'后台首页'
-            }
-          ]
-        }
+export default {
+  components: {
+    breadCrumb
+  },
+  data() {
+    return {
+      config: {
+        crumb: [
+          {
+            to: '',
+            name: '系统'
+          },
+          {
+            to: '',
+            name: '后台首页'
+          }
+        ]
       }
-    },
-    created() {
-      _g.closeGlobalLoading()
     }
+  },
+  created() {
+    _g.closeGlobalLoading()
   }
+}
 </script>

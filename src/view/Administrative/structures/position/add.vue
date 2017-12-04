@@ -24,65 +24,67 @@
 	</div>
 </template>
 <script>
-  import http from 'assets/js/http'
-  import fomrMixin from 'assets/js/form_com'
-  import breadCrumb from 'components/Common/bread-crumb.vue'
-  export default {
-    components: {
-	  breadCrumb
-    },
-    data() {
-      return {
-        config:{
-          crumb: [
-            {
-              to:'',
-              name:'系统'
-            },
-            {
-              to:'',
-              name:'组织构架'
-            },
-            {
-              to:'',
-              name:'岗位管理'
-            }
-          ]
-        },
-        isLoading: false,
-        form: {
-          name: '',
-          remark: ''
-        },
-        rules: {
-          name: [
-            { required: true, message: '请输入岗位名称', trigger: 'blur' }
-          ]
-        }
+import http from 'assets/js/http'
+import fomrMixin from 'assets/js/form_com'
+import breadCrumb from 'components/Common/bread-crumb.vue'
+export default {
+  components: {
+    breadCrumb
+  },
+  data() {
+    return {
+      config: {
+        crumb: [
+          {
+            to: '',
+            name: '系统'
+          },
+          {
+            to: '',
+            name: '组织构架'
+          },
+          {
+            to: '',
+            name: '岗位管理'
+          }
+        ]
+      },
+      isLoading: false,
+      form: {
+        name: '',
+        remark: ''
+      },
+      rules: {
+        name: [{ required: true, message: '请输入岗位名称', trigger: 'blur' }]
       }
-    },
-    methods: {
-      add(form) {
-        this.$refs[form].validate((valid) => {
-          if (valid) {
-            this.isLoading = !this.isLoading
-            this.apiPost('admin/posts', this.form).then((res) => {
-              this.handelResponse(res, (data) => {
+    }
+  },
+  methods: {
+    add(form) {
+      this.$refs[form].validate(valid => {
+        if (valid) {
+          this.isLoading = !this.isLoading
+          this.apiPost('admin/posts', this.form).then(res => {
+            this.handelResponse(
+              res,
+              data => {
                 _g.toastMsg('success', '添加成功')
                 setTimeout(() => {
                   this.goback()
                 }, 1500)
-              }, () => {
+              },
+              () => {
                 this.isLoading = !this.isLoading
-              })
-            })
-          }
-        })
-      }
-    },
-    created() {
-      _g.closeGlobalLoading()
-    },
-    mixins: [http, fomrMixin]
-  }
+              }
+            )
+          })
+        }
+      })
+    }
+  },
+  created() {
+    _g.closeGlobalLoading()
+  },
+  mixins: [http, fomrMixin]
+}
 </script>

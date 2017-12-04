@@ -55,11 +55,11 @@
 </template>
 
 <script>
-import btnGroup from 'components/Common/btn-group.vue';
-import http from 'assets/js/http';
-import breadCrumb from 'components/Common/bread-crumb.vue';
+import btnGroup from 'components/Common/btn-group.vue'
+import http from 'assets/js/http'
+import breadCrumb from 'components/Common/bread-crumb.vue'
 export default {
-  data () {
+  data() {
     return {
       config: {
         crumb: [
@@ -88,7 +88,7 @@ export default {
     }
   },
   methods: {
-    downloadsql (data) {
+    downloadsql(data) {
       const a = document.createElement('a')
       const url = ResourceBaseUrl + 'databak\\' + data.row.name
       const filename = '数据备份.sql'
@@ -97,16 +97,16 @@ export default {
       a.click()
       window.URL.revokeObjectURL(url)
     },
-    selectItem (val) {
+    selectItem(val) {
       this.multipleSelection = val
     },
-    handleCurrentChange (page) {
+    handleCurrentChange(page) {
       router.push({
         path: this.$route.path,
         query: { keywords: this.keywords, page: page }
       })
     },
-    confirmRecovery (data) {
+    confirmRecovery(data) {
       this.$confirm('确认恢复该备份?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -126,7 +126,7 @@ export default {
           // handel error
         })
     },
-    addBackup (item) {
+    addBackup(item) {
       this.$confirm('确认新增备份?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -149,7 +149,7 @@ export default {
           // handel error
         })
     },
-    confirmDelete (item) {
+    confirmDelete(item) {
       this.$confirm('确认删除该备份?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -172,15 +172,15 @@ export default {
           // handel error
         })
     },
-    handleRemove (file, fileList) {
+    handleRemove(file, fileList) {
       console.log(file, fileList)
     },
-    handlePreview (file) {
+    handlePreview(file) {
       _g.shallowRefresh(this.$route.name)
       this.fileList = []
       console.log(file)
     },
-    getCurrentPage () {
+    getCurrentPage() {
       const data = this.$route.query
       if (data) {
         if (data.page) {
@@ -190,7 +190,7 @@ export default {
         }
       }
     },
-    getPageList () {
+    getPageList() {
       this.apiGet('admin/DbBackup', {
         params: { page: this.currentPage, limit: this.limit }
       }).then(res => {
@@ -200,27 +200,27 @@ export default {
         })
       })
     },
-    init () {
+    init() {
       this.getCurrentPage()
       this.getPageList()
     }
   },
-  created () {
+  created() {
     this.init()
   },
   computed: {
-    addShow () {
+    addShow() {
       return _g.getHasRule('menus-save')
     },
-    editShow () {
+    editShow() {
       return _g.getHasRule('menus-update')
     },
-    deleteShow () {
+    deleteShow() {
       return _g.getHasRule('menus-delete')
     }
   },
   watch: {
-    $route (to, from) {
+    $route(to, from) {
       this.init()
     }
   },
@@ -233,7 +233,7 @@ export default {
 </script>
 
 <style>
-  .block-pages{
-    margin-bottom: 20px!important;
-  }
+.block-pages {
+  margin-bottom: 20px !important;
+}
 </style>

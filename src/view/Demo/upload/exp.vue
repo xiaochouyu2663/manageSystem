@@ -5,41 +5,41 @@
 </template>
 
 <style>
-    .exp-code{
-        background: #eef1f6;
-        padding: 15px 10px;
-        margin-bottom: 20px;
-        display: block;
-        line-height: 36px;
-        font-family: monospace, monospace;
-        font-size: 1em
-    }
-    .exp-code a{
-        color: #4caf50;
-    }
+.exp-code {
+  background: #eef1f6;
+  padding: 15px 10px;
+  margin-bottom: 20px;
+  display: block;
+  line-height: 36px;
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+.exp-code a {
+  color: #4caf50;
+}
 </style>
 
 <script>
-    import { VueEditor } from 'vue2-editor'
+import { VueEditor } from 'vue2-editor'
 
-    export default {
-        components: {
-            VueEditor
-        },
-        data() {
-            return {
-                content: '<h1>Some initial content</h1>',
-                isLoading: false
-            }
-        },
-        methods: {
-            init() {
-                console.log('init success')
-                _g.closeGlobalLoading()
-            }
-        },
-        created() {
-            this.init()
-        }
+export default {
+  components: {
+    VueEditor
+  },
+  data() {
+    return {
+      content: '<h1>Some initial content</h1>',
+      isLoading: false
     }
+  },
+  methods: {
+    init() {
+      console.log('init success')
+      _g.closeGlobalLoading()
+    }
+  },
+  created() {
+    this.init()
+  }
+}
 </script>

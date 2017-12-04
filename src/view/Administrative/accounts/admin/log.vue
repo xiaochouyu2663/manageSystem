@@ -10,7 +10,7 @@ export default {
   components: {
     List
   },
-  data () {
+  data() {
     return {
       config: {
         baseApi: 'admin/SysLogs',
@@ -103,12 +103,12 @@ export default {
       }
     }
   },
-  created () {
+  created() {
     this.init()
     // 延迟绑定监听
     this.$watch('data.exchanged.search', {
       deep: true,
-      handler: function () {
+      handler: function() {
         router.push({ path: this.$route.path, query: this.getCondition() })
         _g.openGlobalLoading()
         this.tableData()
@@ -116,25 +116,25 @@ export default {
     })
     this.$watch('$route', {
       deep: true,
-      handler: function () {
+      handler: function() {
         this.init()
       }
     })
     this.$watch('data.exchanged.isDelete', {
       deep: true,
-      handler: function () {
+      handler: function() {
         _g.openGlobalLoading()
         this.tableData()
       }
     })
   },
   methods: {
-    init () {
+    init() {
       // 基本数据获取
       this.data.exchanged.search.uid = this.$route.params.id
       this.tableData()
     },
-    tableData () {
+    tableData() {
       // 表格数据
       const data = {
         params: this.getCondition()
@@ -145,9 +145,9 @@ export default {
         this.handelResponse(res, data => {
           this.data.received.table = data.list
           this.data.received.count = data.dataCount
-          _g.closeGlobalLoading();
-        });
-      });
+          _g.closeGlobalLoading()
+        })
+      })
     },
     getCondition() {
       // 搜索优化配置
@@ -162,7 +162,7 @@ export default {
     }
   },
   mixins: [http]
-};
+}
 </script>
 
 <style scoped>

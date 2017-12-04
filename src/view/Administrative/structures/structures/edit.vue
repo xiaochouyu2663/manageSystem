@@ -37,201 +37,203 @@
   </div>
 </template>
 <style type="text/css">
-  .form-checkbox:first-child{
-    margin-left: 15px;
-  }
+.form-checkbox:first-child {
+  margin-left: 15px;
+}
 </style>
 <script>
-    import http from 'assets/js/http'
-    import fomrMixin from 'assets/js/form_com'
-    import breadCrumb from 'components/Common/bread-crumb.vue'
+import http from 'assets/js/http'
+import fomrMixin from 'assets/js/form_com'
+import breadCrumb from 'components/Common/bread-crumb.vue'
 
-    export default {
-        components: {
-            breadCrumb,
+export default {
+  components: {
+    breadCrumb
+  },
+  data() {
+    return {
+      data: {
+        primary: '',
+        form: {
+          name: '',
+          orgcode: '',
+          type: '',
+          level: '',
+          position: ''
         },
-        data() {
-            return {
-                data:{
-                    primary:'',
-                    form: {
-                        name: '',
-                        orgcode:'',
-                        type: '',
-                        level: '',
-                        position: ''
-                    },
-                    selectData: {
-                        position: null,
-                        level: null,
-                    },
-                },
-                config:{
-                    commitMsg: '编辑成功',
-                    type: 'edit',
-                    baseApi: 'admin/structures',
-                    crumb: [
-                        {
-                            to:'',
-                            name:'系统'
-                        },
-                        {
-                            to:'',
-                            name:'组织构架'
-                        },
-                        {
-                            to:'',
-                            name:'部门管理'
-                        }
-                    ],
-                    form: {
-                        input:[
-                            {
-                                prop: 'name',
-                                label: '单位名称'
-                            },
-                            {
-                                prop: 'orgcode',
-                                label: '组织代码'
-                            }
-                        ],
-                        select:[
-                            {
-                                prop: 'position',
-                                label: '坐落位置',
-                            },
-                            {
-                                prop: 'level',
-                                label: '级　　别'
-                            }
-                        ],
-                        multipleSelect: [
-                            {
-                                prop: 'type',
-                                label: '单位类型'
-                            }
-                        ]
-                    },
-                    rules: {
-                        name: [
-                            { required: true, message: '请输入单位名称' }
-                        ],
-                        orgcode: [
-                            { required: true, message: '请输入组织机构代码' }
-                        ],
-                        type: [
-                            { required: true, message: '请输入单位类型' }
-                        ],
-                        level: [
-                            { required: true, message: '请选择级别' }
-                        ],
-                        position: [
-                            { required: true, message: '请选择坐落位置' }
-                        ]
-                    },
-                },
+        selectData: {
+          position: null,
+          level: null
+        }
+      },
+      config: {
+        commitMsg: '编辑成功',
+        type: 'edit',
+        baseApi: 'admin/structures',
+        crumb: [
+          {
+            to: '',
+            name: '系统'
+          },
+          {
+            to: '',
+            name: '组织构架'
+          },
+          {
+            to: '',
+            name: '部门管理'
+          }
+        ],
+        form: {
+          input: [
+            {
+              prop: 'name',
+              label: '单位名称'
+            },
+            {
+              prop: 'orgcode',
+              label: '组织代码'
             }
-        },
-        created() {
-            this.init()
-        },
-        methods: {
-            init() {
-                this.getDefaultData()
-                this.getType()
-                this.getLevel()
-                this.getPosition()
+          ],
+          select: [
+            {
+              prop: 'position',
+              label: '坐落位置'
             },
-            filter(data) {
-                data.type = data.type.split(',')
-                this.data.form = data
-            },
-            getType() {
-                this.apiGet('admin/structureType').then((res) => {
-                    this.handelResponse(res, (data) => {
-                        this.data.selectData.type = data.list
-                        console.log(data.list)
-                        this.data.selectData.type.map(function (value) {
-                            value.value = value.id
-                            value.label = value.type
-                            delete value.value.id
-                            delete value.value.type
-                        })
-                        console.log(this.data.selectData.type)
-                    })
-                })
-            },
-            getLevel() {
-                this.apiGet('admin/structureLevel').then((res) => {
-                    this.handelResponse(res, (data) => {
-                        this.data.selectData.level = data.list
-                        this.data.selectData.level.map(function (value) {
-                            value.value = value.id
-                            value.label = value.level
-                            delete value.value.id
-                            delete value.value.level
-                        })
-                        console.log(this.data.selectData.level)
-                    })
-                })
-            },
-            getPosition() {
-                this.apiGet('admin/structurePosition').then((res) => {
-                    this.handelResponse(res, (data) => {
-                        this.data.selectData.position = data.list
-                        this.data.selectData.position.map(function (value) {
-                            value.value = value.id
-                            value.label = value.position
-                            delete value.value.id
-                            delete value.value.position
-                        })
-                        console.log(this.data.selectData.position)
-                    })
-                })
-            },
-            commit(form) {
-                console.log('res = ', _g.j2s(this.data.form))
-                this.$refs.form.validate((pass) => {
-                    if (pass) {
-                        this.isLoading = !this.isLoading
-                        if( this.config.type === 'edit' ) {
-                            this.apiPut(this.config.baseApi+'/', this.data.primary, this.data.form).then((res) => {
-                                this.handelResponse(res, (data) => {
-                                    _g.toastMsg('success', this.config.commitMsg)
-                                    _g.clearVuex('setUsers')
-                                    setTimeout(() => {
-                                        this.goback()
-                                    }, 1500)
-                                }, () => {
-                                    this.isLoading = !this.isLoading
-                                })
-                            })
-                        }
-                        if( this.config.type === 'add' ) {
-                            this.apiPost(this.config.baseApi, this.data.form).then((res) => {
-                                this.handelResponse(res, (data) => {
-                                    _g.toastMsg('success', this.config.commitMsg)
-                                    _g.clearVuex('setUsers')
-                                    setTimeout(() => {
-                                        this.goback()
-                                    }, 1500)
-                                }, () => {
-                                    this.isLoading = !this.isLoading
-                                })
-                            })
-                        }
-                    }
-                })
-            },
-            getDefaultData() {
-                this.data.primary = this.$route.params.id
-                this.apiGet(this.config.baseApi+'/' + this.data.primary).then((res) => {
-                    this.handelResponse(res, (data) => {
-                        this.filter(data)
-                    })
-                })
+            {
+              prop: 'level',
+              label: '级　　别'
             }
+          ],
+          multipleSelect: [
+            {
+              prop: 'type',
+              label: '单位类型'
+            }
+          ]
         },
-        mixins: [http, fomrMixin]
+        rules: {
+          name: [{ required: true, message: '请输入单位名称' }],
+          orgcode: [{ required: true, message: '请输入组织机构代码' }],
+          type: [{ required: true, message: '请输入单位类型' }],
+          level: [{ required: true, message: '请选择级别' }],
+          position: [{ required: true, message: '请选择坐落位置' }]
+        }
+      }
     }
+  },
+  created() {
+    this.init()
+  },
+  methods: {
+    init() {
+      this.getDefaultData()
+      this.getType()
+      this.getLevel()
+      this.getPosition()
+    },
+    filter(data) {
+      data.type = data.type.split(',')
+      this.data.form = data
+    },
+    getType() {
+      this.apiGet('admin/structureType').then(res => {
+        this.handelResponse(res, data => {
+          this.data.selectData.type = data.list
+          console.log(data.list)
+          this.data.selectData.type.map(function(value) {
+            value.value = value.id
+            value.label = value.type
+            delete value.value.id
+            delete value.value.type
+          })
+          console.log(this.data.selectData.type)
+        })
+      })
+    },
+    getLevel() {
+      this.apiGet('admin/structureLevel').then(res => {
+        this.handelResponse(res, data => {
+          this.data.selectData.level = data.list
+          this.data.selectData.level.map(function(value) {
+            value.value = value.id
+            value.label = value.level
+            delete value.value.id
+            delete value.value.level
+          })
+          console.log(this.data.selectData.level)
+        })
+      })
+    },
+    getPosition() {
+      this.apiGet('admin/structurePosition').then(res => {
+        this.handelResponse(res, data => {
+          this.data.selectData.position = data.list
+          this.data.selectData.position.map(function(value) {
+            value.value = value.id
+            value.label = value.position
+            delete value.value.id
+            delete value.value.position
+          })
+          console.log(this.data.selectData.position)
+        })
+      })
+    },
+    commit(form) {
+      console.log('res = ', _g.j2s(this.data.form))
+      this.$refs.form.validate(pass => {
+        if (pass) {
+          this.isLoading = !this.isLoading
+          if (this.config.type === 'edit') {
+            this.apiPut(
+              this.config.baseApi + '/',
+              this.data.primary,
+              this.data.form
+            ).then(res => {
+              this.handelResponse(
+                res,
+                data => {
+                  _g.toastMsg('success', this.config.commitMsg)
+                  _g.clearVuex('setUsers')
+                  setTimeout(() => {
+                    this.goback()
+                  }, 1500)
+                },
+                () => {
+                  this.isLoading = !this.isLoading
+                }
+              )
+            })
+          }
+          if (this.config.type === 'add') {
+            this.apiPost(this.config.baseApi, this.data.form).then(res => {
+              this.handelResponse(
+                res,
+                data => {
+                  _g.toastMsg('success', this.config.commitMsg)
+                  _g.clearVuex('setUsers')
+                  setTimeout(() => {
+                    this.goback()
+                  }, 1500)
+                },
+                () => {
+                  this.isLoading = !this.isLoading
+                }
+              )
+            })
+          }
+        }
+      })
+    },
+    getDefaultData() {
+      this.data.primary = this.$route.params.id
+      this.apiGet(this.config.baseApi + '/' + this.data.primary).then(res => {
+        this.handelResponse(res, data => {
+          this.filter(data)
+        })
+      })
+    }
+  },
+  mixins: [http, fomrMixin]
+}
 </script>

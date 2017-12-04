@@ -10,7 +10,7 @@ export default {
   components: {
     List
   },
-  data () {
+  data() {
     return {
       config: {
         baseApi: 'admin/users',

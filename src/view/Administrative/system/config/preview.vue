@@ -5,22 +5,22 @@
 </template>
 <style>
 .box-shadow-none {
-	box-shadow: 0 1px 3px rgba(0,0,0,0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0);
 }
 </style>
 <script>
-  export default {
-    props: ['url'],
-    data() {
-      return {
-          dialogVisible: false
-      }
-    },
-    methods: {
-      open() {
-          this.dialogVisible = true;
-        this.$refs.dialog.open()
-      }
+export default {
+  props: ['url'],
+  data() {
+    return {
+      dialogVisible: false
+    }
+  },
+  methods: {
+    open() {
+      this.dialogVisible = true
+      this.$refs.dialog.open()
     }
   }
+}
 </script>

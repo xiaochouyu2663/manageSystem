@@ -37,92 +37,86 @@
 </template>
 
 <script>
-  import http from 'assets/js/http'
-  import fomrMixin from 'assets/js/form_com'
-  import breadCrumb from 'components/Common/bread-crumb.vue'
-  export default {
-    components:{
-      breadCrumb
-    },
-    data() {
-      return {
-        config:{
-          crumb: [
-            {
-              to:'',
-              name:'系统'
-            },
-            {
-              to:'',
-              name:'系统配置'
-            },
-            {
-              to:'',
-              name:'添加权限'
-            }
-          ]
-        },
-        isLoading: false,
-        form: {
-          title: '',
-          name: '',
-          pid: null,
-          level: '1',
-            isLog:0
-        },
-        options: [{ id: 0, title: '根节点' }],
-        rules: {
-          title: [
-            { required: true, message: '请输入节点名称' }
-          ],
-          name: [
-            { required: true, message: '请输入节点显示名' }
-          ],
-          level: [
-            { required: true, message: '请选择节点类型' }
-          ],
-          pid: [
-            { required: true, message: '请选择父级节点' }
-          ],
-            isLog: [
-                { required: true, message: '请选择是否记录日志' }
-            ]
-        }
+import http from 'assets/js/http'
+import fomrMixin from 'assets/js/form_com'
+import breadCrumb from 'components/Common/bread-crumb.vue'
+export default {
+  components: {
+    breadCrumb
+  },
+  data() {
+    return {
+      config: {
+        crumb: [
+          {
+            to: '',
+            name: '系统'
+          },
+          {
+            to: '',
+            name: '系统配置'
+          },
+          {
+            to: '',
+            name: '添加权限'
+          }
+        ]
+      },
+      isLoading: false,
+      form: {
+        title: '',
+        name: '',
+        pid: null,
+        level: '1',
+        isLog: 0
+      },
+      options: [{ id: 0, title: '根节点' }],
+      rules: {
+        title: [{ required: true, message: '请输入节点名称' }],
+        name: [{ required: true, message: '请输入节点显示名' }],
+        level: [{ required: true, message: '请选择节点类型' }],
+        pid: [{ required: true, message: '请选择父级节点' }],
+        isLog: [{ required: true, message: '请选择是否记录日志' }]
       }
-    },
-    methods: {
-      add(form) {
-        this.$refs[form].validate((valid) => {
-          if (valid) {
-            this.isLoading = !this.isLoading
-            this.apiPost('admin/rules', this.form).then((res) => {
-              this.handelResponse(res, (data) => {
+    }
+  },
+  methods: {
+    add(form) {
+      this.$refs[form].validate(valid => {
+        if (valid) {
+          this.isLoading = !this.isLoading
+          this.apiPost('admin/rules', this.form).then(res => {
+            this.handelResponse(
+              res,
+              data => {
                 _g.toastMsg('success', '添加成功')
                 setTimeout(() => {
                   this.goback()
                 }, 1500)
-              }, () => {
+              },
+              () => {
                 this.isLoading = !this.isLoading
-              })
-            })
-          }
-        })
-      },
-      getRules() {
-        this.apiGet('admin/rules').then((res) => {
-          this.handelResponse(res, (data) => {
-            _(data).forEach((ret) => {
-              if (ret.level != 3) {
-                this.options.push(ret)
               }
-            })
+            )
+          })
+        }
+      })
+    },
+    getRules() {
+      this.apiGet('admin/rules').then(res => {
+        this.handelResponse(res, data => {
+          _(data).forEach(ret => {
+            if (ret.level !== 3) {
+              this.options.push(ret)
+            }
           })
         })
-      }
-    },
-    created() {
-      this.getRules()
-    },
-    mixins: [http, fomrMixin]
-  }
+      })
+    }
+  },
+  created() {
+    this.getRules()
+  },
+  mixins: [http, fomrMixin]
+}
 </script>
