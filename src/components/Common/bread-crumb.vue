@@ -2,9 +2,10 @@
     <!-- 下一步实现可修正的自动面包屑导航 () -->
     <div class="m-b-10 h-30 l-h-15 breadcrumb">
         <div class="fl">
-             <el-breadcrumb separator-class="el-icon-arrow-right">
+             <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
                 <el-breadcrumb-item :to="{ path: crumb.to }" v-for="crumb in config">{{ crumb.name }}</el-breadcrumb-item>
-            </el-breadcrumb>
+            </el-breadcrumb> -->
+          <bread-path></bread-path>
         </div>
 
         <!-- <div class="fl m-l-5">
@@ -28,9 +29,9 @@
 
 <script>
 import ScrollPane from 'components/ScrollPane'
+import breadPath from './bread-path.vue'
 export default {
-  props: ['config'],
-  components: { ScrollPane },
+  components: { ScrollPane, breadPath },
   computed: {
     visitedViews() {
       return this.$store.state.app.visitedViews

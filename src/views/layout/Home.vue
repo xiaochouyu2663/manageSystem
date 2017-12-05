@@ -35,9 +35,9 @@
 			<section class="panel-c-c" :class="{'hide-leftMenu': hasChildMenu}">
 				<div class="grid-content bg-purple-light">
 					<el-col :span="24">
-						<transition name="fade" mode="out-in" appear>
+            <!-- 面包屑 -->
+              <bread-crumb></bread-crumb>
 							<router-view v-loading="showLoading"></router-view>
-						</transition>
 					</el-col>
 				</div>
 			</section>
@@ -52,6 +52,7 @@
 import leftMenu from './leftMenu.vue'
 import changePwd from './changePwd.vue'
 import http from 'assets/js/http'
+import breadCrumb from 'components/Common/bread-crumb.vue'
 
 export default {
   data() {
@@ -167,7 +168,8 @@ export default {
   },
   components: {
     leftMenu,
-    changePwd
+    changePwd,
+    breadCrumb
   },
   watch: {
     $route(to, from) {

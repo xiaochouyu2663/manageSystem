@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!-- 面包屑 -->
-		<bread-crumb :config="config.crumb"></bread-crumb>
+		<!-- <bread-crumb :config="config.crumb"></bread-crumb> -->
 		<!-- 头部 -->
 		<div class="m-b-20 ovf-hd">
 			<!-- 页面跳转 -->
@@ -20,7 +20,9 @@
 		<!-- 头部 -->
 
 		<!-- 内容 -->
-		<table-model :tableData="data.received.table" :config="config.table" :exchanged="data.exchanged" :baseApi="config.baseApi"></table-model>
+		<transition name="fade" mode="out-in" appear>
+			<table-model v-loading="showLoading" :tableData="data.received.table" :config="config.table" :exchanged="data.exchanged" :baseApi="config.baseApi"></table-model>
+    </transition>
 		<!-- 内容 -->
 
 		<!-- 底部 -->
@@ -43,7 +45,7 @@ import searchModel from '../Common/search-model.vue'
 import pageModel from '../Common/page-model.vue'
 
 export default {
-  props: ['data', 'config'],
+  props: ['data', 'config', 'showLoading'],
   components: {
     btnGroup,
     downExcel,

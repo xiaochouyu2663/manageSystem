@@ -66,18 +66,22 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    name: 'dashboard',
+    meta: { moduleName: '系统' },
     children: [
       {
         path: 'dashboard/list',
         component: Dashboard,
-        name: '首页',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'menu' }
+        name: '后台首页',
+        meta: { hideLeft: false, module: 'Administrative', menu: 'menu', path: [] }
       }
     ]
   },
   {
     path: '/home',
     component: Home,
+    name: '系统配置',
+    meta: { moduleName: '系统' },
     children: [
       {
         path: 'menu/list',
@@ -89,19 +93,21 @@ const routes = [
         path: 'menu/add',
         component: menuAdd,
         name: '添加菜单',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'menu' }
+        meta: { hideLeft: false, module: 'Administrative', menu: 'menu', path: ['菜单管理'] }
       },
       {
         path: 'menu/edit/:id',
         component: menuEdit,
         name: '编辑菜单',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'menu' }
+        meta: { hideLeft: false, module: 'Administrative', menu: 'menu', path: ['菜单管理'] }
       }
     ]
   },
   {
     path: '/home',
     component: Home,
+    name: '系统配置',
+    meta: { moduleName: '系统' },
     children: [
       {
         path: 'config/add',
@@ -118,6 +124,8 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    name: '系统配置',
+    meta: { moduleName: '系统' },
     children: [
       {
         path: 'rule/list',
@@ -129,19 +137,21 @@ const routes = [
         path: 'rule/add',
         component: ruleAdd,
         name: '添加权限',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'rule' }
+        meta: { hideLeft: false, module: 'Administrative', menu: 'rule', path: ['权限规则'] }
       },
       {
         path: 'rule/edit/:id',
         component: ruleEdit,
         name: '编辑权限',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'rule' }
+        meta: { hideLeft: false, module: 'Administrative', menu: 'rule', path: ['权限规则'] }
       }
     ]
   },
   {
     path: '/home',
     component: Home,
+    name: '组织架构',
+    meta: { moduleName: '系统' },
     children: [
       {
         path: 'position/list',
@@ -153,13 +163,13 @@ const routes = [
         path: 'position/add',
         component: positionAdd,
         name: '添加岗位',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'position' }
+        meta: { hideLeft: false, module: 'Administrative', menu: 'position', path: ['岗位管理'] }
       },
       {
         path: 'position/edit/:id',
         component: positionEdit,
         name: '编辑岗位',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'position' }
+        meta: { hideLeft: false, module: 'Administrative', menu: 'position', path: ['岗位管理'] }
       }
     ]
   },
@@ -190,6 +200,8 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    name: '组织架构',
+    meta: { moduleName: '系统' },
     children: [
       {
         path: 'groups/list',
@@ -201,49 +213,53 @@ const routes = [
         path: 'groups/add',
         component: groupsAdd,
         name: '添加角色',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'groups' }
+        meta: { hideLeft: false, module: 'Administrative', menu: 'groups', path: ['角色管理'] }
       },
       {
         path: 'groups/edit/:id',
         component: groupsEdit,
         name: '编辑角色',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'groups' }
+        meta: { hideLeft: false, module: 'Administrative', menu: 'groups', path: ['角色管理'] }
       }
     ]
   },
   {
     path: '/home',
     component: Home,
+    name: '账户管理',
+    meta: { moduleName: '系统' },
     children: [
       {
         path: 'users/list',
         component: usersList,
-        name: '账户列表',
+        name: '管 理 员',
         meta: { hideLeft: false, module: 'Administrative', menu: 'users' }
       },
       {
         path: 'users/add',
         component: usersAdd,
         name: '添加账户',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'users' }
+        meta: { hideLeft: false, module: 'Administrative', menu: 'users', path: ['管 理 员'] }
       },
       {
         path: 'users/edit/:id',
         component: usersEdit,
         name: '编辑账户',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'users' }
+        meta: { hideLeft: false, module: 'Administrative', menu: 'users', path: ['管 理 员'] }
       },
       {
         path: 'users/Log/:id',
         component: usersLog,
         name: '账户日志',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'users' }
+        meta: { hideLeft: false, module: 'Administrative', menu: 'users', path: ['管 理 员'] }
       }
     ]
   },
   {
     path: '/home',
     component: Home,
+    name: '系统配置',
+    meta: { moduleName: '系统' },
     children: [
       {
         path: 'Db/list',
@@ -256,6 +272,8 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    name: '系统配置',
+    meta: { moduleName: '系统' },
     children: [
       {
         path: 'signlog/list',
@@ -268,17 +286,19 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    name: '表格',
+    meta: { moduleName: '模板' },
     children: [
       {
         path: 'table/list',
         component: tableList,
-        name: 'tableList',
+        name: '表格展示',
         meta: { hideLeft: false, module: 'Demo', menu: 'table' }
       },
       {
         path: 'table/exp',
         component: tableExp,
-        name: 'tableExp',
+        name: '表格说明',
         meta: { hideLeft: false, module: 'Demo', menu: 'table' }
       }
     ]
@@ -286,11 +306,13 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    name: 'dashboard',
+    meta: { moduleName: '模板' },
     children: [
       {
         path: 'Demo/list',
         component: DemoList,
-        name: 'DemoList',
+        name: '介绍',
         meta: { hideLeft: false, module: 'Demo', menu: 'demo' }
       }
     ]
@@ -298,17 +320,19 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    name: '编辑器',
+    meta: { moduleName: '模板' },
     children: [
       {
         path: 'editor/list',
         component: editorList,
-        name: 'editorList',
+        name: '编辑器说明',
         meta: { hideLeft: false, module: 'Demo', menu: 'editor' }
       },
       {
         path: 'editor/explain',
         component: editorExplain,
-        name: 'editorExplain',
+        name: '编辑器效果',
         meta: { hideLeft: false, module: 'Demo', menu: 'editor' }
       }
     ]
@@ -316,17 +340,19 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    name: '上传',
+    meta: { moduleName: '模板' },
     children: [
       {
         path: 'upload/list',
         component: uploadList,
-        name: 'uploadList',
+        name: '上传效果',
         meta: { hideLeft: false, module: 'Demo', menu: 'upload' }
       },
       {
         path: 'upload/exp',
         component: uploadExp,
-        name: 'uploadExp',
+        name: '上传说明',
         meta: { hideLeft: false, module: 'Demo', menu: 'upload' }
       }
     ]
@@ -334,17 +360,19 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    name: '表单',
+    meta: { moduleName: '模板' },
     children: [
       {
         path: 'form/list',
         component: formList,
-        name: 'formList',
+        name: '表单效果',
         meta: { hideLeft: false, module: 'Demo', menu: 'form' }
       },
       {
         path: 'form/exp',
         component: formExp,
-        name: 'formExp',
+        name: '表单说明',
         meta: { hideLeft: false, module: 'Demo', menu: 'form' }
       }
     ]
@@ -352,17 +380,19 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    name: 'Excel',
+    meta: { moduleName: '模板' },
     children: [
       {
         path: 'excel/list',
         component: excelList,
-        name: 'excelList',
+        name: 'Excel效果',
         meta: { hideLeft: false, module: 'Demo', menu: 'excel' }
       },
       {
         path: 'excel/exp',
         component: excelExp,
-        name: 'excelExp',
+        name: 'Excel说明',
         meta: { hideLeft: false, module: 'Demo', menu: 'excel' }
       }
     ]
@@ -370,17 +400,19 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    name: 'Icons',
+    meta: { moduleName: '模板' },
     children: [
       {
         path: 'icons/list',
         component: iconsList,
-        name: 'iconsList',
+        name: 'Icons效果',
         meta: { hideLeft: false, module: 'Demo', menu: 'icons' }
       },
       {
         path: 'icons/exp',
         component: iconsExp,
-        name: 'iconsExp',
+        name: 'Icons说明',
         meta: { hideLeft: false, module: 'Demo', menu: 'icons' }
       }
     ]
@@ -388,17 +420,19 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    name: '图表',
+    meta: { moduleName: '模板' },
     children: [
       {
         path: 'charts/list',
         component: chartsList,
-        name: 'chartsList',
+        name: '图表效果',
         meta: { hideLeft: false, module: 'Demo', menu: 'charts' }
       },
       {
         path: 'charts/line',
         component: chartsLine,
-        name: 'chartsLine',
+        name: '图表说明',
         meta: { hideLeft: false, module: 'Demo', menu: 'charts' }
       },
       {

@@ -68,6 +68,7 @@ export default {
   },
   methods: {
     routerChange(item) {
+      _g.openGlobalLoading()
       // 与当前页面路由相等则刷新页面
       if (item.url !== this.$route.path) {
         router.push(item.url)

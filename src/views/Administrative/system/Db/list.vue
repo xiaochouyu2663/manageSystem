@@ -1,6 +1,6 @@
 <template>
     <div>
-        <bread-crumb :config="config.crumb"></bread-crumb>
+        <!-- <bread-crumb :config="config.crumb"></bread-crumb> -->
         <div class="m-b-20">
             <el-button class="btn-link-large add-btn" v-on:click="addBackup()">
                 新增备份

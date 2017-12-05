@@ -1,5 +1,5 @@
 <template>
-    <List :data="data" :config="config"></List>
+    <List :data="data" :config="config" :showLoading="showLoading"></List>
 </template>
 
 <script>

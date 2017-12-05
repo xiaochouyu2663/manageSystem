@@ -1,7 +1,5 @@
 <template>
-    <div id="app">
-        <vue-editor v-model="content"></vue-editor>
-    </div>
+  <vue-editor v-model="content"></vue-editor>
 </template>
 
 <script>

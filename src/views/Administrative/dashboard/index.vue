@@ -1,6 +1,6 @@
 <template>
     <div>
-        <bread-crumb :config="config.crumb"></bread-crumb>
+        <!-- <bread-crumb :config="config.crumb"></bread-crumb> -->
 
         <div>
             这里是主页介绍内容

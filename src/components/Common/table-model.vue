@@ -1,5 +1,5 @@
 <template>
-    <el-table
+         <el-table
             :data="tableData"
             stripe="stripe"
             :border='true'

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<bread-crumb :config="config.crumb"></bread-crumb>
+		<!-- <bread-crumb :config="config.crumb"></bread-crumb> -->
 		<div class="m-l-50 m-t-30 w-500">
 			<el-form ref="form" :model="form" :rules="rules" label-width="130px">
 				<el-form-item label="用户名" prop="username">

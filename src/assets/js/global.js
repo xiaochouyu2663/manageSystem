@@ -46,7 +46,7 @@ const commonFn = {
   getHasRule(val) {
     const moduleRule = 'admin'
     let userInfo = Lockr.get('userInfo')
-    if (userInfo.id == 1) {
+    if (userInfo.id === 1) {
       return true
     } else {
       let authList = moduleRule + Lockr.get('authList')

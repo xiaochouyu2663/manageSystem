@@ -1,35 +1,37 @@
 <template>
     <div>
         <!-- 面包屑 -->
-        <bread-crumb :config="config.crumb"></bread-crumb>
-        <!-- 头部 -->
-        <div class="m-b-20 ovf-hd">
-            <!-- 页面跳转 -->
-            <div class="fl">
-                <router-link :class="router.class" :to="router.to" v-for="router in config.jump">
-                    <i :class="router.icon"></i>&nbsp;&nbsp;{{ router.name }}
-                </router-link>
-            </div>
-            <!-- 导出Excel表格 -->
-            <downExcel :baseApi="config.baseApi" :config="config.excel" :tableData="data.received.table" :conditions="data.exchanged.search"></downExcel>
-            <div>
-                <!-- 搜索 -->
-                <search-model :config="config.search" :data="data"></search-model>
-            </div>
-        </div>
-        <!-- 头部 -->
+        <!-- <bread-crumb :config="config.crumb"></bread-crumb> -->
+        <div >
+          <!-- 头部 -->
+          <div class="m-b-20 ovf-hd">
+              <!-- 页面跳转 -->
+              <div class="fl">
+                  <router-link :class="router.class" :to="router.to" v-for="router in config.jump">
+                      <i :class="router.icon"></i>&nbsp;&nbsp;{{ router.name }}
+                  </router-link>
+              </div>
+              <!-- 导出Excel表格 -->
+              <downExcel :baseApi="config.baseApi" :config="config.excel" :tableData="data.received.table" :conditions="data.exchanged.search"></downExcel>
+              <div>
+                  <!-- 搜索 -->
+                  <search-model :config="config.search" :data="data"></search-model>
+              </div>
+          </div>
+          <!-- 头部 -->
 
-        <!-- 内容 -->
-        <table-model :tableData="data.received.table" :config="config.table" :exchanged="data.exchanged" :baseApi="config.baseApi"></table-model>
-        <!-- 内容 -->
+          <!-- 内容 -->
+          <table-model  :tableData="data.received.table" :config="config.table" :exchanged="data.exchanged" :baseApi="config.baseApi"></table-model>
+          <!-- 内容 -->
 
-        <!-- 底部 -->
-        <div class="pos-rel p-t-20">
-            <btnGroup :selectedData="data.exchanged.multipleSelection" :baseApi="config.baseApi" :config="config.btnGroup"></btnGroup>
-            <!-- 翻页操作 -->
-            <page-model :data="data" :config="config.page" :dataCount="data.received.count" :limit="data.exchanged.search.limit" :currentPage="data.exchanged.search.page"></page-model>
-        </div>
-        <!-- 底部 -->
+          <!-- 底部 -->
+          <div class="pos-rel p-t-20">
+              <btnGroup :selectedData="data.exchanged.multipleSelection" :baseApi="config.baseApi" :config="config.btnGroup"></btnGroup>
+              <!-- 翻页操作 -->
+              <page-model :data="data" :config="config.page" :dataCount="data.received.count" :limit="data.exchanged.search.limit" :currentPage="data.exchanged.search.page"></page-model>
+          </div>
+          <!-- 底部 -->
+          </div>
     </div>
 </template>
 
@@ -168,7 +170,7 @@ export default {
       deep: true,
       handler: function() {
         router.push({ path: this.$route.path, query: this.getCondition() })
-        _g.openGlobalLoading()
+        // _g.openGlobalLoading()
         console.log('this is data: ')
         console.log(this.data)
         this.tableData()
@@ -191,7 +193,7 @@ export default {
         this.handelResponse(res, data => {
           this.data.received.table = data.list
           this.data.received.count = data.dataCount
-          _g.closeGlobalLoading()
+          // _g.closeGlobalLoading()
         })
       })
     },
