@@ -13,6 +13,9 @@
 				<div class="fl p-l-20 p-r-20 top-menu" :class="{'top-active': menu.selected}" v-for="menu in topMenu" @click="switchTopMenu(menu)">{{menu.title}}</div>
 			</el-col>
 			<el-col :span="4" class="pos-rel">
+        <a href="javascript:;" title="全屏" @click="screenfull">
+          <icon class="icon-screenfull" name="screenfull"></icon>           
+        </a>
 				<el-dropdown @command="handleMenu" class="user-menu">
 		      <span class="el-dropdown-link c-gra" style="cursor: pointer">
 		        {{username}}&nbsp;&nbsp;    
@@ -38,7 +41,7 @@
             <!-- 面包屑 -->
               <bread-crumb></bread-crumb>
               <transition name="fade" mode="out-in">
-  							<router-view v-loading="showLoading"></router-view>
+							<router-view v-loading="showLoading"></router-view>
               </transition>
 					</el-col>
 				</div>
@@ -55,6 +58,7 @@ import leftMenu from './leftMenu.vue'
 import changePwd from './changePwd.vue'
 import http from 'assets/js/http'
 import breadCrumb from 'components/Common/bread-crumb.vue'
+import screenfull from 'screenfull'
 
 export default {
   data() {
@@ -73,6 +77,16 @@ export default {
     }
   },
   methods: {
+    screenfull() {
+      if (!screenfull.enabled) {
+        this.$message({
+          message: 'you browser can not work',
+          type: 'warning'
+        })
+        return false
+      }
+      screenfull.toggle()
+    },
     logout() {
       this.$confirm('确认退出吗?', '提示', {
         confirmButtonText: '确定',
