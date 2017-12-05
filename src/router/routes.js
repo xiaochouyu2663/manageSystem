@@ -1,4 +1,4 @@
-import Login from '../views/Account/Login.vue'
+import Login from '../views/Login'
 import Dashboard from '../views/Administrative/dashboard/index.vue'
 import refresh from '../views/layout/refresh.vue'
 import Home from '../views/layout/Home.vue'
