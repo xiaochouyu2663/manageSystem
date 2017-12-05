@@ -37,7 +37,9 @@
 					<el-col :span="24">
             <!-- 面包屑 -->
               <bread-crumb></bread-crumb>
-							<router-view v-loading="showLoading"></router-view>
+              <transition name="fade" mode="out-in">
+  							<router-view v-loading="showLoading"></router-view>
+              </transition>
 					</el-col>
 				</div>
 			</section>

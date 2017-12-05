@@ -2,28 +2,14 @@
     <!-- 下一步实现可修正的自动面包屑导航 () -->
     <div class="m-b-10 h-30 l-h-15 breadcrumb">
         <div class="fl">
-             <!-- <el-breadcrumb separator-class="el-icon-arrow-right">
-                <el-breadcrumb-item :to="{ path: crumb.to }" v-for="crumb in config">{{ crumb.name }}</el-breadcrumb-item>
-            </el-breadcrumb> -->
           <bread-path></bread-path>
         </div>
-
-        <!-- <div class="fl m-l-5">
-            <router-link class="tabs-view" v-for="tag in Array.from(visitedViews)" :to="tag.path" :key="tag.path">
-                <el-tag class='m-l-5' size="mini" :closable="true" :type="isActive(tag.path)?'':'info'" @close='closeViewTabs(tag,$event)'>
-                    {{tag.name}}
-                </el-tag>
-            </router-link>
-        </div> -->
-
         <scroll-pane class='tags-view-container'>
-         
           <router-link class="tags-view-item" :class="isActive(tag)?'active':''" v-for="tag in Array.from(visitedViews)" :to="tag.path":key="tag.path">
              {{tag.name}}
           <span class='el-icon-close' @click='closeViewTags(tag,$event)'></span>
           </router-link>
         </scroll-pane>
-
     </div>
 </template>
 
@@ -32,6 +18,11 @@ import ScrollPane from 'components/ScrollPane'
 import breadPath from './bread-path.vue'
 export default {
   components: { ScrollPane, breadPath },
+  data() {
+    return {
+      tempRoute: ''
+    }
+  },
   computed: {
     visitedViews() {
       return this.$store.state.app.visitedViews
@@ -42,7 +33,7 @@ export default {
   },
   methods: {
     closeViewTags(view, $event) {
-      this.$store.dispatch('delVisitedViews', view).then((views) => {
+      this.$store.dispatch('delVisitedViews', view).then(views => {
         if (this.isActive(view)) {
           const latestView = views.slice(-1)[0]
           if (latestView) {
@@ -55,6 +46,11 @@ export default {
       $event.preventDefault()
     },
     generateRoute() {
+      if (this.$route.name === 'refresh') {
+        return false
+      }else{
+        this.tempRoute = this.$route
+      }
       if (this.$route.name) {
         return this.$route
       }
@@ -68,9 +64,8 @@ export default {
       this.$store.dispatch('addVisitedViews', route)
     },
     isActive(route) {
-      return route.path === this.$route.path || route.name === this.$route.name
+      return route.path === this.tempRoute.path || route.name === this.tempRoute.name
     }
-
   },
   watch: {
     $route() {
@@ -81,15 +76,15 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.el-breadcrumb{
-  line-height:2rem;
-  margin-right:10px;
+.el-breadcrumb {
+  line-height: 2rem;
+  margin-right: 10px;
 }
 .tags-view-container {
   background: #fff;
   height: 34px;
   border-bottom: 1px solid #d8dce5;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
   .tags-view-item {
     display: inline-block;
     position: relative;
@@ -133,10 +128,10 @@ export default {
       vertical-align: 2px;
       border-radius: 50%;
       text-align: center;
-      transition: all .3s cubic-bezier(.645, .045, .355, 1);
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       transform-origin: 100% 50%;
       &:before {
-        transform: scale(.6);
+        transform: scale(0.6);
         display: inline-block;
         vertical-align: -3px;
       }

@@ -25,11 +25,6 @@ export default {
   methods: {
     getBreadcrumb() {
       let matched = this.$route.matched.filter(item => item.name)
-      console.log(matched)
-      // const first = matched[0]
-      // if (first && first.name !== 'dashboard') {
-      //   matched = [{ path: '/dashboard', meta: { title: 'dashboard' }}].concat(matched)
-      // }
       this.levelList = matched
     }
   }
@@ -37,14 +32,14 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  .app-breadcrumb.el-breadcrumb {
-    display: inline-block;
-    font-size: 14px;
-    line-height: 50px;
-    margin-left: 10px;
-    .no-redirect {
-      color: #97a8be;
-      cursor: text;
-    }
+.app-breadcrumb.el-breadcrumb {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 50px;
+  margin-left: 10px;
+  .no-redirect {
+    color: #97a8be;
+    cursor: text;
   }
+}
 </style>
