@@ -1,7 +1,7 @@
 <template>
     <!-- 下一步实现可修正的自动面包屑导航 () -->
     <div class="m-b-10 h-30 l-h-15 breadcrumb">
-        <div class="fl">
+        <div class="fl betterline">
           <bread-path></bread-path>
         </div>
         <scroll-pane class='tags-view-container'>
@@ -48,7 +48,7 @@ export default {
     generateRoute() {
       if (this.$route.name === 'refresh') {
         return false
-      }else{
+      } else {
         this.tempRoute = this.$route
       }
       if (this.$route.name) {
@@ -64,7 +64,9 @@ export default {
       this.$store.dispatch('addVisitedViews', route)
     },
     isActive(route) {
-      return route.path === this.tempRoute.path || route.name === this.tempRoute.name
+      return (
+        route.path === this.tempRoute.path || route.name === this.tempRoute.name
+      )
     }
   },
   watch: {
@@ -77,8 +79,10 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .el-breadcrumb {
-  line-height: 2rem;
-  margin-right: 10px;
+  margin-right: 20px;
+}
+.betterline{
+  margin-top: 3.2px;
 }
 .tags-view-container {
   background: #fff;
