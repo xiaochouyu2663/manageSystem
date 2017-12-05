@@ -13,9 +13,11 @@
 				<div class="fl p-l-20 p-r-20 top-menu" :class="{'top-active': menu.selected}" v-for="menu in topMenu" @click="switchTopMenu(menu)">{{menu.title}}</div>
 			</el-col>
 			<el-col :span="4" class="pos-rel">
-        <a href="javascript:;" title="全屏" @click="screenfull">
-          <icon class="icon-screenfull" name="screenfull"></icon>           
-        </a>
+         <el-tooltip class="item" effect="dark" :content="screenMsg" placement="bottom">
+          <a href="javascript:;" @click="screenfull" class="icon-top-bar">
+            <icon class="icon-screenfull" name="screenfull"></icon>           
+          </a>
+        </el-tooltip>
 				<el-dropdown @command="handleMenu" class="user-menu">
 		      <span class="el-dropdown-link c-gra" style="cursor: pointer">
 		        {{username}}&nbsp;&nbsp;    
@@ -63,6 +65,7 @@ import screenfull from 'screenfull'
 export default {
   data() {
     return {
+      screenMsg: '全屏',
       isCollapse: false,
       username: '',
       topMenu: [],
@@ -84,6 +87,11 @@ export default {
           type: 'warning'
         })
         return false
+      }
+      if (this.screenMsg === '全屏') {
+        this.screenMsg = '恢复'
+      } else {
+        this.screenMsg = '全屏'
       }
       screenfull.toggle()
     },
@@ -210,6 +218,10 @@ export default {
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
+}
+
+.icon-top-bar{
+  color: #657180
 }
 
 .fade-enter,
