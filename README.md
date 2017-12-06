@@ -1,17 +1,36 @@
-## 安装
-1. 安装node (安装完成后windows可能需要自己配置环境变量)
-    >node官网地址 https://nodejs.org/en/
-2. 如果已经安装需将npm升级到最新的版本 升级命令:
-    >npm install -g npm
-3. 为了保证安装速度 推荐安装cnpm
-    >npm install -g cnpm --registry=https://registry.npm.taobao.org
-4. 使用git安装(也可以之间下载)
-    > git clone https://gitee.com/orchief/framework
-5. 本地安装
-    >cd framework
+## 前序准备
 
-    >cnpm install 
-6. 本地运行测试环境
-    > npm run dev
-7. 打包成为静态资源
-    > npm run build
+你的本地环境需要安装 [node](http://nodejs.org/) 和 [git](https://git-scm.com/)。我们的技术栈基于 [ES2015+](http://es6.ruanyifeng.com/)、[vue](https://cn.vuejs.org/index.html)、[vuex](https://vuex.vuejs.org/zh-cn/)、[vue-router](https://router.vuejs.org/zh-cn/) 和 [element-ui](https://github.com/ElemeFE/element)，提前了解和学习这些知识会对使用本项目有很大的帮助。
+
+
+## 开发
+```bash
+    # 克隆项目
+    git clone https://gitee.com/orchief/framework
+
+    # 安装依赖
+    npm install
+    
+    //or # 建议不要用cnpm  安装有各种诡异的bug 可以通过如下操作解决npm速度慢的问题
+    npm install --registry=https://registry.npm.taobao.org
+
+    # 本地开发 开启服务
+    npm run dev
+```
+浏览器访问 http://localhost:8081
+
+## 发布
+```bash
+    # 发布测试环境 带webpack ananalyzer
+    npm run build:sit-preview
+
+    # 构建生成环境
+    npm run build:prod
+```
+
+## License
+
+MIT
+
+
+
