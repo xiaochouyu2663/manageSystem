@@ -23,6 +23,8 @@
 ```bash
     npm run build
 ```
+## 兼容性
+ie10 以下版本不能兼容 推荐使用crome浏览器
 
 ## License
 
