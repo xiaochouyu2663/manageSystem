@@ -1,7 +1,5 @@
 <template>
     <div>
-        <!-- <bread-crumb :config="config.crumb"></bread-crumb> -->
-
         <div>
             这里是主页介绍内容
         </div>
@@ -9,12 +7,7 @@
 </template>
 
 <script>
-import breadCrumb from 'components/Common/bread-crumb.vue'
-
 export default {
-  components: {
-    breadCrumb
-  },
   data() {
     return {
       config: {

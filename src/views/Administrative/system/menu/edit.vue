@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<!-- <bread-crumb :config="config.crumb"></bread-crumb> -->
 		<div class="m-l-50 m-t-30 w-500">
 			<el-form ref="form" :model="form" :rules="rules" label-width="110px">
 				<el-form-item label="标题" prop="title">
@@ -51,7 +50,6 @@
 import ruleList from './rule.vue'
 import http from 'assets/js/http'
 import fomrMixin from 'assets/js/form_com'
-import breadCrumb from 'components/Common/bread-crumb.vue'
 
 export default {
   data() {
@@ -161,7 +159,6 @@ export default {
   },
   components: {
     ruleList,
-    breadCrumb
   },
   mixins: [http, fomrMixin]
 }

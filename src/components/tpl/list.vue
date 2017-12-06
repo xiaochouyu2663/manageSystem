@@ -40,7 +40,6 @@
 import btnGroup from '../Common/btn-group.vue'
 import downExcel from '../Common/down-excel.vue'
 import tableModel from '../Common/table-model.vue'
-import breadCrumb from '../Common/bread-crumb.vue'
 import searchModel from '../Common/search-model.vue'
 import pageModel from '../Common/page-model.vue'
 
@@ -50,7 +49,6 @@ export default {
     btnGroup,
     downExcel,
     tableModel,
-    breadCrumb,
     searchModel,
     pageModel
   }

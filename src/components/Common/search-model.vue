@@ -29,103 +29,127 @@
 </template>
 
 <script>
-    import http from '../../assets/js/http'
-    export default {
-        props: ['config', 'data'],
-        data() {
-            return {
-                tempDate:null,
-                pickerOptions2: {
-                    shortcuts: [{
-                        text: '最近一周',
-                        onClick(picker) {
-                            const end = new Date();
-                            const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-                            picker.$emit('pick', [start, end]);
-                        }
-                    }, {
-                        text: '最近一个月',
-                        onClick(picker) {
-                            const end = new Date();
-                            const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-                            picker.$emit('pick', [start, end]);
-                        }
-                    }, {
-                        text: '最近三个月',
-                        onClick(picker) {
-                            const end = new Date();
-                            const start = new Date();
-                            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-                            picker.$emit('pick', [start, end]);
-                        }
-                    }]
-                }
+export default {
+  props: ['config', 'data'],
+  data() {
+    return {
+      tempDate: null,
+      pickerOptions2: {
+        shortcuts: [
+          {
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', [start, end])
             }
-        },
-        methods: {
-            handleDateChange(date, item) {
-                if(null===date) {
-                    this.data.exchanged.search[item.name] = ''
-                    return true
-                }
-                if(''===date) {
-                  return true
-                }
-                let start  = new Date(date[0]);
-                let separator = item.separator
-                let end    = new Date(date[1]);
-                let startString = start.getFullYear() + '-' + (start.getMonth() + 1) + '-' + start.getDate() + ' ' + start.getHours() + ':' + start.getMinutes() + ':' + start.getSeconds();
-                let endString = end.getFullYear() + '-' + (end.getMonth() + 1) + '-' + end.getDate() + ' ' + end.getHours() + ':' + end.getMinutes() + ':' + end.getSeconds();
-                let resDate = startString + separator + endString
-                this.data.exchanged.search[item.name] = resDate
-//                // 日期查询
+          },
+          {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
             }
-        },
-        created() {
-            // 处理配置文件 生成相应的数据容器
-
-        }
+          },
+          {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date()
+              const start = new Date()
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+              picker.$emit('pick', [start, end])
+            }
+          }
+        ]
+      }
     }
+  },
+  methods: {
+    handleDateChange(date, item) {
+      if (date === null) {
+        this.data.exchanged.search[item.name] = ''
+        return true
+      }
+      if (date === '') {
+        return true
+      }
+      let start = new Date(date[0])
+      let separator = item.separator
+      let end = new Date(date[1])
+      let startString =
+        start.getFullYear() +
+        '-' +
+        (start.getMonth() + 1) +
+        '-' +
+        start.getDate() +
+        ' ' +
+        start.getHours() +
+        ':' +
+        start.getMinutes() +
+        ':' +
+        start.getSeconds()
+      let endString =
+        end.getFullYear() +
+        '-' +
+        (end.getMonth() + 1) +
+        '-' +
+        end.getDate() +
+        ' ' +
+        end.getHours() +
+        ':' +
+        end.getMinutes() +
+        ':' +
+        end.getSeconds()
+      let resDate = startString + separator + endString
+      this.data.exchanged.search[item.name] = resDate
+      //                // 日期查询
+    }
+  },
+  created() {
+    // 处理配置文件 生成相应的数据容器
+  }
+}
 </script>
 
 <style scoped>
-    .el-input--small .el-input__inner{
-        height: 30px;
-        width: 200px;
-    }
-    .el-select{
-        display: block;
-        position: relative;
-        float: left;
-    }
-    .el-input, .el-input__inner{
-        display: inline-block;
-        float: left;
-        width:217px!important;
-    }
-    .el-select>.el-input{
-        display: block;
-    }
-    input.el-input__inner{
-        width: 192px!important;
-    }
-    .el-select{
-        display: inline-block!important;
-        margin-top: 2px;
-        margin-left: 5px!important;
-    }
+.el-input--small .el-input__inner {
+  height: 30px;
+  width: 200px;
+}
+.el-select {
+  display: block;
+  position: relative;
+  float: left;
+}
+.el-input,
+.el-input__inner {
+  display: inline-block;
+  width: 217px !important;
+}
+.el-select > .el-input {
+  display: block;
+}
+input.el-input__inner {
+  width: 192px !important;
+}
+.el-select {
+  display: inline-block !important;
+  margin-top: 2px;
+  margin-left: 5px !important;
+}
 
-    .el-input {
-        margin-top: 2px;
-        margin-left: 5px!important;
-    }
-    .el-select > .el-input{
-        width: 222px!important;
-    }
-    .el-date-editor{
-        margin-top: 2px;
-        margin-left: 5px!important;
-    }
+.el-input {
+  margin-top: 2px;
+  margin-left: 5px !important;
+}
+.el-select > .el-input {
+  width: 222px !important;
+}
+.el-date-editor {
+  margin-top: 2px;
+  margin-left: 5px !important;
+}
 </style>

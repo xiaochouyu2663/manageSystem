@@ -39,11 +39,7 @@
 <script>
 import http from 'assets/js/http'
 import fomrMixin from 'assets/js/form_com'
-import breadCrumb from 'components/Common/bread-crumb.vue'
 export default {
-  components: {
-    breadCrumb
-  },
   data() {
     const validatePassword = (rule, value, callback) => {
       const re = /[^\u0000-\u00FF]+/

@@ -1,7 +1,5 @@
 <template>
 	<div>
-		<!-- 面包屑 -->
-		<!-- <bread-crumb :config="config.crumb"></bread-crumb> -->
 		<!-- 头部 -->
 		<div class="m-b-20 ovf-hd">
 			<!-- 页面跳转 -->
@@ -38,7 +36,6 @@
   import btnGroup from './components/btn-group.vue'
   import downExcel from 'components/Common/down-excel.vue'
   import tableModel from 'components/Common/table-model.vue'
-  import breadCrumb from 'components/Common/bread-crumb.vue'
   import searchModel from 'components/Common/search-model.vue'
   import pageModel from 'components/Common/page-model.vue'
 
@@ -48,7 +45,6 @@ export default {
       btnGroup,
       downExcel,
       tableModel,
-      breadCrumb,
       searchModel,
       pageModel
     },

@@ -4,7 +4,6 @@
 			更多验证规则需手动编辑条目 现在需要配置的部分包括 data config 以及自定义方法
 		-->
 		<!-- 面包屑 -->
-		<!-- <bread-crumb :config="config.crumb"></bread-crumb> -->
 
 		<div class="m-l-50 m-t-30 w-500">
 			<el-form ref="form" :model="data.form" :rules="config.rules" label-width="130px">
@@ -44,12 +43,8 @@
 <script>
 import http from 'assets/js/http'
 import fomrMixin from 'assets/js/form_com'
-import breadCrumb from 'components/Common/bread-crumb.vue'
 
 export default {
-  components: {
-    breadCrumb
-  },
   data() {
     return {
       data: {

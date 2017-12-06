@@ -1,6 +1,5 @@
 <template>
 	<div>
-	<!-- <bread-crumb :config="config.crumb"></bread-crumb> -->
 	<div class="m-l-50 m-t-30 w-500">
 		<el-form ref="form" :model="form" :rules="rules" label-width="130px">
 			<el-form-item label="系统名称" prop="SYSTEM_NAME" >
@@ -44,7 +43,6 @@
 <script>
 import http from 'assets/js/http'
 import preview from './preview.vue'
-import breadCrumb from 'components/Common/bread-crumb.vue'
 export default {
   data() {
     let check_LOGIN_SESSION_VALID = (rule, value, callback) => {
@@ -170,7 +168,6 @@ export default {
   },
   components: {
     preview,
-    breadCrumb
   },
   mixins: [http]
 }

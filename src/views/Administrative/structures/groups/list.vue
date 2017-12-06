@@ -58,8 +58,6 @@
 <script>
 import btnGroup from 'components/Common/btn-group.vue'
 import http from 'assets/js/http'
-import breadCrumb from 'components/Common/bread-crumb.vue'
-
 export default {
   data() {
     return {
@@ -132,8 +130,7 @@ export default {
     }
   },
   components: {
-    btnGroup,
-    breadCrumb
+    btnGroup
   },
   mixins: [http]
 }

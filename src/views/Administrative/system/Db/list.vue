@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- <bread-crumb :config="config.crumb"></bread-crumb> -->
         <div class="m-b-20">
             <el-button class="btn-link-large add-btn" v-on:click="addBackup()">
                 新增备份
@@ -57,7 +56,6 @@
 <script>
 import btnGroup from 'components/Common/btn-group.vue'
 import http from 'assets/js/http'
-import breadCrumb from 'components/Common/bread-crumb.vue'
 export default {
   data() {
     return {
@@ -226,7 +224,6 @@ export default {
   },
   components: {
     btnGroup,
-    breadCrumb
   },
   mixins: [http]
 }
