@@ -1,14 +1,9 @@
 <template>
-  <vue-editor v-model="content"></vue-editor>
+  <div>富文本编辑器</div>
 </template>
 
 <script>
-import { VueEditor } from 'vue2-editor'
-
 export default {
-  components: {
-    VueEditor
-  },
   data() {
     return {
       content: '<h1>Some initial content</h1>',

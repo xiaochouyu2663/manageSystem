@@ -1,7 +1,5 @@
 <template>
 	<div>
-		<!-- 面包屑 -->
-		<!-- <bread-crumb :config="config.crumb"></bread-crumb> -->
 		<!-- 头部 -->
 		<div class="m-b-20 ovf-hd">
 			<!-- 页面跳转 -->

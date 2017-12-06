@@ -7,8 +7,8 @@ var projectRoot = path.resolve(__dirname, '../')
 var env = process.env.NODE_ENV
 // check env & config/index.js to decide weither to enable CSS Sourcemaps for the
 // various preprocessor loaders added to vue-loader at the end of this file
-var cssSourceMapDev = (env === 'development' && config.dev.cssSourceMap)
-var cssSourceMapProd = (env === 'production' && config.build.productionSourceMap)
+var cssSourceMapDev = env === 'development' && config.dev.cssSourceMap
+var cssSourceMapProd = env === 'production' && config.build.productionSourceMap
 var useCssSourceMap = cssSourceMapDev || cssSourceMapProd
 
 // define the different HOST between development and production environment
@@ -21,7 +21,10 @@ module.exports = {
   },
   output: {
     path: config.build.assetsRoot,
-    publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath,
+    publicPath:
+      process.env.NODE_ENV === 'production'
+        ? config.build.assetsPublicPath
+        : config.dev.assetsPublicPath,
     filename: '[name].js'
   },
   eslint: {
@@ -36,22 +39,23 @@ module.exports = {
     extensions: ['', '.js', '.vue'],
     fallback: [path.join(__dirname, '../node_modules')],
     alias: {
-      'vue$': 'vue/dist/vue',
-      'src': path.resolve(__dirname, '../src'),
-      'assets': path.resolve(__dirname, '../src/assets'),
-      'components': path.resolve(__dirname, '../src/components'),
-      'vendor': path.resolve(__dirname, '../src/vendor'),
-      'jszip': path.resolve(__dirname, '../node_modules/_xlsx@0.11.8@xlsx/jszip.js')
+      vue$: 'vue/dist/vue',
+      src: path.resolve(__dirname, '../src'),
+      assets: path.resolve(__dirname, '../src/assets'),
+      components: path.resolve(__dirname, '../src/components'),
+      vendor: path.resolve(__dirname, '../src/vendor'),
+      jszip: path.resolve(
+        __dirname,
+        '../node_modules/_xlsx@0.11.8@xlsx/jszip.js'
+      )
     }
   },
   resolveLoader: {
     fallback: [path.join(__dirname, '../node_modules')]
   },
   module: {
-    preLoaders: [
-
-    ],
-      noParse: [/jszip/],
+    preLoaders: [],
+    noParse: [/jszip/],
     loaders: [
       {
         test: /\.vue$/,

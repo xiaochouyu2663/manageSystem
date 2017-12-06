@@ -24,6 +24,8 @@ axios.defaults.timeout = 1000 * 15
 axios.defaults.headers.authKey = Lockr.get('authKey')
 axios.defaults.headers.sessionId = Lockr.get('sessionId')
 axios.defaults.headers['Content-Type'] = 'application/json'
+axios.defaults.withCredentials = true
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
 const router = new VueRouter({
   mode: 'history',
@@ -69,5 +71,5 @@ new Vue({
   router,
   store,
   components: { App }
-// render: h => h(Login)
+  // render: h => h(Login)
 }).$mount('#app')

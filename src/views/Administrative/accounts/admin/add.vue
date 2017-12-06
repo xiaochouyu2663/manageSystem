@@ -31,156 +31,149 @@
 	</div>
 </template>
 <style type="text/css">
-	.form-checkbox:first-child{
-		margin-left: 15px;
-	}
+.form-checkbox:first-child {
+  margin-left: 15px;
+}
 </style>
 <script>
-  import http from 'assets/js/http'
-  import fomrMixin from 'assets/js/form_com'
-  export default {
-    data () {
-      const validateUsername = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('用户名不能为空'))
-        }
-        const re = /[^\u0000-\u00FF]+/
-        const res = re.test(value)
-        console.log(res)
-        if (res) {
-          callback(new Error('用户名只能包含半角，字母加数字'))
-        }
-        if (value.length < 6) {
-          callback(new Error('用户名长度为最小为6位'))
-        }
-        callback()
+import http from 'assets/js/http'
+import fomrMixin from 'assets/js/form_com'
+export default {
+  data() {
+    const validateUsername = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('用户名不能为空'))
       }
-      const validatePassword = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('密码不能为空'))
-        }
-        const re = /[^\u0000-\u00FF]+/
-        const res = re.test(value)
-        console.log(res)
-        if (res) {
-          callback(new Error('密码只能包含半角字符，字母加数字'))
-        }
-        if (value.length < 6) {
-          callback(new Error('密码最小长度为6位'))
-        }
-        if (this.form.password !== this.form.repass && this.form.repass !== '') {
-          return callback(new Error('密码不一致'))
-        }
-        callback()
+      const re = /[^\u0000-\u00FF]+/
+      const res = re.test(value)
+      console.log(res)
+      if (res) {
+        callback(new Error('用户名只能包含半角，字母加数字'))
       }
-      const validateRePass = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('确认密码不能为空'))
-        }
-        if (this.form.password !== this.form.repass) {
-          return callback(new Error('密码不一致'))
-        }
-        callback()
+      if (value.length < 6) {
+        callback(new Error('用户名长度为最小为6位'))
       }
-      return {
-        config: {
-          crumb: [
-            {
-              to: '',
-              name: '系统'
-            },
-            {
-              to: '',
-              name: '账户管理'
-            },
-            {
-              to: '',
-              name: '添加账户'
-            }
-          ]
-        },
-        isLoading: false,
-        form: {
-          username: '',
-          password: '',
-          realname: '',
-          structure_id: null,
-          remark: '',
-          repass: '',
-          groups: []
-        },
-        orgsOptions: [],
-        groupOptions: [],
-        selectedGroups: [],
-        selectedIds: [],
-        rules: {
-          username: [
-            { validator: validateUsername, trigger: 'blur' }
-          ],
-          password: [
-            { validator: validatePassword, trigger: 'blur' }
-          ],
-          repass: [
-            { validator: validateRePass, trigger: 'blur' }
-          ],
-          realname: [
-            { required: true, message: '请输入真实姓名' }
-          ],
-          structure_id: [
-            { required: true, message: '请选择用户部门' }
-          ]
-        }
+      callback()
+    }
+    const validatePassword = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('密码不能为空'))
       }
-    },
-    methods: {
-      selectCheckbox () {
-        let temp = false
-        _(this.groupOptions).forEach((res) => {
-          if (this.selectedGroups.toString().indexOf(res.title) > -1) {
-            this.selectedIds.push(res.id)
+      const re = /[^\u0000-\u00FF]+/
+      const res = re.test(value)
+      console.log(res)
+      if (res) {
+        callback(new Error('密码只能包含半角字符，字母加数字'))
+      }
+      if (value.length < 6) {
+        callback(new Error('密码最小长度为6位'))
+      }
+      if (this.form.password !== this.form.repass && this.form.repass !== '') {
+        return callback(new Error('密码不一致'))
+      }
+      callback()
+    }
+    const validateRePass = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('确认密码不能为空'))
+      }
+      if (this.form.password !== this.form.repass) {
+        return callback(new Error('密码不一致'))
+      }
+      callback()
+    }
+    return {
+      config: {
+        crumb: [
+          {
+            to: '',
+            name: '系统'
+          },
+          {
+            to: '',
+            name: '账户管理'
+          },
+          {
+            to: '',
+            name: '添加账户'
           }
-        })
-        if (this.selectedIds.length) {
-          this.form.groups = _.cloneDeep(this.selectedIds)
-          temp = true
-        }
-        this.selectedIds = []
-        return temp
+        ]
       },
-      add (form) {
-        if (!this.selectCheckbox()) {
-          _g.toastMsg('warning', '请选择用户组')
-          return
+      isLoading: false,
+      form: {
+        username: '',
+        password: '',
+        realname: '',
+        structure_id: null,
+        remark: '',
+        repass: '',
+        groups: []
+      },
+      orgsOptions: [],
+      groupOptions: [],
+      selectedGroups: [],
+      selectedIds: [],
+      rules: {
+        username: [{ validator: validateUsername, trigger: 'blur' }],
+        password: [{ validator: validatePassword, trigger: 'blur' }],
+        repass: [{ validator: validateRePass, trigger: 'blur' }],
+        realname: [{ required: true, message: '请输入真实姓名' }],
+        structure_id: [{ required: true, message: '请选择用户部门' }]
+      }
+    }
+  },
+  methods: {
+    selectCheckbox() {
+      let temp = false
+      _(this.groupOptions).forEach(res => {
+        if (this.selectedGroups.toString().indexOf(res.title) > -1) {
+          this.selectedIds.push(res.id)
         }
-        // console.log('res = ', _g.j2s(this.form))
-        this.$refs.form.validate((pass) => {
-          if (pass) {
-            this.isLoading = !this.isLoading
-            this.apiPost('admin/users', this.form).then((res) => {
-              this.handelResponse(res, (data) => {
+      })
+      if (this.selectedIds.length) {
+        this.form.groups = _.cloneDeep(this.selectedIds)
+        temp = true
+      }
+      this.selectedIds = []
+      return temp
+    },
+    add(form) {
+      if (!this.selectCheckbox()) {
+        _g.toastMsg('warning', '请选择用户组')
+        return
+      }
+      this.$refs.form.validate(pass => {
+        if (pass) {
+          this.isLoading = !this.isLoading
+          this.apiPost('admin/users', this.form).then(res => {
+            this.handelResponse(
+              res,
+              data => {
                 _g.toastMsg('success', '添加成功')
                 _g.clearVuex('setUsers')
                 setTimeout(() => {
                   this.goback()
                 }, 1500)
-              }, () => {
+              },
+              () => {
                 this.isLoading = !this.isLoading
-              })
-            })
-          }
-        })
-      },
-      getAllGroups () {
-        this.apiGet('admin/groups').then((res) => {
-          this.handelResponse(res, (data) => {
-            this.groupOptions = data
+              }
+            )
           })
+        }
+      })
+    },
+    getAllGroups() {
+      this.apiGet('admin/groups').then(res => {
+        this.handelResponse(res, data => {
+          this.groupOptions = data
         })
-      }
-    },
-    created () {
-      this.getAllGroups()
-    },
-    mixins: [http, fomrMixin]
-  }
+      })
+    }
+  },
+  created() {
+    this.getAllGroups()
+  },
+  mixins: [http, fomrMixin]
+}
 </script>

@@ -156,7 +156,6 @@ export default {
         this.form.SYSTEM_NAME = data.SYSTEM_NAME
         this.form.IDENTIFYING_CODE = Boolean(parseInt(data.IDENTIFYING_CODE))
         this.form.LOGIN_SESSION_VALID = parseInt(data.LOGIN_SESSION_VALID)
-        //          this.form.LOGO_TYPE = data.LOGO_TYPE
         this.imageUrl = ResourceBaseUrl + data.SYSTEM_LOGO
         if (data.SYSTEM_LOGO) {
           let img = window.HOST + data.SYSTEM_LOGO
@@ -167,7 +166,7 @@ export default {
     })
   },
   components: {
-    preview,
+    preview
   },
   mixins: [http]
 }

@@ -33,25 +33,23 @@
 </template>
 
 <script>
-  import btnGroup from './components/btn-group.vue'
-  import downExcel from 'components/Common/down-excel.vue'
-  import tableModel from 'components/Common/table-model.vue'
-  import searchModel from 'components/Common/search-model.vue'
-  import pageModel from 'components/Common/page-model.vue'
+import btnGroup from './components/btn-group.vue'
+import downExcel from 'components/Common/down-excel.vue'
+import tableModel from 'components/Common/table-model.vue'
+import searchModel from 'components/Common/search-model.vue'
+import pageModel from 'components/Common/page-model.vue'
 
 export default {
-    props: ['data', 'config'],
-    components: {
-      btnGroup,
-      downExcel,
-      tableModel,
-      searchModel,
-      pageModel
-    },
-    data () {
-      return {
-
-      }
-    }
+  props: ['data', 'config'],
+  components: {
+    btnGroup,
+    downExcel,
+    tableModel,
+    searchModel,
+    pageModel
+  },
+  data() {
+    return {}
+  }
 }
 </script>

@@ -158,7 +158,7 @@ export default {
     })
   },
   components: {
-    ruleList,
+    ruleList
   },
   mixins: [http, fomrMixin]
 }

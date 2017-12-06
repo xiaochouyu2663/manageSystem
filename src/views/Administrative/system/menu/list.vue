@@ -159,7 +159,7 @@ export default {
     }
   },
   components: {
-    btnGroup,
+    btnGroup
   },
   mixins: [http]
 }
