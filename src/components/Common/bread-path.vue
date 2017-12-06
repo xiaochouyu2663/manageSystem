@@ -11,25 +11,7 @@
 
 <script>
 export default {
-  created() {
-    this.getBreadcrumb()
-  },
-  data() {
-    return {
-      levelList: null
-    }
-  },
-  watch: {
-    $route() {
-      this.getBreadcrumb()
-    }
-  },
-  methods: {
-    getBreadcrumb() {
-      let matched = this.$route.matched.filter(item => item.name)
-      this.levelList = matched
-    }
-  }
+  props: ['levelList']
 }
 </script>
 
