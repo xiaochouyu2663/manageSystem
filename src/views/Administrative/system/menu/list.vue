@@ -51,7 +51,7 @@
 			</el-table-column>
 		</el-table>
 		<div class="pos-rel p-t-20">
-			<btnGroup :selectedData="multipleSelection" :type="'menus'"></btnGroup>
+			<btnGroup :selectedData="multipleSelection" :baseApi="'admin/menus'"></btnGroup>
 
 		</div>
 	</div>
@@ -64,22 +64,6 @@ import http from 'assets/js/http'
 export default {
   data() {
     return {
-      config: {
-        crumb: [
-          {
-            to: '',
-            name: '系统'
-          },
-          {
-            to: '',
-            name: '系统配置'
-          },
-          {
-            to: '',
-            name: '菜单管理'
-          }
-        ]
-      },
       tableData: [],
       multipleSelection: [],
       fileList: [],
