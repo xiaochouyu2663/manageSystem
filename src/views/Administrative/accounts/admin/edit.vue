@@ -12,9 +12,6 @@
         <el-form-item label="确认密码" prop="repass">
 					<el-input v-model.trim="form.repass" class="h-40 w-200" type="password" :maxlength=12></el-input>
 				</el-form-item>
-				<el-form-item label="真实姓名" prop="realname">
-					<el-input v-model.trim="form.realname" class="h-40 w-200"></el-input>
-				</el-form-item>
 				<el-form-item label="备注">
 					<el-input v-model.trim="form.remark" class="h-40 w-200"></el-input>
 				</el-form-item>

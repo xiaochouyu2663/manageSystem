@@ -56,7 +56,7 @@ export default {
             }, 1500)
           },
           () => {
-            if (cate == 1) {
+            if (cate === 1) {
               this.enableLoading = !this.enableLoading
             } else {
               this.disableLoading = !this.disableLoading

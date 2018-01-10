@@ -1,12 +1,14 @@
 <template>
-  <div>
+  <div class="backgroundImg-login">
+    <img src="../../assets/images/logo.png" alt="" class="login-logo">
+    <span class='meg-login'>欢迎来到{{systemName}}，请登录!</span>
     <el-form :model="form" :rules="rules2" ref="form" label-position="left" label-width="0px" class="demo-ruleForm card-box loginform">
       <h3 class="title">{{systemName}}</h3>
       <el-form-item prop="username">
         <el-input type="text" v-model="form.username" auto-complete="off" placeholder="账号"></el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input type="password" v-model="form.password" auto-complete="off" placeholer="密码"></el-input>
+        <el-input type="password" v-model="form.password" auto-complete="off" placeholder="密码"></el-input>
       </el-form-item>
       <el-form-item v-show="requireVerify" prop="verifyCode">
         <el-input type="text" v-model="form.verifyCode" auto-complete="off" placeholder="验证码" class="w-150"></el-input>
@@ -21,7 +23,7 @@
 </template>
 
 <script>
-import http from '../../assets/js/http'
+import http from 'assets/js/http'
 
 export default {
   data() {
@@ -134,6 +136,24 @@ export default {
   top: 0px;
 }
 
+body{
+  background-color: #ffffff;
+  background-image: url(../../assets/images/backgroud.png);
+  background-repeat:no-repeat; 
+  background-position:0 100px;
+  background-size:100% 550px;
+}
+
+.login-logo{
+  width: 160px;
+  margin-top: 15px;
+  margin-left: 200px;
+}
+
+.meg-login{
+  margin-left: 500px;
+}
+
 .card-box {
   padding: 20px;
   /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
@@ -157,5 +177,6 @@ export default {
 .loginform {
   width: 350px;
   padding: 35px 35px 15px 35px;
+  margin-right: 120px;
 }
 </style>

@@ -15,7 +15,7 @@
         <!-- 隐藏内容 可配置是否以及内容-->
         <el-table-column type="expand" v-if="config.hidden">
             <template scope="props">
-                <el-form label-position="left" inline >
+                <el-form label-position="left" inline class='demo-table-expand'>
                     <el-form-item :label="config.hidden.items[i-1]" v-for="i in config.hidden.items.length">
                         <span>{{ props.row[config.hidden.prop[i-1]] }}</span>
                     </el-form-item>
@@ -57,11 +57,16 @@
             <template scope="scope">
                 <div>
                     <template v-if="config.operate.link" v-for="lin in config.operate.link">
-                        <span class="icon_button">
-  						<router-link :to="{ name: ''+lin.name, params: { id: scope.row.id }}">
-  						<i :class="lin.class" :title="lin.title"></i>
+                    <el-tooltip class="icon_button" effect="dark" :content="lin.title" placement="top">
+                        <router-link :to="{ name: ''+lin.name, params: { id: scope.row.id }}" :title="lin.title">
+                        <template v-if="lin.svg">
+                            <icon  :class="lin.class+'-icon'" :name="lin.class"></icon>
+                        </template>
+                        <template v-else>
+      						<i :class="lin.class"></i>
+                        </template>
   						</router-link>
-				    </span>
+				    </el-tooltip>
                     </template>
                     <span  class="icon_button" v-if="config.operate.del">
 							<a href="javascript:;" @click="confirmDelete(scope.row)" title="删除">
@@ -78,22 +83,22 @@
 import http from 'assets/js/http'
 export default {
   props: ['exchanged', 'tableData', 'config', 'baseApi'],
-  data () {
+  data() {
     return {}
   },
   methods: {
-    sortChange (column) {
+    sortChange(column) {
       if (column.prop === null || column.order === null) {
         this.exchanged.search.orderByString = ''
       } else {
         this.exchanged.search.orderByString = column.prop + '.' + column.order
       }
     },
-    selectItem (val) {
+    selectItem(val) {
       // checkbox方法
       this.exchanged.multipleSelection = val
     },
-    confirmDelete (item) {
+    confirmDelete(item) {
       this.$confirm('确认删除?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -130,3 +135,19 @@ export default {
   mixins: [http]
 }
 </script>
+
+<style>
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
+</style>
+

@@ -26,7 +26,7 @@
 		<!-- 底部 -->
 		<div class="pos-rel p-t-20">
 			<!-- 批量操作 -->
-			<btnGroup  v-if="!config.table.noGroup"  :selectedData="data.exchanged.multipleSelection" :baseApi="config.baseApi" :config="config.btnGroup"></btnGroup>
+			<btnGroup  v-if="!config.table.noGroup"  :selectedData="data.exchanged.multipleSelection" :baseApi="config.baseApi" :config="config.btnGroup" :exchanged="data.exchange"></btnGroup>
 			<!-- 翻页操作 -->
 			<page-model :data="data" :config="config.page" :dataCount="data.received.count" :limit="data.exchanged.search.limit" :currentPage="data.exchanged.search.page"></page-model>
 		</div>

@@ -18,8 +18,10 @@ import 'nprogress/nprogress.css'
 import 'assets/css/global.css'
 import 'assets/css/base.css'
 import Icon from 'vue-svg-icon/Icon.vue'
+// import VueSocketio from 'vue-socket.io'  需要构筑即时通讯系统  将该项注释打开 并在app.vue中编辑相应代码
 
-axios.defaults.baseURL = 'http://test.pstech360.com/php/index.php'
+// axios.defaults.baseURL = 'http://test.pstech360.com/php/public/'
+axios.defaults.baseURL = 'http://framework.com/'
 axios.defaults.timeout = 1000 * 15
 axios.defaults.headers.authKey = Lockr.get('authKey')
 axios.defaults.headers.sessionId = Lockr.get('sessionId')
@@ -47,12 +49,13 @@ router.afterEach(transition => {
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
+// Vue.use(VueSocketio, 'http://szt.pstech360.com:2021')
 Vue.component('icon', Icon)
 
 window.router = router
 window.store = store
 window.HOST = HOST
-window.ResourceBaseUrl = 'http://test.pstech360.com/php/'
+window.ResourceBaseUrl = axios.defaults.baseURL
 window.axios = axios
 window._ = _
 window.moment = moment

@@ -73,7 +73,12 @@ const routes = [
         path: 'dashboard/list',
         component: Dashboard,
         name: '后台首页',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'menu', path: [] }
+        meta: {
+          hideLeft: false,
+          module: 'Administrative',
+          menu: 'menu',
+          path: []
+        }
       }
     ]
   },
@@ -93,22 +98,30 @@ const routes = [
         path: 'menu/add',
         component: menuAdd,
         name: '添加菜单',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'menu', path: ['菜单管理'] }
+        meta: {
+          hideLeft: false,
+          module: 'Administrative',
+          menu: 'menu',
+          path: ['菜单管理']
+        }
       },
       {
         path: 'menu/edit/:id',
         component: menuEdit,
         name: '编辑菜单',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'menu', path: ['菜单管理'] }
-      }
-    ]
-  },
-  {
-    path: '/home',
-    component: Home,
-    name: '系统配置',
-    meta: { moduleName: '系统' },
-    children: [
+        meta: {
+          hideLeft: false,
+          module: 'Administrative',
+          menu: 'menu',
+          path: ['菜单管理']
+        }
+      },
+      {
+        path: 'Db/list',
+        component: DbList,
+        name: '数据备份',
+        meta: { hideLeft: false, module: 'Administrative', menu: 'Db' }
+      },
       {
         path: 'config/add',
         component: systemConfig,
@@ -118,15 +131,7 @@ const routes = [
           module: 'Administrative',
           menu: 'systemConfig'
         }
-      }
-    ]
-  },
-  {
-    path: '/home',
-    component: Home,
-    name: '系统配置',
-    meta: { moduleName: '系统' },
-    children: [
+      },
       {
         path: 'rule/list',
         component: ruleList,
@@ -137,13 +142,29 @@ const routes = [
         path: 'rule/add',
         component: ruleAdd,
         name: '添加权限',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'rule', path: ['权限规则'] }
+        meta: {
+          hideLeft: false,
+          module: 'Administrative',
+          menu: 'rule',
+          path: ['权限规则']
+        }
       },
       {
         path: 'rule/edit/:id',
         component: ruleEdit,
         name: '编辑权限',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'rule', path: ['权限规则'] }
+        meta: {
+          hideLeft: false,
+          module: 'Administrative',
+          menu: 'rule',
+          path: ['权限规则']
+        }
+      },
+      {
+        path: 'signlog/list',
+        component: signlogList,
+        name: '登陆日志',
+        meta: { hideLeft: false, module: 'Administrative', menu: 'signlog' }
       }
     ]
   },
@@ -163,13 +184,23 @@ const routes = [
         path: 'position/add',
         component: positionAdd,
         name: '添加岗位',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'position', path: ['岗位管理'] }
+        meta: {
+          hideLeft: false,
+          module: 'Administrative',
+          menu: 'position',
+          path: ['岗位管理']
+        }
       },
       {
         path: 'position/edit/:id',
         component: positionEdit,
         name: '编辑岗位',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'position', path: ['岗位管理'] }
+        meta: {
+          hideLeft: false,
+          module: 'Administrative',
+          menu: 'position',
+          path: ['岗位管理']
+        }
       }
     ]
   },
@@ -213,13 +244,23 @@ const routes = [
         path: 'groups/add',
         component: groupsAdd,
         name: '添加角色',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'groups', path: ['角色管理'] }
+        meta: {
+          hideLeft: false,
+          module: 'Administrative',
+          menu: 'groups',
+          path: ['角色管理']
+        }
       },
       {
         path: 'groups/edit/:id',
         component: groupsEdit,
         name: '编辑角色',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'groups', path: ['角色管理'] }
+        meta: {
+          hideLeft: false,
+          module: 'Administrative',
+          menu: 'groups',
+          path: ['角色管理']
+        }
       }
     ]
   },
@@ -239,47 +280,34 @@ const routes = [
         path: 'users/add',
         component: usersAdd,
         name: '添加账户',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'users', path: ['管 理 员'] }
+        meta: {
+          hideLeft: false,
+          module: 'Administrative',
+          menu: 'users',
+          path: ['管 理 员']
+        }
       },
       {
         path: 'users/edit/:id',
         component: usersEdit,
         name: '编辑账户',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'users', path: ['管 理 员'] }
+        meta: {
+          hideLeft: false,
+          module: 'Administrative',
+          menu: 'users',
+          path: ['管 理 员']
+        }
       },
       {
         path: 'users/Log/:id',
         component: usersLog,
         name: '账户日志',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'users', path: ['管 理 员'] }
-      }
-    ]
-  },
-  {
-    path: '/home',
-    component: Home,
-    name: '系统配置',
-    meta: { moduleName: '系统' },
-    children: [
-      {
-        path: 'Db/list',
-        component: DbList,
-        name: '数据备份',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'Db' }
-      }
-    ]
-  },
-  {
-    path: '/home',
-    component: Home,
-    name: '系统配置',
-    meta: { moduleName: '系统' },
-    children: [
-      {
-        path: 'signlog/list',
-        component: signlogList,
-        name: '登陆日志',
-        meta: { hideLeft: false, module: 'Administrative', menu: 'signlog' }
+        meta: {
+          hideLeft: false,
+          module: 'Administrative',
+          menu: 'users',
+          path: ['管 理 员']
+        }
       }
     ]
   },

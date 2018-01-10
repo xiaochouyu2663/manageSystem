@@ -4,8 +4,8 @@ var path = require('path')
 module.exports = {
   build: {
     env: require('./prod.env'),
-    index: path.resolve(__dirname, '../../dist/base/index.html'),
-    assetsRoot: path.resolve(__dirname, '../../dist/base'),
+    index: path.resolve(__dirname, '../../shunzhitang-cms-static/index.html'),
+    assetsRoot: path.resolve(__dirname, '../../shunzhitang-cms-static'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     productionSourceMap: true,

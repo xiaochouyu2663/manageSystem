@@ -82,6 +82,9 @@ export default {
     $route() {
       this.addViewTags()
     }
+  },
+  created(){
+    this.levelList = this.$route.matched.filter(item => item.name)
   }
 }
 </script>

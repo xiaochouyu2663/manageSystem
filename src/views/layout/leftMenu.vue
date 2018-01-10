@@ -5,7 +5,8 @@
 
 				<el-menu :default-active="active" :collapse="isCollapse" :unique-opened="true" background-color="#e1e1e1" active-text-color="#20a0ff">
 					<template v-for="secMenu in menuData">
-							<el-submenu :index="secMenu.id" v-if="secMenu.child">
+            <!-- 这里:index只能接收字符类型  假设后台返回的是int类型就需要进行类型转换  -->
+							<el-submenu :index="secMenu.id+''" v-if="secMenu.child">
 								<template slot="title">
 									<icon :class="secMenu.icon + '-icon'" :name="secMenu.icon"></icon>
 									<span>{{ secMenu.title }}</span>
@@ -52,7 +53,8 @@
   margin-right: 5px;
 }
 .el-submenu__title {
-  background-color: #e1e1e1 !important;
+  background-color: #ededed!important;
+  color: #495060!important;
 }
 </style>
 
@@ -88,6 +90,14 @@ export default {
         that.height = window.screenWidth
       })()
     }
+    // 延迟绑定监听
+    this.$watch('$route', {
+      deep: true,
+      handler: function() {
+        this.active = this.$route.path
+        // console.log('data:', this.active)
+      }
+    })
   },
   watch: {
     height(val) {
@@ -98,13 +108,6 @@ export default {
   created() {
     this.active = this.$route.path
     this.init()
-    // 延迟绑定监听
-    this.$watch('$route', {
-      deep: true,
-      handler: function() {
-        this.active = this.$route.path
-      }
-    })
   }
 }
 </script>

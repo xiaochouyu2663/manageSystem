@@ -1,9 +1,9 @@
 <template>
 <el-breadcrumb separator="/" class="app-breadcrumb">
 <transition-group tag="span" name="breadcrumb">
-  <el-breadcrumb-item :key="levelList[0].meta.moduleName">{{levelList[0].meta.moduleName}}</el-breadcrumb-item>
+  <el-breadcrumb-item v-if="levelList[0].meta" :key="levelList[0].meta.moduleName">{{levelList[0].meta.moduleName}}</el-breadcrumb-item>
   <el-breadcrumb-item :key="levelList[0].name" v-if="levelList[0].name !== 'dashboard'">{{ levelList[0].name }}</el-breadcrumb-item>
-  <el-breadcrumb-item :key="item"  v-for="item in levelList[1].meta.path">{{ item }}</el-breadcrumb-item>
+  <el-breadcrumb-item v-if="levelList[1].meta" :key="item"  v-for="item in levelList[1].meta.path">{{ item }}</el-breadcrumb-item>
   <el-breadcrumb-item :key="levelList[1].name">{{ levelList[1].name }}</el-breadcrumb-item>
 </transition-group>  
 </el-breadcrumb>

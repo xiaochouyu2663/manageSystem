@@ -59,22 +59,6 @@ import http from 'assets/js/http'
 export default {
   data() {
     return {
-      config: {
-        crumb: [
-          {
-            to: '',
-            name: '系统'
-          },
-          {
-            to: '',
-            name: '系统配置'
-          },
-          {
-            to: '',
-            name: '数据备份'
-          }
-        ]
-      },
       tableData: [],
       multipleSelection: [],
       fileList: [],
@@ -87,13 +71,28 @@ export default {
   },
   methods: {
     downloadsql(data) {
-      const a = document.createElement('a')
-      const url = ResourceBaseUrl + 'databak\\' + data.row.name
-      const filename = '数据备份.sql'
-      a.href = url
-      a.download = filename
-      a.click()
-      window.URL.revokeObjectURL(url)
+      // 请求后台数据 并生成xml文件
+      this.apiGet('admin/DbBackup', {
+            params: { name: data.row.name, tp: 'dowonload' }
+          }).then(res => {
+        _g.closeGlobalLoading()
+        this.handelResponse(res, data => {
+          this.downloadFile('backup.sql', data);
+        })
+      })
+    },
+    downloadFile(fileName, content){
+      var eleLink = document.createElement('a');
+      eleLink.download = fileName;
+      eleLink.style.display = 'none';
+      // 字符内容转变成blob地址
+      var blob = new Blob([content]);
+      eleLink.href = URL.createObjectURL(blob);
+      // 触发点击
+      document.body.appendChild(eleLink);
+      eleLink.click();
+      // 然后移除
+      document.body.removeChild(eleLink);
     },
     selectItem(val) {
       this.multipleSelection = val

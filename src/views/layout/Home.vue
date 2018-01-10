@@ -23,7 +23,7 @@
 		        {{username}}&nbsp;&nbsp;    
 		      </span>
           <div class="fr">
-          <icon class="photo-icon" name="photo" style="width:20px;height:20px;margin-top:20px"></icon>            
+          <icon class="admin-icon" name="admin" style="width:20px;height:20px;margin-top:20px"></icon>            
           </div>
 		      <el-dropdown-menu slot="dropdown">
 		        <el-dropdown-item command="changePwd">修改密码</el-dropdown-item>
@@ -124,10 +124,10 @@ export default {
         .catch(() => {})
     },
     switchTopMenu(item) {
-      console.log(item)
-      if (!item.child) {
-        router.push(item.url)
+      if (item.child[0].url === '') {
+        router.push(item.child[0].child[0].url)
       } else {
+        item.child[0].url
         router.push(item.child[0].url)
       }
     },
@@ -220,8 +220,8 @@ export default {
   transition: opacity 0.5s;
 }
 
-.icon-top-bar{
-  color: #657180
+.icon-top-bar {
+  color: white;
 }
 
 .fade-enter,
@@ -239,8 +239,15 @@ export default {
 .panel-top {
   height: 60px;
   line-height: 60px;
-  background: #e6e6e6;
-  color: black;
+  background: #409EFF;
+  color: white;
+}
+
+.panel-top hover{
+  height: 60px;
+  line-height: 60px;
+  background: #ededed;
+  color:#409EFF;
 }
 
 .panel-center {

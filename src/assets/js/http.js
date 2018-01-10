@@ -57,10 +57,10 @@ const apiMethods = {
     },
     handelResponse(res, cb, errCb) {
       _g.closeGlobalLoading()
-      if (res.code == 200) {
+      if (res.code === 200) {
         cb(res.data)
       } else {
-        if (typeof errCb == 'function') {
+        if (typeof errCb === 'function') {
           errCb()
         }
         this.handleError(res)
@@ -104,13 +104,15 @@ const apiMethods = {
       }
     },
     resetCommonData(data) {
+      console.log('data:', data)
       _(data.menusList).forEach((res, key) => {
-        if (key == 0) {
+        if (key === 0) {
           res.selected = true
         } else {
           res.selected = false
         }
       })
+      console.log(data.menusList)
       Lockr.set('menus', data.menusList)                 // 菜单数据
       Lockr.set('authKey', data.authKey)               // 权限认证
       Lockr.set('rememberKey', data.rememberKey)      // 记住密码的加密字符串
@@ -121,14 +123,12 @@ const apiMethods = {
       let routerUrl = ''
       if (data.menusList[0].url) {
         routerUrl = data.menusList[0].url
-          console.log(routerUrl)
       } else {
         routerUrl = data.menusList[0].child[0].url
-          console.log(routerUrl)
       }
       setTimeout(() => {
         let path = this.$route.path
-        if (routerUrl != path) {
+        if (routerUrl !== path) {
           router.replace(routerUrl)
         } else {
           _g.shallowRefresh(this.$route.name)
