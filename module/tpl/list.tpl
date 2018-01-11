@@ -29,7 +29,7 @@ export default {
           filterVal: {{$filterVal}}
         },
         table: {
-          
+          noGroup: true,
           checkbox: false,
           status: false,
           sort: {
