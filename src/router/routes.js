@@ -41,6 +41,7 @@ import Error from '../views/Error/404.vue'
 import chartsList from '../views/Demo/charts/list.vue'
 import chartsLine from '../views/Demo/charts/line.vue'
 import chartsMix from '../views/Demo/charts/mix.vue'
+import articlesList from '../views/blog/Articles/list.vue'
 
 /**
  * meta参数解析
@@ -468,6 +469,20 @@ const routes = [
         component: chartsMix,
         name: 'chartsMix',
         meta: { hideLeft: false, module: 'Demo', menu: 'charts' }
+      }
+    ]
+  },
+  {
+    path: '/blog',
+    component: Home,
+    name: '文章',
+    meta: { moduleName: '博客' },
+    children: [
+      {
+        path: 'articles/list',
+        component: articlesList,
+        name: '文章列表',
+        meta: { hideLeft: false, module: 'Blog', menu: 'articles' }
       }
     ]
   },
