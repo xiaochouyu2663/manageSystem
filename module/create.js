@@ -72,11 +72,23 @@ var dealFile = function(err, TplData) {
     http.handelResponse(res, data => {
       // 遍历对象
       let filterVal = []
+      let form = {}
+      let formInput = ''
+      let temp = {}
       for (variable in res.data.list[0]) {
         filterVal[filterVal.length] = " '" + variable + "'"
+        form[variable] = null
+        temp.prop = variable
+        temp.label = variable
+        formInput += JSON.stringify(temp) + ','
       }
+      console.log(formInput)
+
       TplData = TplData.toString().replace(/\{\{\$baseApi\}\}/g, args[0])
+      TplData = TplData.toString().replace(/\{\{\$form\}\}/g, JSON.stringify(form))
+      TplData = TplData.toString().replace(/\{\{\$formInput\}\}/g, formInput)
       TplData = TplData.toString().replace(/\{\{\$filterVal\}\}/g, '[' + filterVal.join(',') + ']')
+
       fs.writeFile('src/views/' + args[0] + '/list.vue', TplData, function(err) {
         if (err) {
           return console.log(err)

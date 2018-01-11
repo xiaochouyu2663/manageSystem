@@ -131,4 +131,8 @@ body {
   height: 2px;
 }
 
+.el-button {
+  padding: 9px 20px !important;
+}
+
 </style>

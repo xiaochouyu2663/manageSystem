@@ -1,18 +1,105 @@
-
 <template>
-	<List :data="data" :config="config" :showLoading="showLoading"></List>
+<div>
+			<!-- 头部 -->
+		<div class="m-b-20 ovf-hd">
+			<!-- 页面跳转 -->
+			<div class="fl">
+        <el-button type="primary" icon="document" @click="Add" >新增</el-button>
+			</div>
+			<!-- 导出Excel表格 -->
+			<downExcel :baseApi="config.baseApi" :config="config.excel" :tableData="data.received.table" :conditions="data.exchanged.search"></downExcel>
+			<div>
+				<!-- 搜索 -->
+				<search-model :config="config.search" :data="data"></search-model>
+			</div>
+		</div>
+		<!-- 头部 -->
+
+		<!-- 内容 -->
+		<transition name="fade" mode="out-in" appear>
+			<table-model v-loading="showLoading" :Edit="Edit" :tableData="data.received.table" :config="config.table" :exchanged="data.exchanged" :baseApi="config.baseApi"></table-model>
+    </transition>
+		<!-- 内容 -->
+
+		<!-- 底部 -->
+		<div class="pos-rel p-t-20">
+			<!-- 批量操作 -->
+			<btnGroup  v-if="!config.table.noGroup"  :selectedData="data.exchanged.multipleSelection" :baseApi="config.baseApi" :config="config.btnGroup" :exchanged="data.exchange"></btnGroup>
+			<!-- 翻页操作 -->
+			<page-model :data="data" :config="config.page" :dataCount="data.received.count" :limit="data.exchanged.search.limit" :currentPage="data.exchanged.search.page"></page-model>
+		</div>
+		 <!--底部 -->
+        <!-- 新增 -->
+    <el-dialog :title="Edit.config.title" :visible.sync="Edit.dialogFormVisible">
+      <el-form ref="form" :model="Edit.data.form" :rules="Edit.config.rules" label-width="130px">
+				
+        <!-- 普通输入类型 -->
+        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Edit.config.form.input">
+          <el-input v-model.trim="Edit.data.form[item.prop]" class="h-40 w-200" :maxlength=12 ></el-input>
+        </el-form-item>
+
+        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Edit.config.form.select">
+          <el-select v-model="Edit.data.form[item.prop]" :placeholder="item.placeholder" class="w-200">
+            <el-option v-for="option in Edit.data.selectData[item.prop]" :label="option.label" :value="option.value"></el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Edit.config.form.multipleSelect">
+          <el-select v-model="Edit.data.form[item.prop]" :placeholder="item.placeholder" class="w-200" multiple>
+            <el-option v-for="option in Edit.data.selectData[item.prop]" :label="option.label" :value="option.value"></el-option>
+          </el-select>
+        </el-form-item>
+			</el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      </div>
+    </el-dialog>
+    <!-- 新增 -->
+
+</div>
 </template>
 
 <script>
-import List from 'components/tpl/list.vue'
 import http from 'assets/js/http.js'
+import btnGroup from 'components/Common/btn-group.vue'
+import downExcel from 'components/Common/down-excel.vue'
+import tableModel from 'components/Common/table-modelUp.vue'
+import searchModel from 'components/Common/search-model.vue'
+import pageModel from 'components/Common/page-model.vue'
 
 export default {
   components: {
-    List
+    btnGroup,
+    downExcel,
+    tableModel,
+    searchModel,
+    pageModel
   },
   data() {
     return {
+      Edit: {
+        dialogFormVisible: false,
+        data: {
+          primary: '',
+          form: {{$form}},
+          selectData: {{$form}}, // 这里是可选项字段 
+        },
+        config: {
+          title: '新增',
+          form: {
+            input: [
+              {{$formInput}}
+            ],
+            select: [
+              {{$formInput}}
+            ]
+          },
+          rules: {
+            goodsName: [{ required: true, message: '请输入商品名称' }]  // 这里是添加内容时的限制条件
+          }
+        }
+      },
       config: {
         baseApi: '{{$baseApi}}',
         jump: [
@@ -33,13 +120,16 @@ export default {
           checkbox: false,
           status: false,
           sort: {
-            username: 'custom',
-            create_time: 'custom'
+            field: 'custom',   // 可排序字段
           },
           show: {
             items: {{$filterVal}},
             prop: {{$filterVal}},
             width: [150, 200, 200, 250]
+          },
+          operate: {
+            del: true,
+            edit: true
           }
         },
         search: {
@@ -114,6 +204,9 @@ export default {
     init() {
       // 基本数据获取
       this.tableData()
+    },
+    Add() {
+      this.Edit.dialogFormVisible = true // 显示窗体
     },
     tableData() {
       // 表格数据
