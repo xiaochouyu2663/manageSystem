@@ -65,29 +65,29 @@ var dealFile = function(err, TplData) {
     return console.error(err)
   }
   // 获取restful风格接口数据
-  let url = args[0]
-
+  const url = 'JsonConfig'
+  const data = {
+    params: {
+      configName: args[1]
+    }
+  }
   // get 方式 获取
-  http.apiGet(url).then(res => {
+  http.apiGet(url, data).then(res => {
     http.handelResponse(res, data => {
-      // 遍历对象
-      let filterVal = []
-      let form = {}
-      let formInput = ''
-      let temp = {}
-      for (variable in res.data.list[0]) {
-        filterVal[filterVal.length] = " '" + variable + "'"
-        form[variable] = null
-        temp.prop = variable
-        temp.label = variable
-        formInput += JSON.stringify(temp) + ','
-      }
-      console.log(formInput)
+      // // 遍历对象
+      // let filterVal = []
+      // let form = {}
+      // let formInput = ''
+      // let temp = {}
+      // for (variable in res.data.list[0]) {
+      //   filterVal[filterVal.length] = " '" + variable + "'"
+      //   form[variable] = null
+      //   temp.prop = variable
+      //   temp.label = variable
+      //   formInput += JSON.stringify(temp) + ','
+      // }
 
-      TplData = TplData.toString().replace(/\{\{\$baseApi\}\}/g, args[0])
-      TplData = TplData.toString().replace(/\{\{\$form\}\}/g, JSON.stringify(form))
-      TplData = TplData.toString().replace(/\{\{\$formInput\}\}/g, formInput)
-      TplData = TplData.toString().replace(/\{\{\$filterVal\}\}/g, '[' + filterVal.join(',') + ']')
+      TplData = TplData.toString().replace(/\{\{\$config\}\}/g, JSON.stringify(res))
 
       fs.writeFile('src/views/' + args[0] + '/list.vue', TplData, function(err) {
         if (err) {

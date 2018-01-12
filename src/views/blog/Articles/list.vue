@@ -4,7 +4,7 @@
 		<div class="m-b-20 ovf-hd">
 			<!-- 页面跳转 -->
 			<div class="fl">
-        <el-button type="primary" icon="document" @click="Add" >新增</el-button>
+        <el-button type="primary" icon="document" @click="AddItems" >新增</el-button>
 			</div>
 			<!-- 导出Excel表格 -->
 			<downExcel :baseApi="config.baseApi" :config="config.excel" :tableData="data.received.table" :conditions="data.exchanged.search"></downExcel>
@@ -30,33 +30,32 @@
 		</div>
 		 <!--底部 -->
         <!-- 新增 -->
-    <el-dialog :title="Edit.config.title" :visible.sync="Edit.dialogFormVisible">
-      <el-form ref="form" :model="Edit.data.form" :rules="Edit.config.rules" label-width="130px">
+    <el-dialog :title="Add.config.title" :visible.sync="Add.dialogFormVisible">
+      <el-form ref="form" :model="Add.data.form" :rules="Add.config.rules" label-width="130px">
 				
         <!-- 普通输入类型 -->
-        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Edit.config.form.input">
-          <el-input v-model.trim="Edit.data.form[item.prop]" class="h-40 w-200" :maxlength=12 ></el-input>
+        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Add.config.form.input">
+          <el-input v-model.trim="Add.data.form[item.prop]" class="h-40 w-200" :maxlength=12 ></el-input>
         </el-form-item>
 
-        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Edit.config.form.select">
-          <el-select v-model="Edit.data.form[item.prop]" :placeholder="item.placeholder" class="w-200">
-            <el-option v-for="option in Edit.data.selectData[item.prop]" :label="option.label" :value="option.value"></el-option>
+        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Add.config.form.select">
+          <el-select v-model="Add.data.form[item.prop]" :placeholder="item.placeholder" class="w-200">
+            <el-option v-for="option in Add.data.selectData[item.prop]" :label="option.label" :value="option.value"></el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Edit.config.form.multipleSelect">
-          <el-select v-model="Edit.data.form[item.prop]" :placeholder="item.placeholder" class="w-200" multiple>
-            <el-option v-for="option in Edit.data.selectData[item.prop]" :label="option.label" :value="option.value"></el-option>
+        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Add.config.form.multipleSelect">
+          <el-select v-model="Add.data.form[item.prop]" :placeholder="item.placeholder" class="w-200" multiple>
+            <el-option v-for="option in data.received.search[item.prop]" :label="option.label" :value="option.value"></el-option>
           </el-select>
         </el-form-item>
 			</el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button @click="Add.dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="commitAdd">确 定</el-button>
       </div>
     </el-dialog>
     <!-- 新增 -->
-
 </div>
 </template>
 
@@ -78,97 +77,70 @@ export default {
   },
   data() {
     return {
+      Add: {
+        dialogFormVisible: false,
+        data: {
+          primary: '',
+          form: { Author: null, Title: null },
+          selectData: { type: null }
+        },
+        config: {
+          title: '新增1',
+          form: {
+            input: [
+              { prop: 'Author', label: '作者' },
+              { prop: 'Title', label: '文章标题' }
+            ],
+            select: [{ prop: 'type', label: '文章类型(单选)' }]
+          },
+          rules: {
+            Author: [{ required: true, message: '请输入作者' }],
+            Title: [{ required: true, message: '请输入文章标题' }]
+          }
+        }
+      },
       Edit: {
         dialogFormVisible: false,
         data: {
           primary: '',
-          form: {
-            id: null,
-            Author: null,
-            Title: null,
-            type: null,
-            publishDate: null,
-            upvote: null
-          },
-          selectData: {
-            id: null,
-            Author: null,
-            Title: null,
-            type: null,
-            publishDate: null,
-            upvote: null
-          } // 这里是可选项字段
+          form: { Author: null, Title: null },
+          selectData: { type: null }
         },
         config: {
-          title: '新增',
+          title: '编辑1',
           form: {
             input: [
-              { prop: 'id', label: 'id' },
-              { prop: 'Author', label: 'Author' },
-              { prop: 'Title', label: 'Title' },
-              { prop: 'type', label: 'type' },
-              { prop: 'publishDate', label: 'publishDate' },
-              { prop: 'upvote', label: 'upvote' }
+              { prop: 'Author', label: '作者' },
+              { prop: 'Title', label: '文章标题' }
             ],
-            select: [
-              { prop: 'id', label: 'id' },
-              { prop: 'Author', label: 'Author' },
-              { prop: 'Title', label: 'Title' },
-              { prop: 'type', label: 'type' },
-              { prop: 'publishDate', label: 'publishDate' },
-              { prop: 'upvote', label: 'upvote' }
-            ]
+            select: [{ prop: 'type', label: '文章类型(单选)' }]
           },
-          rules: {
-            goodsName: [{ required: true, message: '请输入商品名称' }] // 这里是添加内容时的限制条件
-          }
+          rules: []
         }
       },
       config: {
         baseApi: 'blog/Articles',
-        jump: [
-          {
-            to: 'add',
-            name: '添加',
-            class: 'btn-link-large add-btn',
-            icon: 'el-icon-plus'
-          }
-        ],
         excel: {
-          fileName: '列表',
-          tHeader: ['id', 'Author', 'Title', 'type', 'publishDate', 'upvote'],
-          filterVal: ['id', 'Author', 'Title', 'type', 'publishDate', 'upvote']
+          fileName: '1列表',
+          tHeader: ['作者', '文章标题', '文章类型'],
+          filterVal: ['Author', 'Title', 'typeName']
         },
         table: {
           noGroup: true,
           checkbox: false,
           status: false,
-          sort: {
-            field: 'custom' // 可排序字段
-          },
+          sort: { field: 'custom' },
           show: {
-            items: ['id', 'Author', 'Title', 'type', 'publishDate', 'upvote'],
-            prop: ['id', 'Author', 'Title', 'type', 'publishDate', 'upvote'],
-            width: [150, 200, 200, 250]
+            items: ['作者', '文章标题', '文章类型'],
+            prop: ['Author', 'Title', 'typeName'],
+            width: [200, 200, 200, 200]
           },
-          operate: {
-            del: true,
-            edit: true
-          }
+          operate: { del: true, edit: true }
         },
         search: {
-          search_input: [
-            {
-              name: 'field',
-              placeholder: 'fieldName'
-            }
-          ],
+          search_input: [{ name: 'field', placeholder: 'fieldName' }],
           search_select: [
-            {
-              name: 'status',
-              placeholder: '请选择状态',
-              multiple: false
-            }
+            { name: 'type', placeholder: '文章类型' }
           ]
         },
         page: {
@@ -181,24 +153,12 @@ export default {
           table: [],
           count: null,
           search: {
-            status: [
-              {
-                label: '启用',
-                value: '1'
-              },
-              {
-                label: '禁用',
-                value: '0'
-              }
-            ]
+            status: [{ label: '启用', value: '1' }, { label: '禁用', value: '0' }],
+            type: this.Add.data.selectData.type
           }
         },
         exchanged: {
-          search: {
-            limit: 10,
-            page: 1,
-            orderByString: ''
-          },
+          search: { limit: 10, page: 1, orderByString: '' },
           multipleSelection: [],
           isDelete: 0
         }
@@ -229,8 +189,22 @@ export default {
       // 基本数据获取
       this.tableData()
     },
-    Add() {
-      this.Edit.dialogFormVisible = true // 显示窗体
+    AddItems() {
+      this.getSelect()
+      this.Add.dialogFormVisible = true // 显示窗体
+    },
+    getSelect() {
+      let url = 'blog/ArticleTypes'
+      this.apiGet(url).then(res => {
+        this.handelResponse(res, data => {
+          data.list.map(function(i) {
+            i.value = i.id
+            i.label = i.typeName
+          })
+          console.log('data.list', data.list)
+          this.data.received.search.type = data.list
+        })
+      })
     },
     tableData() {
       // 表格数据
@@ -257,6 +231,27 @@ export default {
         }
       }
       return params
+    },
+    commitAdd() {
+      console.log(this.Add.data.form)
+      this.$refs.form.validate(pass => {
+        if (pass) {
+          // 提交数据
+          this.apiPost(this.config.baseApi, this.Add.data.form).then(res => {
+            this.handelResponse(
+              res,
+              data => {
+                _g.toastMsg('success', res.data)
+                this.data.exchanged.isDelete++
+                this.Add.dialogFormVisible = false // 显示窗体
+              },
+              () => {
+                this.isLoading = !this.isLoading
+              }
+            )
+          })
+        }
+      })
     }
   },
   mixins: [http]

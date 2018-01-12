@@ -4,7 +4,7 @@
 		<div class="m-b-20 ovf-hd">
 			<!-- 页面跳转 -->
 			<div class="fl">
-        <el-button type="primary" icon="document" @click="Add" >新增</el-button>
+        <el-button type="primary" icon="document" @click="AddItems" >新增</el-button>
 			</div>
 			<!-- 导出Excel表格 -->
 			<downExcel :baseApi="config.baseApi" :config="config.excel" :tableData="data.received.table" :conditions="data.exchanged.search"></downExcel>
@@ -30,33 +30,32 @@
 		</div>
 		 <!--底部 -->
         <!-- 新增 -->
-    <el-dialog :title="Edit.config.title" :visible.sync="Edit.dialogFormVisible">
-      <el-form ref="form" :model="Edit.data.form" :rules="Edit.config.rules" label-width="130px">
+    <el-dialog :title="Add.config.title" :visible.sync="Add.dialogFormVisible">
+      <el-form ref="form" :model="Add.data.form" :rules="Add.config.rules" label-width="130px">
 				
         <!-- 普通输入类型 -->
-        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Edit.config.form.input">
-          <el-input v-model.trim="Edit.data.form[item.prop]" class="h-40 w-200" :maxlength=12 ></el-input>
+        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Add.config.form.input">
+          <el-input v-model.trim="Add.data.form[item.prop]" class="h-40 w-200" :maxlength=12 ></el-input>
         </el-form-item>
 
-        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Edit.config.form.select">
-          <el-select v-model="Edit.data.form[item.prop]" :placeholder="item.placeholder" class="w-200">
-            <el-option v-for="option in Edit.data.selectData[item.prop]" :label="option.label" :value="option.value"></el-option>
+        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Add.config.form.select">
+          <el-select v-model="Add.data.form[item.prop]" :placeholder="item.placeholder" class="w-200">
+            <el-option v-for="option in Add.data.selectData[item.prop]" :label="option.label" :value="option.value"></el-option>
           </el-select>
         </el-form-item>
 
-        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Edit.config.form.multipleSelect">
-          <el-select v-model="Edit.data.form[item.prop]" :placeholder="item.placeholder" class="w-200" multiple>
-            <el-option v-for="option in Edit.data.selectData[item.prop]" :label="option.label" :value="option.value"></el-option>
+        <el-form-item :label="item.label" :prop="item.prop" v-for="item in Add.config.form.multipleSelect">
+          <el-select v-model="Add.data.form[item.prop]" :placeholder="item.placeholder" class="w-200" multiple>
+            <el-option v-for="option in Add.data.selectData[item.prop]" :label="option.label" :value="option.value"></el-option>
           </el-select>
         </el-form-item>
 			</el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button @click="Add.dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="commitAdd">确 定</el-button>
       </div>
     </el-dialog>
     <!-- 新增 -->
-
 </div>
 </template>
 
@@ -77,109 +76,7 @@ export default {
     pageModel
   },
   data() {
-    return {
-      Edit: {
-        dialogFormVisible: false,
-        data: {
-          primary: '',
-          form: {{$form}},
-          selectData: {{$form}}, // 这里是可选项字段 
-        },
-        config: {
-          title: '新增',
-          form: {
-            input: [
-              {{$formInput}}
-            ],
-            select: [
-              {{$formInput}}
-            ]
-          },
-          rules: {
-            goodsName: [{ required: true, message: '请输入商品名称' }]  // 这里是添加内容时的限制条件
-          }
-        }
-      },
-      config: {
-        baseApi: '{{$baseApi}}',
-        jump: [
-          {
-            to: 'add',
-            name: '添加',
-            class: 'btn-link-large add-btn',
-            icon: 'el-icon-plus'
-          }
-        ],
-        excel: {
-          fileName: '列表',
-          tHeader: {{$filterVal}},
-          filterVal: {{$filterVal}}
-        },
-        table: {
-          noGroup: true,
-          checkbox: false,
-          status: false,
-          sort: {
-            field: 'custom',   // 可排序字段
-          },
-          show: {
-            items: {{$filterVal}},
-            prop: {{$filterVal}},
-            width: [150, 200, 200, 250]
-          },
-          operate: {
-            del: true,
-            edit: true
-          }
-        },
-        search: {
-          search_input: [
-            {
-              name: 'field',
-              placeholder: 'fieldName'
-            }
-          ],
-          search_select: [
-            {
-              name: 'status',
-              placeholder: '请选择状态',
-              multiple: false
-            }
-          ]
-        },
-        page: {
-          limits: [5, 10, 20, 50, 100],
-          layout: 'total, sizes, prev, pager, next, jumper'
-        }
-      },
-      data: {
-        received: {
-          table: [],
-          count: null,
-          search: {
-            status: [
-              {
-                label: '启用',
-                value: '1'
-              },
-              {
-                label: '禁用',
-                value: '0'
-              }
-            ]
-          }
-        },
-        exchanged: {
-          search: {
-            limit: 10,
-            page: 1,
-            orderByString: ''
-          },
-          multipleSelection: [],
-          isDelete: 0
-        }
-      }
-    }
+    return {{$config}}
   },
   created() {
     this.init()
@@ -205,8 +102,23 @@ export default {
       // 基本数据获取
       this.tableData()
     },
-    Add() {
-      this.Edit.dialogFormVisible = true // 显示窗体
+    AddItems() {
+      this.getSelect()
+      this.Add.dialogFormVisible = true // 显示窗体
+    },
+    getSelect() {
+      // let url = 'blog/ArticleTypes'
+      // this.apiGet(url).then(res => {
+      //   this.handelResponse(res, data => {
+      //     data.list.map(function(i) {
+      //       i.value = i.id
+      //       i.label = i.typeName
+      //     })
+      //     console.log('data.list', data.list)
+      //     this.Edit.data.selectData.type = data.list
+      //     this.Add.data.selectData.type = data.list
+      //   })
+      // })
     },
     tableData() {
       // 表格数据
@@ -233,6 +145,27 @@ export default {
         }
       }
       return params
+    },
+    commitAdd() {
+      console.log(this.Add.data.form)
+      this.$refs.form.validate(pass => {
+        if(pass){
+          // 提交数据
+          this.apiPost(this.config.baseApi, this.Add.data.form).then(res => {
+            this.handelResponse(
+              res,
+              data => {
+                _g.toastMsg('success', res.data)
+                this.data.exchanged.isDelete++
+                this.Add.dialogFormVisible = false // 显示窗体
+              },
+              () => {
+                this.isLoading = !this.isLoading
+              }
+            )
+          })
+        }
+      })
     }
   },
   mixins: [http]

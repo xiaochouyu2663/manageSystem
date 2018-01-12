@@ -20,8 +20,8 @@ import 'assets/css/base.css'
 import Icon from 'vue-svg-icon/Icon.vue'
 // import VueSocketio from 'vue-socket.io'  需要构筑即时通讯系统  将该项注释打开 并在app.vue中编辑相应代码
 
-// axios.defaults.baseURL = 'http://test.pstech360.com/php/public/'
-axios.defaults.baseURL = 'http://framework.com/'
+axios.defaults.baseURL = 'http://test.pstech360.com/php/public/'
+// axios.defaults.baseURL = 'http://framework.com/'
 axios.defaults.timeout = 1000 * 15
 axios.defaults.headers.authKey = Lockr.get('authKey')
 axios.defaults.headers.sessionId = Lockr.get('sessionId')
