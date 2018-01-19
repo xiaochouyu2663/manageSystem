@@ -297,4 +297,8 @@ export default {
 .hide-leftMenu {
   left: 0px;
 }
+
+.el-menu-item.is-active{
+  background-color:rgb(210, 210, 210)!important;
+}
 </style>

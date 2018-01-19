@@ -147,11 +147,14 @@ body{
 .login-logo{
   width: 160px;
   margin-top: 15px;
-  margin-left: 200px;
+  margin-left: 160px;
 }
 
 .meg-login{
-  margin-left: 500px;
+  width: 372px;
+  margin-right: 117px;
+  float: right;
+  margin-top: 75px;
 }
 
 .card-box {

@@ -135,4 +135,38 @@ body {
   padding: 9px 20px !important;
 }
 
+a.tags-view-item.router-link-exact-active.router-link-active.active{
+  background-color: #20a0ff;
+  color: #fff;
+  border-color: #20a0ff;
+}
+
+.el-message--warning{
+
+}
+
+.el-message--success .el-message__content{
+  color: #20a0ff!important;
+}
+
+.el-icon-success:before{
+  color: #20a0ff!important;
+}
+
+.el-form-item.is-success .el-input__inner, .el-form-item.is-success .el-input__inner:focus, .el-form-item.is-success .el-textarea__inner, .el-form-item.is-success .el-textarea__inner:focus {
+  border-color: #20a0ff!important;
+}
+.tags-view-container .tags-view-item.active{
+  background-color: #20a0ff!important;
+  color: #fff;
+  border-color: #20a0ff!important;
+}
+
+.content{
+  background: rgb(225, 225, 225);
+}
+
+.el-submenu__title :hover{
+  background: rgb(190, 190, 190)!important;
+}
 </style>
