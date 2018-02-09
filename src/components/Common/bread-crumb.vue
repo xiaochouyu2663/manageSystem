@@ -4,8 +4,9 @@
         <div class="fl betterline">
           <bread-path :levelList="levelList"></bread-path>
         </div>
+        <!-- <div>demo</div> -->
         <scroll-pane class='tags-view-container'>
-          <router-link class="tags-view-item" :class="isActive(tag)?'active':''" v-for="tag in Array.from(visitedViews)" :to="tag.path":key="tag.path">
+          <router-link class="tags-view-item" :class="isActive(tag)?'active':''" v-for="tag in Array.from(visitedViews)" :to="tag.path" :key="tag.path">
              {{tag.name}}
           <span class='el-icon-close' @click='closeViewTags(tag,$event)'></span>
           </router-link>
@@ -107,25 +108,26 @@ export default {
   margin-right: 20px;
 }
 .betterline {
-  margin-top: 3.2px;
+  padding-left:10px;
+  background: url(../../assets/images/location.png) no-repeat left 2px;
 }
 .tags-view-container {
-  background: #fff;
+  // background: #fff;
   height: 34px;
-  border-bottom: 1px solid #d8dce5;
+  // border-bottom: 1px solid #d8dce5;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
   .tags-view-item {
     display: inline-block;
     position: relative;
-    height: 22px;
-    line-height: 26px;
-    border: 1px solid #d8dce5;
-    color: #495060;
-    background: #fff;
+    height: 30px;
+    line-height: 34px;
+    border: 1px dashed #b1b1b1;
+    color: #b1b1b1;
     padding: 0 8px;
-    font-size: 12px;
+    font-size: 14px;
     margin-left: 5px;
-    margin-top: 4px;
+    border-radius: 5px;
+    
     &:first-of-type {
       margin-left: 15px;
     }
@@ -141,6 +143,7 @@ export default {
         height: 8px;
         border-radius: 50%;
         position: relative;
+        top: -1px;
         margin-right: 2px;
       }
     }
@@ -152,6 +155,9 @@ export default {
 .tags-view-container {
   .tags-view-item {
     .el-icon-close {
+      position: relative;
+      top: 2px;
+      font-size :16px;
       width: 16px;
       height: 16px;
       vertical-align: 2px;
@@ -159,11 +165,7 @@ export default {
       text-align: center;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       transform-origin: 100% 50%;
-      &:before {
-        transform: scale(0.6);
-        display: inline-block;
-        vertical-align: -3px;
-      }
+      
       &:hover {
         background-color: #b4bccc;
         color: #fff;

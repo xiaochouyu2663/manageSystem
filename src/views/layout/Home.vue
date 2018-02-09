@@ -1,58 +1,64 @@
 <template>
-	<el-row class="panel m-w-1280">
-		<el-col :span="24" class="panel-top">
-			<el-col :span="4">
-        <!--<template v-if="logo_type == '1'">-->
-          <!--<img :src="img" class="logo">-->
-        <!--</template>-->
-        <!--<template v-else>-->
-          <span class="p-l-20">{{title}}</span>
-        <!--</template>-->
-			</el-col>
-			<el-col :span="16" class="ofv-hd">
-				<div class="fl p-l-20 p-r-20 top-menu" :class="{'top-active': menu.selected}" v-for="menu in topMenu" @click="switchTopMenu(menu)">{{menu.title}}</div>
-			</el-col>
-			<el-col :span="4" class="pos-rel">
-         <el-tooltip class="item" effect="dark" :content="screenMsg" placement="bottom">
-          <a href="javascript:;" @click="screenfull" class="icon-top-bar">
-            <icon class="icon-screenfull" name="screenfull"></icon>           
-          </a>
-        </el-tooltip>
-				<el-dropdown @command="handleMenu" class="user-menu">
-		      <span class="el-dropdown-link c-gra" style="cursor: pointer">
-		        {{username}}&nbsp;&nbsp;    
-		      </span>
-          <div class="fr">
-          <icon class="admin-icon" name="admin" style="width:20px;height:20px;margin-top:20px"></icon>            
+  <div class="panel">
+    <div class="panel-top">
+      <el-row>
+        <el-col :span="4">
+          <!--<template v-if="logo_type == '1'">-->
+            <!--<img :src="img" class="logo">-->
+          <!--</template>-->
+          <!--<template v-else>-->
+            <span class="p-l-20">{{title}}</span>
+          <!--</template>-->
+        </el-col>
+        <el-col :span="18" class="ofv-hd">
+          <div class="fl p-l-20 p-r-20 top-menu" :class="{'top-active': menu.selected}" v-for="menu in topMenu" @click="switchTopMenu(menu)">{{menu.title}}</div>
+        </el-col>
+        <el-col :span="2" class="pos-rel">
+         
+          <el-dropdown @command="handleMenu" class="user-menu">
+            
+            <div class="fr" >
+              <icon class="admin-icon" name="admin" style="width:20px;height:20px;margin-top:20px"></icon>            
+            </div>
+            <span class="el-dropdown-link c-gra" style="cursor: pointer">
+              {{username}}&nbsp;&nbsp;    
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item command="changePwd">修改密码</el-dropdown-item>
+              <el-dropdown-item command="logout">退出</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+           <el-tooltip class="item" effect="dark" :content="screenMsg" placement="bottom">
+            <a href="javascript:;" @click="screenfull" class="icon-top-bar">
+              <icon class="icon-screenfull" name="screenfull"></icon>           
+            </a>
+          </el-tooltip>
+        </el-col>
+      </el-row>
+    </div>
+    <div style="width:1200px;margin:0 auto;">
+      <el-col :span="24" class="panel-center">
+        <!--<el-col :span="4">-->
+        <aside class="w-180 ovf-hd" v-show="!showLeftMenu">
+          <leftMenu :menuData="menuData" :menu="menu" ref="leftMenu" :isCollapse="isCollapse"></leftMenu>
+        </aside>
+        <section class="panel-c-c" :class="{'hide-leftMenu': hasChildMenu}">
+          <div class="grid-content bg-purple-light">
+            <el-col :span="24">
+              <!-- 面包屑 -->
+                <bread-crumb></bread-crumb>
+                <transition name="fade" mode="out-in">
+                <router-view v-loading="showLoading"></router-view>
+                </transition>
+            </el-col>
           </div>
-		      <el-dropdown-menu slot="dropdown">
-		        <el-dropdown-item command="changePwd">修改密码</el-dropdown-item>
-		        <el-dropdown-item command="logout">退出</el-dropdown-item>
-		      </el-dropdown-menu>
-		    </el-dropdown>
-			</el-col>
-		</el-col>
-		<el-col :span="24" class="panel-center">
-			<!--<el-col :span="4">-->
-			<aside class="w-180 ovf-hd" v-show="!showLeftMenu">
-				<leftMenu :menuData="menuData" :menu="menu" ref="leftMenu" :isCollapse="isCollapse"></leftMenu>
-			</aside>
-			<section class="panel-c-c" :class="{'hide-leftMenu': hasChildMenu}">
-				<div class="grid-content bg-purple-light">
-					<el-col :span="24">
-            <!-- 面包屑 -->
-              <bread-crumb></bread-crumb>
-              <transition name="fade" mode="out-in">
-							<router-view v-loading="showLoading"></router-view>
-              </transition>
-					</el-col>
-				</div>
-			</section>
-		</el-col>
+        </section>
+      </el-col>
+    </div>
+      
 
-		<changePwd ref="changePwd"></changePwd>
-
-	</el-row>
+      <changePwd ref="changePwd"></changePwd>
+  </div>
 </template>
 
 <script>
@@ -237,12 +243,16 @@ export default {
 }
 
 .panel-top {
+  min-width: 1200px;
   height: 60px;
   line-height: 60px;
   background: #409EFF;
   color: white;
 }
-
+.panel-top .el-row {
+  width: 1200px;
+  margin: 0 auto;
+}
 .panel-top hover{
   height: 60px;
   line-height: 60px;
@@ -251,20 +261,20 @@ export default {
 }
 
 .panel-center {
-  background: #ffffff;
-  position: absolute;
-  top: 60px;
+
+  position: relative;
   bottom: 0px;
+  width: 1200px;
   overflow: hidden;
 }
 
 .panel-c-c {
-  background: #ffffff;
   position: absolute;
   right: 0px;
   top: 0px;
   bottom: 0px;
   left: 180px;
+  width: 980px;
   overflow-y: scroll;
   padding: 20px;
 }
@@ -300,5 +310,8 @@ export default {
 
 .el-menu-item.is-active{
   background-color:rgb(210, 210, 210)!important;
+}
+.user-menu {
+  position: static!important;
 }
 </style>

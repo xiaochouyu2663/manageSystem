@@ -129,14 +129,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .verify-pos {
   position: absolute;
   right: 100px;
   top: 0px;
 }
 
-body{
+.backgroundImg-login{
   background-color: #ffffff;
   background-image: url(../../assets/images/backgroud.png);
   background-repeat:no-repeat; 

@@ -3,7 +3,7 @@
 		<div class="inner-container">
 			<div class="content" :style="{height:this.height - 60 + 'px', width:190 + 'px'}">
 
-				<el-menu :default-active="active" :collapse="isCollapse" :unique-opened="true" background-color="rgb(220, 220, 220)" active-text-color="#20a0ff">
+				<el-menu :default-active="active" :collapse="isCollapse" :unique-opened="true"  active-text-color="#20a0ff">
 					<template v-for="secMenu in menuData">
             <!-- 这里:index只能接收字符类型  假设后台返回的是int类型就需要进行类型转换  -->
 							<el-submenu :index="secMenu.id+''" v-if="secMenu.child">
@@ -53,10 +53,17 @@
   margin-right: 5px;
 }
 .el-submenu__title {
-  /* background-color: #ededed!important; */
   color: #495060!important;
 }
-
+.content {
+  background: #fff;
+}
+.el-menu-item.is-active {
+  background: #f7f7f7!important;
+}
+.el-submenu__title :hover{
+  background:none!important;
+}
 </style>
 
 <script>

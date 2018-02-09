@@ -20,6 +20,8 @@ export default {
       const $container = this.$refs.scrollContainer
       const $containerWidth = $container.offsetWidth
       const $wrapper = this.$refs.scrollWrapper
+      // console.log(e.wheelDelta)
+      // console.log(this)
       const $wrapperWidth = $wrapper.offsetWidth
       if (e.wheelDelta > 0) {
         this.left = Math.min(0, this.left + e.wheelDelta)
@@ -41,11 +43,16 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .scroll-container {
+  float: right;
+  // width:200px;
   white-space: nowrap;
-  position: relative;
-  overflow: hidden;
+  // position: relative;
+  // overflow: hidden;
+  background: none;
+  border-bottom: none;
+  box-shadow:none;
   .scroll-wrapper {
-    position: absolute;
+    // position: absolute;
   }
 }
 </style>

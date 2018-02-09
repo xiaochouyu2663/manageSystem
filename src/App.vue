@@ -74,7 +74,7 @@ export default {
 body {
   margin: 0px;
   padding: 0px;
-  background: #c9c9c9;
+  background: #f3f3f3;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
     Microsoft YaHei, SimSun, sans-serif;
   font-weight: 400;
