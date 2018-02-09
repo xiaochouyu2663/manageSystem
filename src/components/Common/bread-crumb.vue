@@ -4,7 +4,7 @@
         <div class="fl betterline">
           <bread-path :levelList="levelList"></bread-path>
         </div>
-        <!-- <div>demo</div> -->
+        
         <scroll-pane class='tags-view-container'>
           <router-link class="tags-view-item" :class="isActive(tag)?'active':''" v-for="tag in Array.from(visitedViews)" :to="tag.path" :key="tag.path">
              {{tag.name}}

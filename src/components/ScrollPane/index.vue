@@ -1,6 +1,6 @@
 <template>
   <div class="scroll-container" ref="scrollContainer" @mousewheel="handleScroll">
-    <div class="scroll-wrapper" ref="scrollWrapper" :style="{left: left + 'px'}">
+    <div class="scroll-wrapper" ref="scrollWrapper" :style="{right: right + 'px'}">
       <slot></slot>
     </div>
   </div>
@@ -11,7 +11,7 @@ export default {
   name: 'scrollPane',
   data() {
     return {
-      left: 0
+      right: 0
     }
   },
   methods: {
@@ -20,20 +20,20 @@ export default {
       const $container = this.$refs.scrollContainer
       const $containerWidth = $container.offsetWidth
       const $wrapper = this.$refs.scrollWrapper
-      // console.log(e.wheelDelta)
-      // console.log(this)
+      
       const $wrapperWidth = $wrapper.offsetWidth
       if (e.wheelDelta > 0) {
-        this.left = Math.min(0, this.left + e.wheelDelta)
+        this.right = Math.min(0, this.right + e.wheelDelta)
       } else {
         if ($containerWidth - 100 < $wrapperWidth) {
-          if (this.left < -($wrapperWidth - $containerWidth + 100)) {
-            this.left = this.left
+          if (this.right < -($wrapperWidth - $containerWidth + 100)) {
+            this.right = this.right
           } else {
-            this.left = Math.max(this.left + e.wheelDelta, $containerWidth - $wrapperWidth - 100)
+            this.right = Math.max(this.right + e.wheelDelta, $containerWidth - $wrapperWidth - 100)
           }
         } else {
-          this.left = 0
+          console.log(this)
+          this.right = 0
         }
       }
     }
@@ -43,16 +43,14 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .scroll-container {
-  float: right;
-  // width:200px;
   white-space: nowrap;
-  // position: relative;
-  // overflow: hidden;
+  position: relative;
+  overflow: hidden;
   background: none;
   border-bottom: none;
   box-shadow:none;
   .scroll-wrapper {
-    // position: absolute;
+    position: absolute;
   }
 }
 </style>
