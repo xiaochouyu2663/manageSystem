@@ -1,6 +1,6 @@
 <template>
     <!-- 下一步实现可修正的自动面包屑导航 () -->
-    <div class="m-b-10 h-30 l-h-15 breadcrumb">
+    <div class="m-b-10  l-h-15 breadcrumb">
         <div class="fl betterline">
           <bread-path :levelList="levelList"></bread-path>
         </div>
@@ -109,7 +109,7 @@ export default {
 }
 .betterline {
   padding-left:10px;
-  background: url(../../assets/images/location.png) no-repeat left 2px;
+  background: url(../../assets/images/location.png) no-repeat left 4px;
 }
 .tags-view-container {
   // background: #fff;
@@ -149,9 +149,14 @@ export default {
     }
   }
 }
+
 </style>
 
 <style rel="stylesheet/scss" lang="scss">
+.m-b-10 {
+  overflow: hidden;
+  line-height: 35px;
+}
 .tags-view-container {
   .tags-view-item {
     .el-icon-close {

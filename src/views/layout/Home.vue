@@ -278,7 +278,7 @@ export default {
   overflow-y: scroll;
   padding: 20px;
 }
-
+.panel-c-c::-webkit-scrollbar {display:none}
 .logout {
   background: url(../../assets/images/logout_36.png);
   background-size: contain;
