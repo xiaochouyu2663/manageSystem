@@ -10,27 +10,29 @@
             <span class="p-l-20">{{title}}</span>
           <!--</template>-->
         </el-col>
-        <el-col :span="18" class="ofv-hd">
+        <el-col :span="16" class="ofv-hd">
           <div class="fl p-l-20 p-r-20 top-menu" :class="{'top-active': menu.selected}" v-for="menu in topMenu" @click="switchTopMenu(menu)">{{menu.title}}</div>
         </el-col>
-        <el-col :span="2" class="pos-rel">
-         
+        <el-col :span="4" class="pos-rel">
+          
           <el-dropdown @command="handleMenu" class="user-menu">
-            
-            <div class="fr" >
-              <icon class="admin-icon" name="admin" style="width:20px;height:20px;margin-top:20px"></icon>            
-            </div>
             <span class="el-dropdown-link c-gra" style="cursor: pointer">
-              {{username}}&nbsp;&nbsp;    
+              <img style="width:19px;height:19px;" src="~assets/images/admin.png" alt="">
+              {{username}}    
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="changePwd">修改密码</el-dropdown-item>
-              <el-dropdown-item command="logout">退出</el-dropdown-item>
+              <!-- <el-dropdown-item command="logout">退出</el-dropdown-item> -->
             </el-dropdown-menu>
           </el-dropdown>
            <el-tooltip class="item" effect="dark" :content="screenMsg" placement="bottom">
             <a href="javascript:;" @click="screenfull" class="icon-top-bar">
               <icon class="icon-screenfull" name="screenfull"></icon>           
+            </a>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" :content="logoff" placement="bottom">
+            <a href="javascript:;" @click="logout" class="icon-top-bar">
+              <img style="width:17px;height:17px;position:relative;top:2px;" src="~assets/images/logoff.png" alt="">           
             </a>
           </el-tooltip>
         </el-col>
@@ -72,6 +74,7 @@ export default {
   data() {
     return {
       screenMsg: '全屏',
+      logoff: '退出',
       isCollapse: false,
       username: '',
       topMenu: [],
@@ -158,7 +161,7 @@ export default {
           this.title = data.SYSTEM_NAME
           this.img = window.HOST + data.SYSTEM_LOGO
         })
-      })
+      })  
     },
     getUsername() {
       this.username = Lockr.get('userInfo').username
@@ -228,6 +231,9 @@ export default {
 
 .icon-top-bar {
   color: white;
+  padding: 0 15px;
+    border-left: 1px solid #13a5ff;
+    margin-left: -5px;
 }
 
 .fade-enter,
@@ -244,11 +250,12 @@ export default {
 
 .panel-top {
   min-width: 1200px;
-  height: 60px;
-  line-height: 60px;
-  background: #409EFF;
+  height: 74px;
+  line-height: 74px;
+  background: #0091ea;
   color: white;
 }
+
 .panel-top .el-row {
   width: 1200px;
   margin: 0 auto;
@@ -313,5 +320,6 @@ export default {
 }
 .user-menu {
   position: static!important;
+  padding: 0 15px;
 }
 </style>

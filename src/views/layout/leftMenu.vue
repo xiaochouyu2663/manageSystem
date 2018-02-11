@@ -64,6 +64,16 @@
 .el-submenu__title :hover{
   background:none!important;
 }
+.el-submenu .el-menu-item.is-active:after, 
+.el-submenu .el-menu-item.is-active:after{
+  position: absolute;
+  top: 14px;
+  left: 30px;
+  content: '';
+  width:3px;
+  height: 20px;
+  background: #0091ea;
+}
 </style>
 
 <script>

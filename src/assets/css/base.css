@@ -1,14 +1,12 @@
 .top-menu:hover {
 	cursor: pointer;
-	background: rgb(7, 111, 216);
+	background: #0099f7;
 	color: white;
 }
-.top-menu:active, .left-menu:active {
-	color: #20a0ff;
-}
+
 .top-active {
 	color: white;
-	background-color:rgb(18, 133, 240);
+	background-color:#0099f7;
 }
 .top-menu, .left-menu {
 	user-select:none;

@@ -120,7 +120,7 @@ export default {
     display: inline-block;
     position: relative;
     height: 30px;
-    line-height: 34px;
+    line-height: 33px;
     border: 1px dashed #b1b1b1;
     color: #b1b1b1;
     padding: 0 8px;
