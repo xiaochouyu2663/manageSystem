@@ -20,7 +20,7 @@ import 'assets/css/base.css'
 import Icon from 'vue-svg-icon/Icon.vue'
 // import VueSocketio from 'vue-socket.io'  需要构筑即时通讯系统  将该项注释打开 并在app.vue中编辑相应代码
 
-axios.defaults.baseURL = 'http://test.pstech360.com/php/public/'
+axios.defaults.baseURL = 'http://qixingshangcheng.pstech360.com/php/public/'
 // axios.defaults.baseURL = 'http://framework.com/'
 axios.defaults.timeout = 1000 * 15
 axios.defaults.headers.authKey = Lockr.get('authKey')
@@ -51,6 +51,18 @@ Vue.use(ElementUI)
 Vue.use(VueRouter)
 // Vue.use(VueSocketio, 'http://szt.pstech360.com:2021')
 Vue.component('icon', Icon)
+
+//引入highcharts
+// import Highcharts from 'highcharts/highstock';
+// import HighchartsMore from 'highcharts/highcharts-more';
+// import HighchartsDrilldown from 'highcharts/modules/drilldown';
+// import Highcharts3D from 'highcharts/highcharts-3d';
+// import Highmaps from 'highcharts/modules/map';
+
+// HighchartsMore(Highcharts)
+// HighchartsDrilldown(Highcharts);
+// Highcharts3D(Highcharts);
+// Highmaps(Highcharts);
 
 window.router = router
 window.store = store

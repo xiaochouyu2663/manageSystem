@@ -42,6 +42,10 @@ import chartsList from '../views/Demo/charts/list.vue'
 import chartsLine from '../views/Demo/charts/line.vue'
 import chartsMix from '../views/Demo/charts/mix.vue'
 
+/**新增固定资产 sherry*/
+import newguding from '../views/Administrative/guding/newguding.vue'
+import gudingdetail from '../views/Administrative/guding/gudingdetail.vue'
+import gudingchart from '../views/Administrative/guding/gudingchart.vue'
 /**
  * meta参数解析
  * hideLeft: 是 否隐藏左侧菜单，单页菜单为true
@@ -474,6 +478,32 @@ const routes = [
   {
     path: '*',
     component: Error
+  },
+  {
+    path:'/home',
+    component: Home,
+    name: '固定资产',
+    meta: { moduleName: '系统' },
+    children: [
+      {
+        path: 'guding/newguding',
+        component: newguding,
+        name: '新增固定资产',
+        meta: { hideLeft: false, module: 'Administrative', menu: 'position' }
+      },
+      {
+        path: 'guding/gudingdetail',
+        component: gudingdetail,
+        name: '固定资产明细',
+        meta: { hideLeft: false, module: 'Administrative', menu: 'position' }
+      },
+      {
+        path: 'guding/gudingchart',
+        component: gudingchart,
+        name: '固定资产图表',
+        meta: { hideLeft: false, module: 'Administrative', menu: 'position' }
+      }
+    ]
   }
 ]
 export default routes
